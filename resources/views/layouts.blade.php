@@ -2,7 +2,7 @@
 <html lang="id" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=chrome">
     {{-- <link rel="icon" href=""> --}}
@@ -20,8 +20,8 @@
     <br><br><br><br>
     @yield('content')
     @extends('footer')
-    <script src="{{ asset('bootstrap-5.3.1-dist/js/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('select2-4.1.0-rc.0/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-5.3.1-dist/js/bootstrap.bundle.js') }}"></script>
+    <script src="{{ asset('assets/select2-4.1.0-rc.0/dist/js/select2.min.js') }}"></script>
     @yield('custom_script')
 </body>
 </html>
