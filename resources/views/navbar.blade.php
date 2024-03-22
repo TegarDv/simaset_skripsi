@@ -36,7 +36,7 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-speedometer"></i> Dashboard</a>
+                    <a class="nav-link {{ request()->is('/pengadaan') ? 'active' : '' }}" href="/pengadaan"><i class="bi bi-speedometer"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-folder-fill"></i> Pengadaan</a>
