@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_user');
             $table->string('tipe_aset');
-            $table->string('kode_aset');
+            $table->string('kode_aset')->unique();
             $table->string('nama_aset');
             $table->integer('jumlah');
             $table->bigInteger('harga');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('assets');
     }
 };
