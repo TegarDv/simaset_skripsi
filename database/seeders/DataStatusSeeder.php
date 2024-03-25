@@ -15,11 +15,13 @@ class DataStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data_status')->insert([
-            'nama_status' => Str::random(10),
-            'status' => Str::random(10).'@example.com',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('data_status')->insert([
+                'nama_status' => 'Status ' . ($i + 1),
+                'status' => 'On',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }
