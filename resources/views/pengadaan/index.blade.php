@@ -3,6 +3,51 @@
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/DataTables/DataTables-1.13.6/css/dataTables.bootstrap5.min.css') }}" />
+<style>
+    .loader-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+    .loader {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        display: inline-block;
+        border-top: 6px solid #FFF;
+        border-right: 6px solid transparent;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+    }
+    .loader::after {
+        content: '';  
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        border-left: 6px solid #FF3D00;
+        border-bottom: 6px solid transparent;
+        animation: rotation 0.5s linear infinite reverse;
+    }
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 @endsection
 @section('content')
 {{-- Header --}}
@@ -36,10 +81,10 @@
                             <div class="loader"></div>
                         </div>
 
-                        <button class="btn btn-primary">Tambah</button>
+                        <button class="btn btn-primary m-3">Tambah</button>
         
                         <div class="table-responsive">
-                            <table class="table table-bordered text-light" style="min-width: 100%;" id="data_transaksi">
+                            <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
@@ -80,4 +125,129 @@
 <script src="{{ asset('assets/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
 <script src="{{ asset('assets/DataTables/DataTables-1.13.6/js/dataTables.bootstrap5.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function showLoader() {
+        $('#loader-modal').css('display', 'flex');
+        setTimeout(function() {
+            hideLoader();
+        }, 1000); // Hide loader after 1 second
+    }
+
+    function hideLoader() {
+        $('#loader-modal').hide();
+    }
+
+    $(document).ready(function () {
+        var datatables = $('#data_assets').DataTable({
+            ajax: {
+                url: '{{ route('pengadaanJson') }}',
+            },
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                ['5', '10', '25', '50', 'All']
+            ],
+            scrollY: false,
+            columns: [
+                { data: null, width: '5%', render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }},
+                { 
+                    data: 'kode_aset', 
+                    width: '10%', 
+                    render: function (data, type, row) {
+                        return '<div class="text-light">' + data + '</div>';
+                    }
+                },
+                {
+                    data: null,
+                    width: '10%',
+                    render: function (data, type, row) {
+                        var nama_aset = row.nama_aset || '';
+                        var tipe_aset = row.tipe_aset || '';
+                        var jumlah = row.jumlah || '';
+                        var harga = row.harga || '';
+                        var masa_berlaku = row.masa_berlaku || '';
+
+                        var nama_asetReturn = '<div class="text-light">Nama: ' + nama_aset + '</div>';
+                        var tipe_asetReturn = '<div class="text-light">Tipe: ' + tipe_aset + '</div>';
+                        var jumlahReturn = '<div class="text-light">Jumlah: ' + jumlah + '</div>';
+                        var hargaReturn = '<div class="text-light">Harga: ' + harga + '</div>';
+                        var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
+                        
+                        var viewReturn = nama_asetReturn + tipe_asetReturn + jumlahReturn + hargaReturn + masa_berlakuReturn;
+
+                        return viewReturn;
+                    }
+                },
+                { 
+                    data: null,
+                    width: '10%',
+                    render: function (data, type, row) {
+                        var masa_berlaku = row.masa_berlaku ? formatDate(row.masa_berlaku) : '';
+                        var created_at = row.created_at ? formatDate(row.created_at) : '';
+                        var updated_at = row.updated_at ? formatDate(row.updated_at) : '';
+
+                        var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
+                        var created_atReturn = '<div class="text-light">Aset dibuat pada: ' + created_at + '</div>';
+                        var updated_atReturn = '<div class="text-light">Terakhir di update pada: ' + updated_at + '</div>';
+                        
+                        var viewReturn = masa_berlakuReturn + created_atReturn + updated_atReturn;
+
+                        return viewReturn;
+                    }
+                },
+                { 
+                    data: 'kode_aset', 
+                    width: '10%', 
+                    render: function (data, type, row) {
+                        return '<div class="text-light">' + data + '</div>';
+                    }
+                },
+                { 
+                    data: 'kode_aset', 
+                    width: '10%', 
+                    render: function (data, type, row) {
+                        return '<div class="text-light">' + data + '</div>';
+                    }
+                }
+            ],
+            // initComplete: function () {
+            //     // Add event listener for the filter change
+            //     $('#userFilter').on('change', function () {
+            //         userFilter = $(this).val();
+
+            //         // Apply the filter to the "Username" column
+            //         datatables.column(1).search(userFilter).draw();
+            //     });
+
+            //     $('#statusFilter').on('change', function () {
+            //         statusFilter = $(this).val();
+
+            //         // Apply the filter to the "Action" column
+            //         datatables.column(6).search(statusFilter).draw();
+            //     });
+            // }
+        });
+
+        function formatDate(timestamp) {
+            var months = [
+                "January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"
+            ];
+
+            var date = new Date(timestamp);
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day + ' ' + months[monthIndex] + ' ' + year;
+        }
+
+        function reloadDatatable() {
+            datatables.ajax.reload(function() {
+            }, false);
+        }
+    });
+</script>
 @endsection
