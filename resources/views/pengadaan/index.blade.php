@@ -112,6 +112,15 @@
             </div>
         </div>
 
+        <!-- Detail modal container -->
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <!-- Modal content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
         {{-- Edit Modal --}}
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -198,17 +207,41 @@
                     }
                 },
                 { 
-                    data: 'kode_aset', 
-                    width: '10%', 
+                    data: 'status',
+                    width: '10%',
+                    className: 'text-center',
                     render: function (data, type, row) {
-                        return '<div class="text-light">' + data + '</div>';
+                        var badgeClass;
+                        if (data === '1') {
+                            badgeClass = 'text-bg-success';
+                        } else if (data === '2') {
+                            badgeClass = 'text-bg-info';
+                        } else if (data === '3') {
+                            badgeClass = 'text-bg-warning';
+                        } else if (data === '4') {
+                            badgeClass = 'text-bg-danger';
+                        } else {
+                            badgeClass = 'text-bg-secondary';
+                        }
+
+                        return '<span class="badge rounded-pill ' + badgeClass + '">Status ' + data + '</span>';
                     }
                 },
-                { 
-                    data: 'kode_aset', 
-                    width: '10%', 
+                {
+                    data: null,
+                    width: '10%',
                     render: function (data, type, row) {
-                        return '<div class="text-light">' + data + '</div>';
+                        var id_aset = row.id || '';
+
+                        var id_asetReturn = '<div class="text-light">ID: ' + id_aset + '</div>';
+
+                        var editButton = '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' + id_aset + '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button>';
+                        var showButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' + id_aset + '" title="View"><i class="bi bi-eye text-light"></i></button>';
+                        var deleteButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 reffund-app-btn" data-app-id="' + id_aset + '" title="Reffund"><i class="bi bi-arrow-repeat text-light"></i></button>';
+                        
+                        var viewReturn = editButton + showButton + deleteButton;
+
+                        return viewReturn;
                     }
                 }
             ],
@@ -228,6 +261,25 @@
             //         datatables.column(6).search(statusFilter).draw();
             //     });
             // }
+        });
+
+        // Handle view button click event
+        $('#data_assets').on('click', '.view-app-btn', function () {
+            var appId = $(this).data('app-id');
+
+            showLoader(); // Show loader while loading the view form
+
+            $.ajax({
+                url: '/pengadaan/' + appId,
+                type: 'GET',
+                success: function (response) {
+                    $('#detailModal .modal-content').html(response);
+                    $('#detailModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while loading the view form.');
+                }
+            });
         });
 
         function formatDate(timestamp) {

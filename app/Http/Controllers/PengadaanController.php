@@ -56,8 +56,8 @@ class PengadaanController extends Controller
      */
     public function show(string $id)
     {
-        $assets = Assets::findOrFail($id);
-        return view('pengadaan.show', compact('assets'));
+        $data = Assets::findOrFail($id);
+        return view('pengadaan.show', compact('data'));
     }
 
     /**
