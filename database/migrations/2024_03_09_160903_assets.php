@@ -24,7 +24,6 @@ return new class extends Migration
             $table->integer('status');
             $table->integer('kondisi_aset');
             $table->date('masa_berlaku');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

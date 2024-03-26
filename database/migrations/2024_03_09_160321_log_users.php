@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('action');
             $table->text('detail');
             $table->integer('status');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nama_status');
             $table->integer('status');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
