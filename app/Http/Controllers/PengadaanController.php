@@ -65,8 +65,8 @@ class PengadaanController extends Controller
      */
     public function edit(string $id)
     {
-        $assets = Assets::findOrFail($id);
-        return view('pengadaan.edit', compact('assets'));
+        $data = Assets::findOrFail($id);
+        return view('pengadaan.edit', compact('data'));
     }
 
     /**
@@ -74,23 +74,28 @@ class PengadaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validateData($request);
+        // $this->validateData($request);
 
-        Assets::update([
-            'kode_aset'            => $request->kode_aset,
-            'tipe_aset'            => $request->tipe_aset,
-            'nama_aset'            => $request->nama_aset,
-            'jumlah'               => $request->jumlah,
-            'harga'                => $request->harga,
-            'spesifikasi'          => $request->spesifikasi,
-            'keterangan'           => $request->keterangan,
-            'status'               => $request->status,
-            'kondisi_aset'         => $request->kondisi_aset,
-            'masa_berlaku'         => $request->masa_berlaku,
-            'updated_at'           => now(),
+        // Assets::update([
+        //     'kode_aset'            => $request->kode_aset,
+        //     'tipe_aset'            => $request->tipe_aset,
+        //     'nama_aset'            => $request->nama_aset,
+        //     'jumlah'               => $request->jumlah,
+        //     'harga'                => $request->harga,
+        //     'spesifikasi'          => $request->spesifikasi,
+        //     'keterangan'           => $request->keterangan,
+        //     'status'               => $request->status,
+        //     'kondisi_aset'         => $request->kondisi_aset,
+        //     'masa_berlaku'         => $request->masa_berlaku,
+        //     'updated_at'           => now(),
+        // ]);
+
+        // return back()->with('success', 'Data Berhasil Disimpan!');
+        return response()->json([
+            'error' => false,
+            'toast' => 'success',
+            'message' => 'Data Berhasil Diubah'
         ]);
-
-        return back()->with('success', 'Data Berhasil Disimpan!');
     }
 
     /**

@@ -282,6 +282,24 @@
             });
         });
 
+        $('#data_assets').on('click', '.edit-app-btn', function () {
+            var appId = $(this).data('app-id');
+
+            showLoader(); // Show loader while loading the view form
+
+            $.ajax({
+                url: '/pengadaan/' + appId + '/edit',
+                type: 'GET',
+                success: function (response) {
+                    $('#editModal .modal-content').html(response);
+                    $('#editModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while loading the view form.');
+                }
+            });
+        });
+
         function formatDate(timestamp) {
             var months = [
                 "January", "February", "March", "April", "May", "June", "July",
