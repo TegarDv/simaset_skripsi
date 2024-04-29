@@ -74,7 +74,7 @@ class PengadaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $this->validateData($request);
+        $this->validateData($request);
 
         // Assets::update([
         //     'kode_aset'            => $request->kode_aset,
@@ -109,7 +109,7 @@ class PengadaanController extends Controller
     private function validateData(Request $request)
     {
         $this->validate($request, [
-            'kode_aset'            => 'required',
+            // 'kode_aset'            => 'required',
             'tipe_aset'            => 'required',
             'nama_aset'            => 'required',
             'jumlah'               => 'required',
