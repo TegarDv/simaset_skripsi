@@ -81,7 +81,10 @@
                             <div class="loader"></div>
                         </div>
 
-                        <button class="btn btn-primary m-3">Tambah</button>
+                        <div class="m-3">
+                            <button class="btn btn-primary create-btn">Tambah</button>
+                            <button id="reloadDatatable" class="btn btn-primary">Reload Data</button>
+                        </div>
         
                         <div class="table-responsive">
                             <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets">
@@ -104,7 +107,7 @@
         {{-- Close Card --}}
 
         {{-- Add Modal --}}
-        <div class="modal faaddid="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     <!-- Modal content will be loaded here -->
@@ -237,7 +240,7 @@
 
                         var editButton = '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' + id_aset + '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button>';
                         var showButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' + id_aset + '" title="View"><i class="bi bi-eye text-light"></i></button>';
-                        var deleteButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 reffund-app-btn" data-app-id="' + id_aset + '" title="Reffund"><i class="bi bi-arrow-repeat text-light"></i></button>';
+                        var deleteButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' + id_aset + '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>';
                         
                         var viewReturn = editButton + showButton + deleteButton;
 
@@ -261,6 +264,29 @@
             //         datatables.column(6).search(statusFilter).draw();
             //     });
             // }
+        });
+
+        // Handle a create button
+        $('.create-btn').on('click', function () {
+            showLoader(); // Show loader while loading the create form
+
+            $.ajax({
+                url: '/pengadaan/create', // Assuming this is the route for loading the create form
+                type: 'GET',
+                success: function (response) {
+                    $('#createModal .modal-content').html(response); // Load the create form into the modal
+                    $('#createModal').modal('show'); // Show the modal
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while loading the create form.');
+                }
+            });
+        });
+
+        // Reload data
+        $('#reloadDatatable').on('click', function() {
+            showLoader();
+            reloadDatatable();
         });
 
         // Handle view button click event
@@ -296,6 +322,37 @@
                 },
                 error: function (xhr, status, error) {
                     alert('An error occurred while loading the view form.');
+                }
+            });
+        });
+
+        $('#data_assets').on('click', '.delete-app-btn', function () {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var appId = $(this).data('app-id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/pengadaan/' + appId,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        success: function (response) {
+                            showToast(response.message, 'success');
+                        },
+                        error: function (xhr, status, error) {
+                            showToast('An error occurred while deleting the asset.', 'error');
+                        }
+                    });
                 }
             });
         });

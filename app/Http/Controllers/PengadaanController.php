@@ -34,7 +34,8 @@ class PengadaanController extends Controller
         $this->validateData($request);
 
         Assets::create([
-            'kode_aset'            => $request->kode_aset,
+            'id_user'              => '1',
+            'kode_aset'            => 'DG-RS17-89',
             'tipe_aset'            => $request->tipe_aset,
             'nama_aset'            => $request->nama_aset,
             'jumlah'               => $request->jumlah,
@@ -48,7 +49,12 @@ class PengadaanController extends Controller
             'updated_at'           => now(),
         ]);
 
-        return back()->with('success', 'Data Berhasil Disimpan!');
+        // return back()->with('success', 'Data Berhasil Disimpan!');
+        return response()->json([
+            'error' => false,
+            'toast' => 'success',
+            'message' => 'Data Berhasil Ditambahkan'
+        ]);
     }
 
     /**
@@ -76,21 +82,22 @@ class PengadaanController extends Controller
     {
         $this->validateData($request);
 
-        // Assets::update([
-        //     'kode_aset'            => $request->kode_aset,
-        //     'tipe_aset'            => $request->tipe_aset,
-        //     'nama_aset'            => $request->nama_aset,
-        //     'jumlah'               => $request->jumlah,
-        //     'harga'                => $request->harga,
-        //     'spesifikasi'          => $request->spesifikasi,
-        //     'keterangan'           => $request->keterangan,
-        //     'status'               => $request->status,
-        //     'kondisi_aset'         => $request->kondisi_aset,
-        //     'masa_berlaku'         => $request->masa_berlaku,
-        //     'updated_at'           => now(),
-        // ]);
+        $aset = Assets::findOrFail($id);
 
-        // return back()->with('success', 'Data Berhasil Disimpan!');
+        $aset->update([
+            // 'kode_aset'            => $request->kode_aset,
+            'nama_aset'            => $request->nama_aset,
+            'tipe_aset'            => $request->tipe_aset,
+            'jumlah'               => $request->jumlah,
+            'harga'                => $request->harga,
+            'status'               => $request->status,
+            'kondisi_aset'         => $request->kondisi_aset,
+            'spesifikasi'          => $request->spesifikasi,
+            'keterangan'           => $request->keterangan,
+            'masa_berlaku'         => $request->masa_berlaku,
+            'updated_at'           => now(),
+        ]);
+
         return response()->json([
             'error' => false,
             'toast' => 'success',
@@ -103,22 +110,37 @@ class PengadaanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $data = Assets::findOrFail($id);
+            $data->delete();
+            
+            return response()->json([
+                'error' => false,
+                'toast' => 'success',
+                'message' => 'Data Berhasil Dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'toast' => 'danger',
+                'message' => 'Error occurred while deleting data: ' . $e->getMessage()
+            ]);
+        }
     }
 
     private function validateData(Request $request)
     {
         $this->validate($request, [
             // 'kode_aset'            => 'required',
-            'tipe_aset'            => 'required',
-            'nama_aset'            => 'required',
-            'jumlah'               => 'required',
-            'harga'                => 'required',
-            'spesifikasi'          => 'required',
-            'keterangan'           => 'required',
-            'status'               => 'required',
-            'kondisi_aset'         => 'required',
-            'masa_berlaku'         => 'required',
+            'tipe_aset'     => 'required',
+            'nama_aset'     => 'required',
+            'jumlah'        => 'required|numeric',
+            'harga'         => 'required|numeric',
+            'spesifikasi'   => 'required',
+            'keterangan'    => 'required',
+            'status'        => 'required',
+            'kondisi_aset'  => 'required',
+            'masa_berlaku'  => 'required|date',
         ]);
     }
 

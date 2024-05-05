@@ -3,17 +3,17 @@
     <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Aset {{ $data['kode_aset'] }}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<div class="modal-body">
-    <form class="row g-3" action="{{ route('pengadaan.update', ['pengadaan' => $data->id]) }}" method="POST" id="updateForm">
-        @csrf
-        @method('PUT')
+<form class="row g-3" action="{{ route('pengadaan.update', ['pengadaan' => $data->id]) }}" method="POST" id="updateForm">
+    @csrf
+    @method('PUT')
+    <div class="modal-body">
         
         <div class="row g-3">
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Nama Aset</label>
                 <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" readonly>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Tipe Aset</label>
                 <select class="form-select" name="tipe_aset" required>
                     <option value="fisik" {{ $data['tipe_aset'] == 'fisik' ? 'selected' : '' }}>fisik</option>
@@ -21,20 +21,20 @@
                     <option value="layanan" {{ $data['tipe_aset'] == 'layanan' ? 'selected' : '' }}>layanan</option>
                 </select>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Jumlah Aset</label>
                 <input type="number" class="form-control" name="jumlah" value="{{ $data['jumlah'] }}" required>
             </div>
         </div>
         <div class="row g-3">
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Harga Aset</label>
-                <div class="input-group mb-3">
+                <div class="input-group">
                     <span class="input-group-text">Rp </span>
                     <input type="number" class="form-control" name="harga" value="{{ $data['harga'] }}" required>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Status aset</label>
                 <select class="form-select" name="status" required>
                     <option value="1" {{ $data['status'] == '1' ? 'selected' : '' }}>1</option>
@@ -42,7 +42,7 @@
                     <option value="3" {{ $data['status'] == '3' ? 'selected' : '' }}>3</option>
                 </select>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Kondisi Aset</label>
                 <select class="form-select" name="kondisi_aset" required>
                     <option value="1" {{ $data['kondisi_aset'] == '1' ? 'selected' : '' }}>1</option>
@@ -65,16 +65,16 @@
                 <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" name="keterangan" required>{{ $data['keterangan'] }}</textarea>
             </div>
         </div>
-        <div class="modal-footer">
-            <div class="text-end mt-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" onclick="submitForm()" class="btn btn-md btn-primary">Save</button>
-                {{-- <button class="btn btn-primary" type="button" onclick="submitForm()" name="tombol" value="submit">Simpan</button> --}}
-                {{-- <button type="reset" class="btn btn-md btn-warning">RESET</button> --}}
-            </div>
+    </div>
+    <div class="modal-footer">
+        <div class="text-end mt-3">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onclick="submitForm()" class="btn btn-md btn-primary">Save</button>
+            {{-- <button class="btn btn-primary" type="button" onclick="submitForm()" name="tombol" value="submit">Simpan</button> --}}
+            {{-- <button type="reset" class="btn btn-md btn-warning">RESET</button> --}}
         </div>
-    </form>
-</div>
+    </div>
+</form>
 <script>
     function submitForm() {
         console.log('Submitting form data:', $('#updateForm').serialize());
@@ -91,6 +91,7 @@
 
                 // Reload Animation
                 showLoader();
+                reloadDatatable();
                 hideLoader();
             },
             error: function(error) {
