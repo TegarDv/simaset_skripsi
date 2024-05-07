@@ -40,4 +40,9 @@ class Assets extends Model
     {
         return $this->dataStatus->nama_status ?? '';
     }
+
+    public function getStatusColorAttribute(): string
+    {
+        return $this->dataStatus->color ?? 'secondary';
+    }
 }

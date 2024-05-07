@@ -160,6 +160,7 @@ class PengadaanController extends Controller
                                 'keterangan' => $asset->keterangan,
                                 'status' => $asset->status,
                                 'status_nama' => $asset->status_nama, // Accessing getStatusNamaAttribute
+                                'status_color' => $asset->status_color, // Accessing getStatusColorAttribute
                                 'kondisi_aset' => $asset->kondisi_aset,
                                 'masa_berlaku' => $asset->masa_berlaku,
                                 'created_at' => $asset->created_at,
