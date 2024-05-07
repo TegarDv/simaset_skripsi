@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\DataStatus;
 
 class Assets extends Model
 {
@@ -29,4 +30,14 @@ class Assets extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function dataStatus(): BelongsTo
+    {
+        return $this->belongsTo(DataStatus::class, 'status')->where('status', '1');
+    }
+
+    public function getStatusNamaAttribute(): string
+    {
+        return $this->dataStatus->nama_status ?? '';
+    }
 }

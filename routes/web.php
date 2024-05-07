@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PengadaanController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,9 @@ Route::get('/', function () {
 
 Route::resource('/pengadaan', PengadaanController::class);
 Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanJson'])->name('pengadaanJson');
+
+Route::resource('/status', StatusController::class);
+Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

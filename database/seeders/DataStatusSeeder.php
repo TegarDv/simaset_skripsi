@@ -19,6 +19,7 @@ class DataStatusSeeder extends Seeder
             DB::table('data_status')->insert([
                 'nama_status' => 'Status ' . ($i + 1),
                 'status' => '1',
+                'color' => 'primary',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

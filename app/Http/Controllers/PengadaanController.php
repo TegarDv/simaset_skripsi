@@ -146,7 +146,27 @@ class PengadaanController extends Controller
 
     public function pengadaanJson()
     {
-        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'jumlah', 'harga', 'spesifikasi', 'keterangan', 'status', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')->get();
+        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'jumlah', 'harga', 'spesifikasi', 'keterangan', 'status', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')
+                        ->get()
+                        ->map(function ($asset) {
+                            return [
+                                'id' => $asset->id,
+                                'kode_aset' => $asset->kode_aset,
+                                'tipe_aset' => $asset->tipe_aset,
+                                'nama_aset' => $asset->nama_aset,
+                                'jumlah' => $asset->jumlah,
+                                'harga' => $asset->harga,
+                                'spesifikasi' => $asset->spesifikasi,
+                                'keterangan' => $asset->keterangan,
+                                'status' => $asset->status,
+                                'status_nama' => $asset->status_nama, // Accessing getStatusNamaAttribute
+                                'kondisi_aset' => $asset->kondisi_aset,
+                                'masa_berlaku' => $asset->masa_berlaku,
+                                'created_at' => $asset->created_at,
+                                'updated_at' => $asset->updated_at,
+                            ];
+                        });
+
         return response()->json([
             'data' => $assets,
         ]);
