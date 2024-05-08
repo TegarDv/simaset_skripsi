@@ -210,24 +210,14 @@
                     }
                 },
                 { 
-                    data: 'status',
+                    data: null,
                     width: '10%',
                     className: 'text-center',
                     render: function (data, type, row) {
-                        var badgeClass;
-                        if (data === '1') {
-                            badgeClass = 'text-bg-success';
-                        } else if (data === '2') {
-                            badgeClass = 'text-bg-info';
-                        } else if (data === '3') {
-                            badgeClass = 'text-bg-warning';
-                        } else if (data === '4') {
-                            badgeClass = 'text-bg-danger';
-                        } else {
-                            badgeClass = 'text-bg-secondary';
-                        }
+                        var status_color = row.status_color || 'secondary';
+                        var status = row.status_nama || '';
 
-                        return '<span class="badge rounded-pill ' + badgeClass + '">Status ' + data + '</span>';
+                        return '<span class="badge rounded-pill border text-bg-' + status_color + '">' + status + '</span>';
                     }
                 },
                 {

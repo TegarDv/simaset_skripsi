@@ -138,7 +138,7 @@ class PengadaanController extends Controller
             'harga'         => 'required|numeric',
             'spesifikasi'   => 'required',
             'keterangan'    => 'required',
-            'status'        => 'required',
+            'status'        => 'required|numeric',
             'kondisi_aset'  => 'required',
             'masa_berlaku'  => 'required|date',
         ]);
