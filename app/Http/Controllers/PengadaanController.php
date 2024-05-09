@@ -131,16 +131,15 @@ class PengadaanController extends Controller
     private function validateData(Request $request)
     {
         $this->validate($request, [
-            // 'kode_aset'            => 'required',
-            'tipe_aset'     => 'required',
             'nama_aset'     => 'required',
+            'tipe_aset'     => 'required',
             'jumlah'        => 'required|numeric',
             'harga'         => 'required|numeric',
-            'spesifikasi'   => 'required',
-            'keterangan'    => 'required',
             'status'        => 'required|numeric',
             'kondisi_aset'  => 'required',
             'masa_berlaku'  => 'required|date',
+            'spesifikasi'   => 'required',
+            'keterangan'    => 'required',
         ]);
     }
 
