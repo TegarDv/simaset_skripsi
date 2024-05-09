@@ -77,27 +77,25 @@
 
 <script>
     function submitCreateForm() {
-        console.log('Submitting form data:', $('#createForm').serialize());
-        // Submit the form using AJAX
         $.ajax({
             url: $('#createForm').attr('action'),
             type: 'POST',
             data: $('#createForm').serialize(),
             success: function(response) {
-                // Close the modal upon success
                 $('#createModal').modal('hide');
-                // Show a success toast
                 showToast(response.message, 'success');
-                // Reload Animation
                 showLoader();
                 reloadDatatable();
                 hideLoader();
             },
-            error: function(error) {
-                // Handle errors if needed
-                console.log(error.responseJSON.message);
-                // Show a failure toast
-                showToast(error.responseJSON.message, 'danger');
+                error: function(xhr, status, error) {
+                console.log(xhr.responseJSON.message);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: xhr.responseJSON.message
+                });
             }
         });
     }
