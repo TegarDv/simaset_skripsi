@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assets;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PengadaanController extends Controller
 {
@@ -32,10 +33,30 @@ class PengadaanController extends Controller
     public function store(Request $request)
     {
         $this->validateData($request);
+        if ($request->tipe_aset == 'fisik') {
+            $typePart = 'FS';
+        } elseif ($request->tipe_aset == 'digital') {
+            $typePart = 'DG';
+        } elseif ($request->tipe_aset == 'layanan') {
+            $typePart = 'LY';
+        }
+
+        $randomChars = strtoupper(str_shuffle(preg_replace('/[^A-Z]/', '', Str::random(3))));
+
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomChars = '';
+        for ($i = 0; $i < 2; $i++) {
+            $randomChars .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        $datePart = now()->format('ymd');
+        $tipePart = Str::upper(Str::substr($request->nama_aset, 0, 2));
+        $lastAsset = Assets::latest()->first();
+        $numberPart = str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
+        $kodeAset = "$typePart-$randomChars$datePart-$numberPart";
 
         Assets::create([
             'id_user'              => '1',
-            'kode_aset'            => 'DG-RS17-89',
+            'kode_aset'            => $kodeAset,
             'tipe_aset'            => $request->tipe_aset,
             'nama_aset'            => $request->nama_aset,
             'jumlah'               => $request->jumlah,
