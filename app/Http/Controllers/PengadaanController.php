@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assets;
+use App\Models\DataStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -24,7 +25,8 @@ class PengadaanController extends Controller
      */
     public function create()
     {
-        return view('pengadaan.create');
+        $status = DataStatus::all();
+        return view('pengadaan.create', ['status' => $status]);
     }
 
     /**
@@ -84,7 +86,8 @@ class PengadaanController extends Controller
     public function show(string $id)
     {
         $data = Assets::findOrFail($id);
-        return view('pengadaan.show', compact('data'));
+        $status = DataStatus::all();
+        return view('pengadaan.show', compact('data', 'status'));
     }
 
     /**
@@ -93,7 +96,8 @@ class PengadaanController extends Controller
     public function edit(string $id)
     {
         $data = Assets::findOrFail($id);
-        return view('pengadaan.edit', compact('data'));
+        $status = DataStatus::all();
+        return view('pengadaan.edit', compact('data', 'status'));
     }
 
     /**

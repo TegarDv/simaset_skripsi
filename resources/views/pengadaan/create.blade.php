@@ -15,9 +15,9 @@
                 <label class="font-weight-bold">Tipe Aset</label>
                 <select class="form-select" name="tipe_aset" required>
                     <option value="">Select Tipe Aset</option>
-                    <option value="fisik">fisik</option>
-                    <option value="digital">digital</option>
-                    <option value="layanan">layanan</option>
+                    <option value="fisik">Fisik</option>
+                    <option value="digital">Digital</option>
+                    <option value="layanan">Layanan</option>
                 </select>
             </div>
             <div class="col">
@@ -36,19 +36,19 @@
             <div class="col">
                 <label class="font-weight-bold">Status aset</label>
                 <select class="form-select" name="status" required>
-                    <option value="">Select Status Aset</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option disabled selected>Select Status Aset</option>
+                    @foreach ($status as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col">
                 <label class="font-weight-bold">Kondisi Aset</label>
                 <select class="form-select" name="kondisi_aset" required>
-                    <option value="">Select Kondisi Aset</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option disabled selected>Select Kondisi Aset</option>
+                    @foreach ($status as $item)
+                        <option value="{{ $item->id }}"><span class="badge rounded-pill bg-{{ $item->color }}">{{ $item->nama_status }}</span></option>
+                    @endforeach
                 </select>
             </div>
             <div class="col">
