@@ -31,7 +31,21 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateData($request);
+
+        DataStatus::create([
+            'nama_status'          => $request->nama_status,
+            'status'               => '1',
+            'color'                => $request->color,
+            'created_at'           => now(),
+            'updated_at'           => now(),
+        ]);
+
+        return response()->json([
+            'error' => false,
+            'toast' => 'success',
+            'message' => 'Data Berhasil Ditambahkan'
+        ]);
     }
 
     /**
@@ -87,13 +101,14 @@ class StatusController extends Controller
     {
         $this->validate($request, [
             'nama_status'   => 'required',
-            'status'        => 'required|in:0,1',
+            'status'        => 'nullable|in:0,1',
+            'color'         => 'required|in:primary,secondary,success,danger,warning,info,light,dark',
         ]);
     }
 
     public function statusJson()
     {
-        $data_status = DataStatus::select('id', 'nama_status', 'status', 'created_at', 'updated_at')->get();
+        $data_status = DataStatus::select('id', 'nama_status', 'color', 'status', 'created_at', 'updated_at')->get();
         return response()->json([
             'data' => $data_status,
         ]);

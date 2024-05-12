@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col">
                 <p>
-                    <h2 class="text-start">Pengadaan</h2>
+                    <h2 class="text-start">Data Status</h2>
                     <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, eaque.</h5>
                 </p>
             </div>
@@ -64,7 +64,7 @@
 
         <div class="container rounded p-1">
             <div class="card shadow-lg">
-                <h5 class="card-header text-warning-emphasis">Assets</h5>
+                <h5 class="card-header text-warning-emphasis">Status</h5>
                 <div class="card-body">
                     @if(session()->has('success'))
                         <div class="alert alert-success">
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="m-3">
-                            <button class="btn btn-primary create-btn">Tambah</button>
+                            <button class="btn btn-primary create-btn">Tambah Data</button>
                             <button id="reloadDatatable" class="btn btn-primary">Reload Data</button>
                         </div>
         
@@ -90,12 +90,12 @@
                             <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Kode Aset</th>
-                                        <th scope="col">Data Aset</th>
-                                        <th scope="col">Waktu</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col text-center">No</th>
+                                        <th scope="col text-center">Nama</th>
+                                        <th scope="col text-center">Warna</th>
+                                        <th scope="col text-center">Waktu</th>
+                                        <th scope="col text-center">Status</th>
+                                        <th scope="col text-center">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -107,7 +107,7 @@
         {{-- Close Card --}}
 
         {{-- Add Modal --}}
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     <!-- Modal content will be loaded here -->
@@ -116,7 +116,7 @@
         </div>
 
         <!-- Detail modal container -->
-        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     <!-- Modal content will be loaded here -->
@@ -125,7 +125,7 @@
         </div>
 
         {{-- Edit Modal --}}
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     <!-- Modal content will be loaded here -->
@@ -153,7 +153,7 @@
     $(document).ready(function () {
         var datatables = $('#data_assets').DataTable({
             ajax: {
-                url: '{{ route('pengadaanJson') }}',
+                url: '{{ route('statusJson') }}',
             },
             lengthMenu: [
                 [5, 10, 25, 50, -1],
@@ -164,75 +164,54 @@
                 { data: null, width: '5%', render: function (data, type, row, meta) {
                     return meta.row + 1;
                 }},
-                { 
-                    data: 'kode_aset', 
-                    width: '10%', 
+                {
+                    data: 'nama_status',
+                    width: '20%', //25
+                    className: 'text-center',
                     render: function (data, type, row) {
                         return '<div class="text-light">' + data + '</div>';
                     }
                 },
-                {
-                    data: null,
-                    width: '10%',
+                { 
+                    data: 'color',
+                    width: '5%', //30
+                    className: 'text-center',
                     render: function (data, type, row) {
-                        var nama_aset = row.nama_aset || '';
-                        var tipe_aset = row.tipe_aset || '';
-                        var jumlah = row.jumlah || '';
-                        var harga = row.harga || '';
-                        var masa_berlaku = row.masa_berlaku || '';
-
-                        var nama_asetReturn = '<div class="text-light">Nama: ' + nama_aset + '</div>';
-                        var tipe_asetReturn = '<div class="text-light">Tipe: ' + tipe_aset + '</div>';
-                        var jumlahReturn = '<div class="text-light">Jumlah: ' + jumlah + '</div>';
-                        var hargaReturn = '<div class="text-light">Harga: ' + harga + '</div>';
-                        var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
-                        
-                        var viewReturn = nama_asetReturn + tipe_asetReturn + jumlahReturn + hargaReturn + masa_berlakuReturn;
-
-                        return viewReturn;
+                        return '<span class="badge rounded-pill border text-bg-' + data + '">' + data + '</span>';
                     }
                 },
                 { 
                     data: null,
-                    width: '10%',
+                    width: '20%', //50
                     render: function (data, type, row) {
-                        var masa_berlaku = row.masa_berlaku ? formatDate(row.masa_berlaku) : '';
                         var created_at = row.created_at ? formatDate(row.created_at) : '';
                         var updated_at = row.updated_at ? formatDate(row.updated_at) : '';
 
-                        var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
                         var created_atReturn = '<div class="text-light">Aset dibuat pada: ' + created_at + '</div>';
                         var updated_atReturn = '<div class="text-light">Terakhir di update pada: ' + updated_at + '</div>';
                         
-                        var viewReturn = masa_berlakuReturn + created_atReturn + updated_atReturn;
+                        var viewReturn = created_atReturn + updated_atReturn;
 
                         return viewReturn;
                     }
                 },
-                { 
+                {
                     data: 'status',
-                    width: '10%',
+                    width: '5%', //55
                     className: 'text-center',
                     render: function (data, type, row) {
-                        var badgeClass;
-                        if (data === '1') {
-                            badgeClass = 'text-bg-success';
-                        } else if (data === '2') {
-                            badgeClass = 'text-bg-info';
-                        } else if (data === '3') {
-                            badgeClass = 'text-bg-warning';
-                        } else if (data === '4') {
-                            badgeClass = 'text-bg-danger';
+                        if (data == 1) {
+                            return '<span class="badge rounded-pill border text-bg-success">Active</span>';
                         } else {
-                            badgeClass = 'text-bg-secondary';
+                            return '<span class="badge rounded-pill border text-bg-danger">Off</span>';
                         }
 
-                        return '<span class="badge rounded-pill ' + badgeClass + '">Status ' + data + '</span>';
                     }
                 },
                 {
                     data: null,
-                    width: '10%',
+                    width: '15%',
+                    className: 'text-center',
                     render: function (data, type, row) {
                         var id_aset = row.id || '';
 
@@ -271,7 +250,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/pengadaan/create', // Assuming this is the route for loading the create form
+                url: '/status/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal

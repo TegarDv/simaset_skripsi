@@ -37,17 +37,17 @@
             <div class="col-lg">
                 <label class="font-weight-bold">Status aset</label>
                 <select class="form-select" name="status" required>
-                    <option value="1" {{ $data['status'] == '1' ? 'selected' : '' }}>1</option>
-                    <option value="2" {{ $data['status'] == '2' ? 'selected' : '' }}>2</option>
-                    <option value="3" {{ $data['status'] == '3' ? 'selected' : '' }}>3</option>
+                    @foreach ($status as $item)
+                        <option value="{{ $item->id }}" {{ $data['status'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
+                    @endforeach
                 </select>
-            </div>
+            </div>            
             <div class="col-lg">
                 <label class="font-weight-bold">Kondisi Aset</label>
                 <select class="form-select" name="kondisi_aset" required>
-                    <option value="1" {{ $data['kondisi_aset'] == '1' ? 'selected' : '' }}>1</option>
-                    <option value="2" {{ $data['kondisi_aset'] == '2' ? 'selected' : '' }}>2</option>
-                    <option value="3" {{ $data['kondisi_aset'] == '3' ? 'selected' : '' }}>3</option>
+                    @foreach ($status as $item)
+                        <option value="{{ $item->id }}" {{ $data['kondisi_aset'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col">
@@ -77,28 +77,24 @@
 </form>
 <script>
     function submitForm() {
-        console.log('Submitting form data:', $('#updateForm').serialize());
-        // Submit the form using AJAX
         $.ajax({
             url: $('#updateForm').attr('action'),
             type: 'POST',
             data: $('#updateForm').serialize(),
             success: function(response) {
-                // Close the modal upon success
                 $('#editModal').modal('hide');
-                // Show a success toast
                 showToast(response.message, 'success');
 
-                // Reload Animation
                 showLoader();
                 reloadDatatable();
                 hideLoader();
             },
-            error: function(error) {
-                // Handle errors if needed
-                console.log(error.responseJSON.message);
-                // Show a failure toast
-                showToast(error.responseJSON.message, 'danger');
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: xhr.responseJSON.message
+                });
             }
         });
     }
