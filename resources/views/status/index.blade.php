@@ -1,5 +1,5 @@
 @extends('layouts')
-@section('title', 'SIMASET - Pengadaan')
+@section('title', 'SIMASET - Data Status')
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/DataTables/DataTables-1.13.6/css/dataTables.bootstrap5.min.css') }}" />
@@ -275,7 +275,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/pengadaan/' + appId,
+                url: '/status/' + appId,
                 type: 'GET',
                 success: function (response) {
                     $('#detailModal .modal-content').html(response);
@@ -293,7 +293,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/pengadaan/' + appId + '/edit',
+                url: '/status/' + appId + '/edit',
                 type: 'GET',
                 success: function (response) {
                     $('#editModal .modal-content').html(response);
@@ -320,13 +320,17 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/pengadaan/' + appId,
+                        url: '/status/' + appId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken
                         },
                         success: function (response) {
-                            showToast(response.message, 'success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: response.message
+                            });
                         },
                         error: function (xhr, status, error) {
                             showToast('An error occurred while deleting the asset.', 'error');

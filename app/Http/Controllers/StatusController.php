@@ -71,7 +71,22 @@ class StatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validateData($request);
+
+        $data = DataStatus::findOrFail($id);
+
+        $data->update([
+            'nama_status'          => $request->nama_status,
+            'status'               => $request->status,
+            'color'                => $request->color,
+            'updated_at'           => now(),
+        ]);
+
+        return response()->json([
+            'error' => false,
+            'toast' => 'success',
+            'message' => 'Data Berhasil Diubah'
+        ]);
     }
 
     /**
@@ -81,7 +96,10 @@ class StatusController extends Controller
     {
         try {
             $data = DataStatus::findOrFail($id);
-            $data->delete();
+            $data->update([
+                'status'               => '0',
+                'updated_at'           => now(),
+            ]);
             
             return response()->json([
                 'error' => false,
