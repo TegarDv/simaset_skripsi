@@ -21,11 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/pengadaan', PengadaanController::class);
-Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanJson'])->name('pengadaanJson');
+Route::resource('/pengadaan', PengadaanController::class)->middleware('auth');
+Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanJson'])->name('pengadaanJson')->middleware('auth');
 
-Route::resource('/status', StatusController::class);
-Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson');
+Route::resource('/status', StatusController::class)->middleware('auth');
+Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

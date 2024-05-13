@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DataStatus;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class StatusController extends Controller
 {
@@ -14,8 +17,9 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $data_status = DataStatus::all();
-        return view('status.index', ['data_status' => $data_status]);
+        $this->authorize('isSuperAdmin');
+
+        return view('status.index');
     }
 
     /**
