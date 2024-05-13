@@ -54,7 +54,7 @@
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-people-fill"></i> Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-exclamation-circle-fill"></i> Status</a>
+                    <a class="nav-link {{ request()->is('/status') ? 'active' : '' }}" href="/status"><i class="bi bi-exclamation-circle-fill"></i> Status</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-journal-text"></i> Log</a>
