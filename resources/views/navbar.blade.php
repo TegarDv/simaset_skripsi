@@ -32,38 +32,54 @@
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('') }}" alt="" width="120">
+                <img src="{{ asset('assets/img/polinema_logo.png') }}" alt="" width="70">
             </a>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <ul class="navbar-nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/pengadaan') ? 'active' : '' }}" href="/pengadaan"><i class="bi bi-speedometer"></i> Dashboard</a>
+                    <a class="nav-link" href="/pengadaan">
+                        <i class="bi bi-speedometer"></i> Dashboard
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-folder-fill"></i> Pengadaan</a>
+                    <a class="nav-link {{ Route::is('pengadaan.index') ? 'active' : '' }}" href="/pengadaan">
+                        <i class="bi bi-folder-fill"></i> Pengadaan
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-tools"></i> Maintenance</a>
+                    <a class="nav-link" href="/">
+                        <i class="bi bi-tools"></i> Maintenance
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-folder"></i> Peminjaman</a>
+                    <a class="nav-link" href="/">
+                        <i class="bi bi-folder"></i> Peminjaman
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="fa-solid fa-arrows-to-eye"></i> Tracking</a>
+                    <a class="nav-link" href="/">
+                        <i class="fa-solid fa-arrows-to-eye"></i> Tracking
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-people-fill"></i> Users</a>
+                    <a class="nav-link" href="/">
+                        <i class="bi bi-people-fill"></i> Users
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/status') ? 'active' : '' }}" href="/status"><i class="bi bi-exclamation-circle-fill"></i> Status</a>
+                    <a class="nav-link {{ Route::is('status.index') ? 'active' : '' }}" href="/status">
+                        <i class="bi bi-exclamation-circle-fill"></i> Status
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/"><i class="bi bi-journal-text"></i> Log</a>
+                    <a class="nav-link" href="/">
+                        <i class="bi bi-journal-text"></i> Log
+                    </a>
                 </li>
             </ul>
-        </div>
+        </div>        
         </div>
     </div>
 </nav>

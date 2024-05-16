@@ -19,14 +19,14 @@
         <div style="margin-top: 200px;"></div>
         <div class="row m-5">
             <div class="col-lg-6 d-none d-lg-block d-flex justify-content-center align-items-center mt-5">
-                <img src="https://spmb.polinema.ac.id/devel/asset/images/polinema_logo.png" class="object-fit-contain rounded" alt="Logo" style="min-height: 20rem; min-width: 20rem; max-height: 20rem; max-width: 20rem;">
+                <img src="{{ asset('assets/img/polinema_logo.png') }}" class="object-fit-contain rounded" alt="Logo" style="min-height: 20rem; min-width: 20rem; max-height: 20rem; max-width: 20rem;">
             </div>
             <div class="col-lg-6 justify-content-center align-items-center">
                 <h3>Selamat Datang</h3>
                 <h5>Silahkan Login terlebih dahulu</h5>
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login') }}" class="mt-1">
                     @csrf
-                    
+
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
                         <input type="email" class="form-control" placeholder="name@example.com" name="email" required>
