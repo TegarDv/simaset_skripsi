@@ -16,7 +16,6 @@ class Assets extends Model
     protected $table = "assets";
 
     protected $fillable = [
-        'id_user',
         'tipe_aset',
         'kode_aset',
         'nama_aset',
@@ -24,16 +23,21 @@ class Assets extends Model
         'harga',
         'spesifikasi',
         'keterangan',
-        'status',
-        'kondisi_aset',
+        'stok_awal',
+        'stok_sekarang',
         'masa_berlaku',
+        'tanggal_penerimaan',
+        'status_aset',
+        'kondisi_aset',
+        'lokasi_aset',
+        'id_user',
         'created_at',
         'updated_at',
     ];
 
     public function dataStatus(): BelongsTo
     {
-        return $this->belongsTo(DataStatus::class, 'status')->where('status', '1');
+        return $this->belongsTo(DataStatus::class, 'status_aset')->where('status', '1');
     }
 
     public function getStatusNamaAttribute(): string
