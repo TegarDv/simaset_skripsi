@@ -16,8 +16,8 @@ class LogSeeder extends Seeder
     public function run(): void
     {
         for ($i = 0; $i < 10; $i++) {
-            DB::table('log')->insert([
-                'id_user' => '1',
+            DB::table('log_activity')->insert([
+                'id_user' => 1,
                 'action' => 'tambah aset',
                 'detail' => 'Ini detail ke ' . ($i + 1),
                 'status' => '1',

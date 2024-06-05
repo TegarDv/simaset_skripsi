@@ -20,10 +20,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            AssetsSeeder::class,
+            AssetLocationSeeder::class,
             DataStatusSeeder::class,
-            LogSeeder::class,
+            UserRoleSeeder::class,
             UserSeeder::class,
+            AssetsSeeder::class,
+            LogSeeder::class,
         ]);
     }
 }
