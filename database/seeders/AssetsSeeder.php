@@ -20,7 +20,6 @@ class AssetsSeeder extends Seeder
             $kodeAset = 'DG-KWT9-' . $formattedCounter;
 
             DB::table('assets')->insert([
-                'id_user' => '1',
                 'tipe_aset' => 'digital',
                 'kode_aset' => $kodeAset,
                 'nama_aset' => 'Aset ' . ($i + 1),
@@ -28,9 +27,14 @@ class AssetsSeeder extends Seeder
                 'harga' => 2570000,
                 'spesifikasi' => 'ini spesifikasi',
                 'keterangan' => 'ini keterangan',
-                'status' => '1',
-                'kondisi_aset' => '1',
+                'stok_awal' => 10,
+                'stok_sekarang' => 10,
                 'masa_berlaku' => now(),
+                'tanggal_penerimaan' => now(),
+                'status_aset' => '1',
+                'kondisi_aset' => '1',
+                'lokasi_aset ' => '1',
+                'id_user' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

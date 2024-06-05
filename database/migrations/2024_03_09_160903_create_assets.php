@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
+            // $table->unsignedInteger('id_user');
             $table->string('tipe_aset');
             $table->string('kode_aset')->unique();
             $table->string('nama_aset');
@@ -21,9 +21,13 @@ return new class extends Migration
             $table->bigInteger('harga');
             $table->text('spesifikasi');
             $table->text('keterangan');
-            $table->integer('status');
-            $table->integer('kondisi_aset');
+            // $table->unsignedInteger('status_aset');
+            // $table->unsignedInteger('kondisi_aset');
+            $table->integer('stok_awal');
+            $table->integer('stok_sekarang');
+            // $table->unsignedInteger('lokasi_aset');
             $table->date('masa_berlaku');
+            $table->date('tanggal_penerimaan');
             $table->timestamps();
         });
     }
