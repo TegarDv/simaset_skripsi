@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssetLocation;
 use App\Models\Assets;
 use App\Models\DataStatus;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -26,7 +28,13 @@ class PengadaanController extends Controller
     public function create()
     {
         $status = DataStatus::all();
-        return view('pengadaan.create', ['status' => $status]);
+        $lokasi = AssetLocation::all();
+        $user = User::all();
+        return view('pengadaan.create', [
+            'status' => $status,
+            'lokasi' => $lokasi,
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -51,23 +59,25 @@ class PengadaanController extends Controller
             $randomChars .= $characters[rand(0, strlen($characters) - 1)];
         }
         $datePart = now()->format('ymd');
-        $tipePart = Str::upper(Str::substr($request->nama_aset, 0, 2));
-        $lastAsset = Assets::latest()->first();
         $numberPart = str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
         $kodeAset = "$typePart-$randomChars$datePart-$numberPart";
 
         Assets::create([
-            'id_user'              => '1',
-            'kode_aset'            => $kodeAset,
             'tipe_aset'            => $request->tipe_aset,
+            'kode_aset'            => $kodeAset,
             'nama_aset'            => $request->nama_aset,
             'jumlah'               => $request->jumlah,
             'harga'                => $request->harga,
             'spesifikasi'          => $request->spesifikasi,
             'keterangan'           => $request->keterangan,
-            'status'               => $request->status,
-            'kondisi_aset'         => $request->kondisi_aset,
+            'stok_awal'            => $request->stok_awal,
+            'stok_sekarang'        => $request->stok_awal,
             'masa_berlaku'         => $request->masa_berlaku,
+            'tanggal_penerimaan'   => $request->tanggal_penerimaan,
+            'status_aset'          => $request->status_aset,
+            'kondisi_aset'         => $request->kondisi_aset,
+            'lokasi_aset'          => $request->lokasi_aset,
+            'pemilik_aset'         => $request->pemilik_aset,
             'created_at'           => now(),
             'updated_at'           => now(),
         ]);
@@ -75,7 +85,6 @@ class PengadaanController extends Controller
         // return back()->with('success', 'Data Berhasil Disimpan!');
         return response()->json([
             'error' => false,
-            'toast' => 'success',
             'message' => 'Data Berhasil Ditambahkan'
         ]);
     }
@@ -156,21 +165,26 @@ class PengadaanController extends Controller
     private function validateData(Request $request)
     {
         $this->validate($request, [
-            'nama_aset'     => 'required',
-            'tipe_aset'     => 'required',
-            'jumlah'        => 'required|numeric',
-            'harga'         => 'required|numeric',
-            'status'        => 'required|numeric',
-            'kondisi_aset'  => 'required',
-            'masa_berlaku'  => 'required|date',
-            'spesifikasi'   => 'required',
-            'keterangan'    => 'required',
+            'tipe_aset'             => 'required',
+            'nama_aset'             => 'required',
+            'jumlah'                => 'required|numeric',
+            'harga'                 => 'required|numeric',
+            'spesifikasi'           => 'required',
+            'keterangan'            => 'required',
+            'stok_awal'             => 'required',
+            'stok_sekarang'         => 'nullable',
+            'masa_berlaku'          => 'required|date',
+            'tanggal_penerimaan'    => 'required|date',
+            'status_aset'           => 'required|numeric',
+            'kondisi_aset'          => 'required',
+            'lokasi_aset'           => 'required',
+            'pemilik_aset'          => 'required',
         ]);
     }
 
     public function pengadaanJson()
     {
-        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'jumlah', 'harga', 'spesifikasi', 'keterangan', 'status', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')
+        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'jumlah', 'harga', 'spesifikasi', 'keterangan', 'status_aset', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')
                         ->get()
                         ->map(function ($asset) {
                             return [
@@ -182,7 +196,7 @@ class PengadaanController extends Controller
                                 'harga' => $asset->harga,
                                 'spesifikasi' => $asset->spesifikasi,
                                 'keterangan' => $asset->keterangan,
-                                'status' => $asset->status,
+                                'status' => $asset->status_aset,
                                 'status_nama' => $asset->status_nama, // Accessing getStatusNamaAttribute
                                 'status_color' => $asset->status_color, // Accessing getStatusColorAttribute
                                 'kondisi_aset' => $asset->kondisi_aset,

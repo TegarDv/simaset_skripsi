@@ -36,7 +36,7 @@
             </div>
             <div class="col-lg">
                 <label class="font-weight-bold">Status aset</label>
-                <select class="form-select" name="status" required>
+                <select class="form-select" name="status_aset" required>
                     @foreach ($status as $item)
                         <option value="{{ $item->id }}" {{ $data['status'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
                     @endforeach

@@ -34,7 +34,7 @@ class AssetsSeeder extends Seeder
                 'status_aset' => 1,
                 'kondisi_aset' => 1,
                 'lokasi_aset' => 1,
-                'id_user' => 1,
+                'pemilik_aset' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

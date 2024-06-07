@@ -30,7 +30,7 @@ class Assets extends Model
         'status_aset',
         'kondisi_aset',
         'lokasi_aset',
-        'id_user',
+        'pemilik_aset',
         'created_at',
         'updated_at',
     ];

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->unsignedBigInteger('status_aset')->after('tanggal_penerimaan');
             $table->unsignedBigInteger('kondisi_aset')->after('status_aset');
             $table->unsignedBigInteger('lokasi_aset')->after('kondisi_aset');
-            $table->unsignedBigInteger('id_user')->after('lokasi_aset');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->unsignedBigInteger('pemilik_aset')->after('lokasi_aset');
+            $table->foreign('pemilik_aset')->references('id')->on('users');
             $table->foreign('status_aset')->references('id')->on('data_status');
             $table->foreign('kondisi_aset')->references('id')->on('data_status');
             $table->foreign('lokasi_aset')->references('id')->on('asset_location');
