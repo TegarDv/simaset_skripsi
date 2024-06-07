@@ -66,7 +66,6 @@ class PengadaanController extends Controller
             'tipe_aset'            => $request->tipe_aset,
             'kode_aset'            => $kodeAset,
             'nama_aset'            => $request->nama_aset,
-            'jumlah'               => $request->jumlah,
             'harga'                => $request->harga,
             'spesifikasi'          => $request->spesifikasi,
             'keterangan'           => $request->keterangan,
@@ -122,7 +121,6 @@ class PengadaanController extends Controller
             // 'kode_aset'            => $request->kode_aset,
             'nama_aset'            => $request->nama_aset,
             'tipe_aset'            => $request->tipe_aset,
-            'jumlah'               => $request->jumlah,
             'harga'                => $request->harga,
             'status'               => $request->status,
             'kondisi_aset'         => $request->kondisi_aset,
@@ -167,7 +165,6 @@ class PengadaanController extends Controller
         $this->validate($request, [
             'tipe_aset'             => 'required',
             'nama_aset'             => 'required',
-            'jumlah'                => 'required|numeric',
             'harga'                 => 'required|numeric',
             'spesifikasi'           => 'required',
             'keterangan'            => 'required',
@@ -184,7 +181,7 @@ class PengadaanController extends Controller
 
     public function pengadaanJson()
     {
-        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'jumlah', 'harga', 'spesifikasi', 'keterangan', 'status_aset', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')
+        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'stok_sekarang', 'harga', 'spesifikasi', 'keterangan', 'status_aset', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')
                         ->get()
                         ->map(function ($asset) {
                             return [
@@ -192,7 +189,7 @@ class PengadaanController extends Controller
                                 'kode_aset' => $asset->kode_aset,
                                 'tipe_aset' => $asset->tipe_aset,
                                 'nama_aset' => $asset->nama_aset,
-                                'jumlah' => $asset->jumlah,
+                                'stok_sekarang' => $asset->stok_sekarang,
                                 'harga' => $asset->harga,
                                 'spesifikasi' => $asset->spesifikasi,
                                 'keterangan' => $asset->keterangan,

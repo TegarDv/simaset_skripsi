@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('tipe_aset');
             $table->string('kode_aset')->unique();
             $table->string('nama_aset');
-            $table->integer('jumlah');
             $table->bigInteger('harga');
             $table->text('spesifikasi');
             $table->text('keterangan');

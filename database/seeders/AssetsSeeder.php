@@ -23,7 +23,6 @@ class AssetsSeeder extends Seeder
                 'tipe_aset' => 'digital',
                 'kode_aset' => $kodeAset,
                 'nama_aset' => 'Aset ' . ($i + 1),
-                'jumlah' => '10',
                 'harga' => 2570000,
                 'spesifikasi' => 'ini spesifikasi',
                 'keterangan' => 'ini keterangan',

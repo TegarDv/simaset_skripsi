@@ -177,17 +177,17 @@
                     render: function (data, type, row) {
                         var nama_aset = row.nama_aset || '';
                         var tipe_aset = row.tipe_aset || '';
-                        var jumlah = row.jumlah || '';
+                        var stok_sekarang = row.stok_sekarang || '';
                         var harga = row.harga || '';
                         var masa_berlaku = row.masa_berlaku || '';
 
                         var nama_asetReturn = '<div class="text-light">Nama: ' + nama_aset + '</div>';
                         var tipe_asetReturn = '<div class="text-light">Tipe: ' + tipe_aset + '</div>';
-                        var jumlahReturn = '<div class="text-light">Jumlah: ' + jumlah + '</div>';
+                        var stok_sekarangReturn = '<div class="text-light">Sisa stok: ' + stok_sekarang + '</div>';
                         var hargaReturn = '<div class="text-light">Harga: ' + harga + '</div>';
                         var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
                         
-                        var viewReturn = nama_asetReturn + tipe_asetReturn + jumlahReturn + hargaReturn + masa_berlakuReturn;
+                        var viewReturn = nama_asetReturn + tipe_asetReturn + stok_sekarangReturn + hargaReturn + masa_berlakuReturn;
 
                         return viewReturn;
                     }

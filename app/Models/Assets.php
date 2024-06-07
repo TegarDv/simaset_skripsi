@@ -19,7 +19,6 @@ class Assets extends Model
         'tipe_aset',
         'kode_aset',
         'nama_aset',
-        'jumlah',
         'harga',
         'spesifikasi',
         'keterangan',
