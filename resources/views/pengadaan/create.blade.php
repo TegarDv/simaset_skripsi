@@ -20,10 +20,6 @@
                     <option value="layanan">Layanan</option>
                 </select>
             </div>
-            <div class="col">
-                <label class="font-weight-bold">Jumlah Aset</label>
-                <input type="number" class="form-control" name="jumlah" required>
-            </div>
         </div>
         <div class="row g-2">
             <div class="col">

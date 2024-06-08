@@ -39,6 +39,16 @@ class Assets extends Model
         return $this->belongsTo(DataStatus::class, 'status_aset')->where('status', '1');
     }
 
+    public function dataKondisi(): BelongsTo
+    {
+        return $this->belongsTo(DataStatus::class, 'kondisi_aset')->where('status', '1');
+    }
+
+    public function dataLokasi(): BelongsTo
+    {
+        return $this->belongsTo(AssetLocation::class, 'lokasi_aset');
+    }
+
     public function getStatusNamaAttribute(): string
     {
         return $this->dataStatus->nama_status ?? '';

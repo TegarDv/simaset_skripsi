@@ -181,28 +181,13 @@ class PengadaanController extends Controller
 
     public function pengadaanJson()
     {
-        $assets = Assets::select('id', 'kode_aset', 'tipe_aset', 'nama_aset', 'stok_sekarang', 'harga', 'spesifikasi', 'keterangan', 'status_aset', 'kondisi_aset', 'masa_berlaku', 'created_at', 'updated_at')
-                        ->get()
-                        ->map(function ($asset) {
-                            return [
-                                'id' => $asset->id,
-                                'kode_aset' => $asset->kode_aset,
-                                'tipe_aset' => $asset->tipe_aset,
-                                'nama_aset' => $asset->nama_aset,
-                                'stok_sekarang' => $asset->stok_sekarang,
-                                'harga' => $asset->harga,
-                                'spesifikasi' => $asset->spesifikasi,
-                                'keterangan' => $asset->keterangan,
-                                'status' => $asset->status_aset,
-                                'status_nama' => $asset->status_nama, // Accessing getStatusNamaAttribute
-                                'status_color' => $asset->status_color, // Accessing getStatusColorAttribute
-                                'kondisi_aset' => $asset->kondisi_aset,
-                                'masa_berlaku' => $asset->masa_berlaku,
-                                'created_at' => $asset->created_at,
-                                'updated_at' => $asset->updated_at,
-                            ];
-                        });
+        $assets = Assets::with('dataStatus', 'dataKondisi', 'dataLokasi')->get();
 
+        $assets->each(function ($asset) {
+            $asset->append('status_nama', 'status_color');
+        });
+
+        // No need for the map function anymore
         return response()->json([
             'data' => $assets,
         ]);
