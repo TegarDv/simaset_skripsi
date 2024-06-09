@@ -187,9 +187,34 @@ class PengadaanController extends Controller
             $asset->append('status_nama', 'status_color');
         });
 
-        // No need for the map function anymore
         return response()->json([
             'data' => $assets,
+        ]);
+    }
+
+    public function pengadaanDataTableJson()
+    {
+        $assets = Assets::with('dataStatus', 'dataKondisi', 'dataLokasi')->get();
+
+        $assets->each(function ($asset) {
+            $asset->append('status_nama', 'status_color');
+        });
+
+        $data = [];
+        foreach ($assets as $key => $asset) {
+            $data[] = [
+                'index' => $key + 1,
+                'id' => $asset->id,
+                'column2_aset' => '<div class="text-light">' . $asset->kode_aset . '</div>',
+                'column3_aset' => '<div class="text-light">Nama: ' . $asset->nama_aset . '<br>Tipe: ' . $asset->tipe_aset . '<br>Sisa stok: ' . $asset->stok_sekarang . '<br>Harga: ' . $asset->harga . '<br>Tipe: ' . $asset->tipe_aset .  '</div>',
+                'column4_aset' => '<div class="text-light">Masa berlaku: ' . $asset->masa_berlaku . '<br>Dibuat pada: ' . $asset->created_at . '<br>Terakhir di update: ' . $asset->updated_at . '</div>',
+                'column5_aset' => '<span class="badge rounded-pill border text-bg-' . $asset->status_color . '">' . $asset->status_nama . '</span>',
+                'column6_aset' => '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>',
+            ];
+        }
+
+        return response()->json([
+            'data' => $data,
         ]);
     }
 }

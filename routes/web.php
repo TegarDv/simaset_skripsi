@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/pengadaan', PengadaanController::class)->middleware('auth');
-Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanJson'])->name('pengadaanJson')->middleware('auth');
+Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson')->middleware('auth');
 
 Route::resource('/status', StatusController::class)->middleware('auth');
 Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson')->middleware('auth');

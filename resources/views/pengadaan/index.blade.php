@@ -87,18 +87,7 @@
                         </div>
         
                         <div class="table-responsive">
-                            <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Kode Aset</th>
-                                        <th scope="col">Data Aset</th>
-                                        <th scope="col">Waktu</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
                         </div>
                     </div>
                 </div>
@@ -161,82 +150,12 @@
             ],
             scrollY: false,
             columns: [
-                { data: null, width: '5%', render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }},
-                { 
-                    data: 'kode_aset', 
-                    width: '10%', 
-                    render: function (data, type, row) {
-                        return '<div class="text-light">' + data + '</div>';
-                    }
-                },
-                {
-                    data: null,
-                    width: '10%',
-                    render: function (data, type, row) {
-                        var nama_aset = row.nama_aset || '';
-                        var tipe_aset = row.tipe_aset || '';
-                        var stok_sekarang = row.stok_sekarang || '';
-                        var harga = row.harga || '';
-                        var masa_berlaku = row.masa_berlaku || '';
-
-                        var nama_asetReturn = '<div class="text-light">Nama: ' + nama_aset + '</div>';
-                        var tipe_asetReturn = '<div class="text-light">Tipe: ' + tipe_aset + '</div>';
-                        var stok_sekarangReturn = '<div class="text-light">Sisa stok: ' + stok_sekarang + '</div>';
-                        var hargaReturn = '<div class="text-light">Harga: ' + harga + '</div>';
-                        var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
-                        
-                        var viewReturn = nama_asetReturn + tipe_asetReturn + stok_sekarangReturn + hargaReturn + masa_berlakuReturn;
-
-                        return viewReturn;
-                    }
-                },
-                { 
-                    data: null,
-                    width: '10%',
-                    render: function (data, type, row) {
-                        var masa_berlaku = row.masa_berlaku ? formatDate(row.masa_berlaku) : '';
-                        var created_at = row.created_at ? formatDate(row.created_at) : '';
-                        var updated_at = row.updated_at ? formatDate(row.updated_at) : '';
-
-                        var masa_berlakuReturn = '<div class="text-light">Masa berlaku: ' + masa_berlaku + '</div>';
-                        var created_atReturn = '<div class="text-light">Aset dibuat pada: ' + created_at + '</div>';
-                        var updated_atReturn = '<div class="text-light">Terakhir di update pada: ' + updated_at + '</div>';
-                        
-                        var viewReturn = masa_berlakuReturn + created_atReturn + updated_atReturn;
-
-                        return viewReturn;
-                    }
-                },
-                { 
-                    data: null,
-                    width: '10%',
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        var status_color = row.status_color || 'secondary';
-                        var status = row.status_nama || '';
-
-                        return '<span class="badge rounded-pill border text-bg-' + status_color + '">' + status + '</span>';
-                    }
-                },
-                {
-                    data: null,
-                    width: '10%',
-                    render: function (data, type, row) {
-                        var id_aset = row.id || '';
-
-                        var id_asetReturn = '<div class="text-light">ID: ' + id_aset + '</div>';
-
-                        var editButton = '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' + id_aset + '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button>';
-                        var showButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' + id_aset + '" title="View"><i class="bi bi-eye text-light"></i></button>';
-                        var deleteButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' + id_aset + '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>';
-                        
-                        var viewReturn = editButton + showButton + deleteButton;
-
-                        return viewReturn;
-                    }
-                }
+                { data: 'index', width: '5%', name: 'index', title: 'No' },
+                { data: 'column2_aset', width: '10%', name: 'column2_aset', title: 'Kode Aset' },
+                { data: 'column3_aset', width: '10%', name: 'column3_aset', title: 'Data Aset' },
+                { data: 'column4_aset', width: '10%', name: 'column4_aset', title: 'Waktu' },
+                { data: 'column5_aset', width: '10%', className: 'text-center', name: 'column5_aset', title: 'Status' },
+                { data: 'column6_aset', width: '10%', className: 'text-center', name: 'column6_aset', title: 'Action' }
             ],
             // initComplete: function () {
             //     // Add event listener for the filter change
