@@ -8,7 +8,7 @@
     @method('PUT')
     <div class="modal-body">
         
-        <div class="row g-3">
+        <div class="row g-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Nama Aset</label>
                 <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" readonly>
@@ -21,12 +21,13 @@
                     <option value="layanan" {{ $data['tipe_aset'] == 'layanan' ? 'selected' : '' }}>layanan</option>
                 </select>
             </div>
-            <div class="col-lg">
-                <label class="font-weight-bold">Jumlah Aset</label>
-                <input type="number" class="form-control" name="jumlah" value="{{ $data['jumlah'] }}" required>
-            </div>
         </div>
-        <div class="row g-3">
+        <div class="row g-2">
+            <div class="col-lg">
+                <label class="font-weight-bold">Stok Aset</label>
+                <input type="hidden" class="form-control" name="stok_awal" value="{{ $data['stok_awal'] }}">
+                <input type="number" class="form-control" name="stok_sekarang" value="{{ $data['stok_sekarang'] }}" required>
+            </div>
             <div class="col-lg">
                 <label class="font-weight-bold">Harga Aset</label>
                 <div class="input-group">
@@ -34,11 +35,21 @@
                     <input type="number" class="form-control" name="harga" value="{{ $data['harga'] }}" required>
                 </div>
             </div>
+            <div class="col">
+                <label class="font-weight-bold">Masa Berlaku</label>
+                <input type="date" class="form-control" name="masa_berlaku" value="{{ $data['masa_berlaku'] }}" required>
+            </div>
+            <div class="col">
+                <label class="font-weight-bold">Tanggal Penerimaan</label>
+                <input type="date" class="form-control" name="tanggal_penerimaan" value="{{ $data['tanggal_penerimaan'] }}" required>
+            </div>
+        </div>
+        <div class="row g-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Status aset</label>
                 <select class="form-select" name="status_aset" required>
                     @foreach ($status as $item)
-                        <option value="{{ $item->id }}" {{ $data['status'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
+                        <option value="{{ $item->id }}" {{ $data['status_aset'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
                     @endforeach
                 </select>
             </div>            
@@ -50,19 +61,31 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col">
-                <label class="font-weight-bold">Masa Berlaku</label>
-                <input type="date" class="form-control" name="masa_berlaku" value="{{ $data['masa_berlaku'] }}" required>
+            <div class="col-lg">
+                <label class="font-weight-bold">Lokasi Aset</label>
+                <select class="form-select" name="lokasi_aset" required>
+                    @foreach ($lokasi as $item)
+                        <option value="{{ $item->id }}" {{ $data['lokasi_aset'] == $item->id ? 'selected' : '' }}>{{ $item->location }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-lg">
+                <label class="font-weight-bold">Pemilik Aset</label>
+                <select class="form-select" name="pemilik_aset" required>
+                    @foreach ($pemilik as $item)
+                        <option value="{{ $item->id }}" {{ $data['pemilik_aset'] == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
-        <div class="row g-3">
+        <div class="row g-2">
             <div class="col-lg-6">
                 <label class="font-weight-bold">Spesifikasi</label>
-                <textarea class="form-control @error('spesifikasi') is-invalid @enderror" rows="3" name="spesifikasi" required>{{ $data['spesifikasi'] }}</textarea>
+                <textarea class="form-control" rows="3" name="spesifikasi" required>{{ $data['spesifikasi'] }}</textarea>
             </div>
             <div class="col">
                 <label class="font-weight-bold">Keterangan</label>
-                <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" name="keterangan" required>{{ $data['keterangan'] }}</textarea>
+                <textarea class="form-control" rows="3" name="keterangan" required>{{ $data['keterangan'] }}</textarea>
             </div>
         </div>
     </div>

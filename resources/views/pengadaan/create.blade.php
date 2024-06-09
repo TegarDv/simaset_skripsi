@@ -23,7 +23,7 @@
         </div>
         <div class="row g-2">
             <div class="col">
-                <label class="font-weight-bold">Stock Aset</label>
+                <label class="font-weight-bold">Stok Aset</label>
                 <input type="number" class="form-control" name="stok_awal" required>
             </div>
             <div class="col">

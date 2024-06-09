@@ -105,7 +105,9 @@ class PengadaanController extends Controller
     {
         $data = Assets::findOrFail($id);
         $status = DataStatus::all();
-        return view('pengadaan.edit', compact('data', 'status'));
+        $lokasi = AssetLocation::all();
+        $pemilik = User::all();
+        return view('pengadaan.edit', compact('data', 'status', 'lokasi', 'pemilik'));
     }
 
     /**
@@ -118,15 +120,18 @@ class PengadaanController extends Controller
         $aset = Assets::findOrFail($id);
 
         $aset->update([
-            // 'kode_aset'            => $request->kode_aset,
-            'nama_aset'            => $request->nama_aset,
             'tipe_aset'            => $request->tipe_aset,
+            'nama_aset'            => $request->nama_aset,
             'harga'                => $request->harga,
-            'status'               => $request->status,
-            'kondisi_aset'         => $request->kondisi_aset,
             'spesifikasi'          => $request->spesifikasi,
             'keterangan'           => $request->keterangan,
+            'stok_sekarang'        => $request->stok_sekarang,
             'masa_berlaku'         => $request->masa_berlaku,
+            'tanggal_penerimaan'   => $request->tanggal_penerimaan,
+            'status_aset'          => $request->status_aset,
+            'kondisi_aset'         => $request->kondisi_aset,
+            'lokasi_aset'          => $request->lokasi_aset,
+            'pemilik_aset'         => $request->pemilik_aset,
             'updated_at'           => now(),
         ]);
 
