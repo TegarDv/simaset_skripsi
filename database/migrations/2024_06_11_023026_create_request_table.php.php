@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mutasi_aset', function (Blueprint $table) {
+        Schema::create('permintaan_aset', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipe_mutasi', ['penambahan', 'penghapusan', 'pemindahan', 'peminjaman', 'perubahan']);
+            $table->string('tipe_aset');
+            $table->string('nama_aset');
+            $table->bigInteger('harga');
+            $table->text('spesifikasi');
+            $table->text('keterangan');
+            $table->integer('stok_permintaan');
+            $table->date('masa_berlaku');
             $table->timestamps();
         });
     }
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mutasi_aset');
+        Schema::dropIfExists('permintaan_aset');
     }
 };

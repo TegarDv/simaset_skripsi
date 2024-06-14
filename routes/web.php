@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AsetLocationController;
 use App\Http\Controllers\PengadaanController;
-use App\Http\Controllers\StatusController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -26,6 +28,9 @@ Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson
 
 Route::resource('/status', StatusController::class)->middleware('auth');
 Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson')->middleware('auth');
+
+Route::resource('/location', AsetLocationController::class)->middleware('auth');
+Route::get('locationJson', [AsetLocationController::class, 'lokasiDataTableJson'])->name('locationJson')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

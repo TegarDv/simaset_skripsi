@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mutasi_aset', function (Blueprint $table) {
+        Schema::table('transkasi_aset', function (Blueprint $table) {
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_asset');
             $table->foreign('id_user')->references('id')->on('users');

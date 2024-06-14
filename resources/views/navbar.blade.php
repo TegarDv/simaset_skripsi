@@ -70,7 +70,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('status.index') ? 'active' : '' }}" href="/status">
-                        <i class="bi bi-exclamation-circle-fill"></i> Status
+                        <i class="bi bi-exclamation-circle-fill"></i> Data Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('location.index') ? 'active' : '' }}" href="/location">
+                        <i class="bi bi-geo-alt"></i> Data Lokasi Aset
                     </a>
                 </li>
                 <li class="nav-item">
