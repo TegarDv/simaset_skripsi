@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role' => '1',
-            'status' => '1',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -32,7 +31,6 @@ class UserSeeder extends Seeder
                 'email' => Str::random(10).'@example.com',
                 'password' => Hash::make('password'),
                 'role' => '1',
-                'status' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
