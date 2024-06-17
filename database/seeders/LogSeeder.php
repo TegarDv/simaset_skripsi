@@ -20,7 +20,6 @@ class LogSeeder extends Seeder
                 'id_user' => 1,
                 'action' => 'tambah aset',
                 'detail' => 'Ini detail ke ' . ($i + 1),
-                'status' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

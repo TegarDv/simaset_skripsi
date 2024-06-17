@@ -12,25 +12,40 @@
         </div>
         <div class="mb-3">
             <label class="font-weight-bold">Warna Status</label>
-            <select class="form-select mb-2" name="color" required>
-                <option value="" disabled>Select Tipe Aset</option>
-                <option value="primary">primary</option>
-                <option value="secondary">secondary</option>
-                <option value="success">success</option>
-                <option value="warning">warning</option>
-                <option value="info">info</option>
-                <option value="light">light</option>
-                <option value="dark">dark</option>
-            </select>
-            
-            <span class="badge text-bg-primary border">Primary</span>
-            <span class="badge text-bg-secondary border">Secondary</span>
-            <span class="badge text-bg-success border">Success</span>
-            <span class="badge text-bg-danger border">Danger</span>
-            <span class="badge text-bg-warning border">Warning</span>
-            <span class="badge text-bg-info border">Info</span>
-            <span class="badge text-bg-light border">Light</span>
-            <span class="badge text-bg-dark border">Dark</span>
+            <div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorPrimary" value="primary" required>
+                    <label class="form-check-label badge text-bg-primary border" for="colorPrimary">Primary</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorSecondary" value="secondary" required>
+                    <label class="form-check-label badge text-bg-secondary border" for="colorSecondary">Secondary</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorSuccess" value="success" required>
+                    <label class="form-check-label badge text-bg-success border" for="colorSuccess">Success</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorDanger" value="danger" required>
+                    <label class="form-check-label badge text-bg-danger border" for="colorDanger">Danger</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorWarning" value="warning" required>
+                    <label class="form-check-label badge text-bg-warning border" for="colorWarning">Warning</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorInfo" value="info" required>
+                    <label class="form-check-label badge text-bg-info border" for="colorInfo">Info</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorLight" value="light" required>
+                    <label class="form-check-label badge text-bg-light border" for="colorLight">Light</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="color" id="colorDark" value="dark" required>
+                    <label class="form-check-label badge text-bg-dark border" for="colorDark">Dark</label>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <div class="text-end mt-3">

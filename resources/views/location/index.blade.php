@@ -178,7 +178,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/pengadaan/create', // Assuming this is the route for loading the create form
+                url: '/location/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal
@@ -203,7 +203,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/pengadaan/' + appId,
+                url: '/location/' + appId,
                 type: 'GET',
                 success: function (response) {
                     $('#detailModal .modal-content').html(response);
@@ -221,7 +221,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/pengadaan/' + appId + '/edit',
+                url: '/location/' + appId + '/edit',
                 type: 'GET',
                 success: function (response) {
                     $('#editModal .modal-content').html(response);
@@ -248,7 +248,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/pengadaan/' + appId,
+                        url: '/location/' + appId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken

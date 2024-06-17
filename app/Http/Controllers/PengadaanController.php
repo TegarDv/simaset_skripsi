@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssetLocation;
 use App\Models\Assets;
 use App\Models\DataStatus;
+use App\Models\LogUsers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,6 +43,7 @@ class PengadaanController extends Controller
      */
     public function store(Request $request)
     {
+        $user_login = auth()->user();
         $this->validateData($request);
         if ($request->tipe_aset == 'fisik') {
             $typePart = 'FS';
@@ -62,7 +64,7 @@ class PengadaanController extends Controller
         $numberPart = str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
         $kodeAset = "$typePart-$randomChars$datePart-$numberPart";
 
-        Assets::create([
+        $data = Assets::create([
             'tipe_aset'            => $request->tipe_aset,
             'kode_aset'            => $kodeAset,
             'nama_aset'            => $request->nama_aset,
@@ -79,6 +81,13 @@ class PengadaanController extends Controller
             'pemilik_aset'         => $request->pemilik_aset,
             'created_at'           => now(),
             'updated_at'           => now(),
+        ]);
+        LogUsers::create([
+            'id_user'               => $user_login->id,
+            'action'                => 'Tambah Aset',
+            'detail'                => $data,
+            'created_at'            => now(),
+            'updated_at'            => now(),
         ]);
 
         // return back()->with('success', 'Data Berhasil Disimpan!');
@@ -115,11 +124,13 @@ class PengadaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user_login = auth()->user();
         $this->validateData($request);
 
-        $aset = Assets::findOrFail($id);
+        $data = Assets::findOrFail($id);
+        $data_lama = $data->replicate();
 
-        $aset->update([
+        $data->update([
             'tipe_aset'            => $request->tipe_aset,
             'nama_aset'            => $request->nama_aset,
             'harga'                => $request->harga,
@@ -133,6 +144,15 @@ class PengadaanController extends Controller
             'lokasi_aset'          => $request->lokasi_aset,
             'pemilik_aset'         => $request->pemilik_aset,
             'updated_at'           => now(),
+        ]);
+        $data_baru = $data;
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Update Aset',
+            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return response()->json([

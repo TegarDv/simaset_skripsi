@@ -13,7 +13,7 @@ class LogUsers extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = "log";
+    protected $table = "log_activity";
 
     protected $fillable = [
         'id_user',

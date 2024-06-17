@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssetLocation;
+use App\Models\LogUsers;
 use Illuminate\Http\Request;
 
 class AsetLocationController extends Controller
@@ -30,7 +31,28 @@ class AsetLocationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_login = auth()->user();
+        $this->validateData($request);
+
+        $data = AssetLocation::create([
+            'location'            => $request->location,
+            'created_at'           => now(),
+            'updated_at'           => now(),
+        ]);
+
+        LogUsers::create([
+            'id_user'               => $user_login->id,
+            'action'                => 'Tambah Lokasi',
+            'detail'                => $data,
+            'created_at'            => now(),
+            'updated_at'            => now(),
+        ]);
+
+        // return back()->with('success', 'Data Berhasil Disimpan!');
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Ditambahkan'
+        ]);
     }
 
     /**
@@ -46,7 +68,8 @@ class AsetLocationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = AssetLocation::findOrFail($id);
+        return view('location.edit', compact('data'));
     }
 
     /**
@@ -54,7 +77,31 @@ class AsetLocationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user_login = auth()->user();
+        $this->validateData($request);
+
+        $data = AssetLocation::findOrFail($id);
+        $data_lama = $data->replicate();
+
+        $data->update([
+            'location'  => $request->location,
+            'updated_at' => now(),
+        ]);
+        $data_baru = $data;
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Update Lokasi',
+            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json([
+            'error'   => false,
+            'toast'   => 'success',
+            'message' => 'Data Berhasil Diubah'
+        ]);
     }
 
     /**
@@ -63,6 +110,13 @@ class AsetLocationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function validateData(Request $request)
+    {
+        $this->validate($request, [
+            'location'     => 'required',
+        ]);
     }
 
     public function lokasiDataTableJson()
