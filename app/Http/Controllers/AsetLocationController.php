@@ -99,7 +99,6 @@ class AsetLocationController extends Controller
 
         return response()->json([
             'error'   => false,
-            'toast'   => 'success',
             'message' => 'Data Berhasil Diubah'
         ]);
     }

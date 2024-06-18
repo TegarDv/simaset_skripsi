@@ -4,7 +4,9 @@ use App\Http\Controllers\AsetLocationController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -23,14 +25,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/pengadaan', PengadaanController::class)->middleware('auth');
-Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::resource('/pengadaan', PengadaanController::class);
+    Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson');
 
-Route::resource('/status', StatusController::class)->middleware('auth');
-Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson')->middleware('auth');
+    Route::resource('/status', StatusController::class);
+    Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson');
 
-Route::resource('/location', AsetLocationController::class)->middleware('auth');
-Route::get('locationJson', [AsetLocationController::class, 'lokasiDataTableJson'])->name('locationJson')->middleware('auth');
+    Route::resource('/location', AsetLocationController::class);
+    Route::get('locationJson', [AsetLocationController::class, 'lokasiDataTableJson'])->name('locationJson');
+
+    Route::resource('/users', UsersController::class);
+    Route::get('usersJson', [UsersController::class, 'usersDataTableJson'])->name('usersJson');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
