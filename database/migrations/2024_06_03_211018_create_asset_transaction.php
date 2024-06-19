@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('asset_id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('tipe_mutasi', ['peminjaman', 'pengembalian']);
+            $table->enum('tipe_transaksi', ['peminjaman', 'pengembalian']);
             $table->string('kode_transaksi');
             $table->integer('stok_sebelum');
-            $table->integer('stok_setelah');
+            $table->integer('stok_sesudah');
             $table->text('keterangan');
             $table->date('tanggal_transaksi');
             $table->timestamps();

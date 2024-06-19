@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AssetsSeeder::class,
             LogSeeder::class,
+            TransactionSeeder::class,
         ]);
     }
 }

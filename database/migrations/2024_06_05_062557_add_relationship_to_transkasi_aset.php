@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transkasi_aset', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_asset');
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_asset')->references('id')->on('assets');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('asset_id')->references('id')->on('assets');
         });
     }
 

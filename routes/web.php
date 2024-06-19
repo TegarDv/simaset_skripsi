@@ -4,8 +4,12 @@ use App\Http\Controllers\AsetLocationController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TrxInController;
+use App\Http\Controllers\TrxOutController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -37,6 +41,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/users', UsersController::class);
     Route::get('usersJson', [UsersController::class, 'usersDataTableJson'])->name('usersJson');
+
+    Route::resource('/transaction-in', TrxInController::class);
+    Route::get('trxInJson', [TrxInController::class, 'trxInDataTableJson'])->name('trxInJson');
+
+    Route::resource('/transaction-out', TrxOutController::class);
+    Route::get('trxOutJson', [TrxOutController::class, 'trxOutDataTableJson'])->name('trxOutJson');
 });
 
 Route::get('/dashboard', function () {
