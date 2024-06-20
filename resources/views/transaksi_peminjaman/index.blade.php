@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col">
                 <p>
-                    <h2 class="text-start">Transaksi - Aset Masuk</h2>
+                    <h2 class="text-start">Transaksi - Peminjaman Aset</h2>
                     <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, eaque.</h5>
                 </p>
             </div>
@@ -87,7 +87,7 @@
                         </div>
         
                         <div class="table-responsive">
-                            <table class="table table-bordered text-light" style="min-width: 100%;" id="data_users"></table>
+                            <table class="table table-bordered text-light" style="min-width: 100%;" id="data_trxs"></table>
                         </div>
                     </div>
                 </div>
@@ -140,9 +140,9 @@
     }
 
     $(document).ready(function () {
-        var datatables = $('#data_users').DataTable({
+        var datatables = $('#data_trxs').DataTable({
             ajax: {
-                url: '{{ route('usersJson') }}',
+                url: '{{ route('trxPinjamJson') }}',
             },
             lengthMenu: [
                 [5, 10, 25, 50, -1],
@@ -151,10 +151,11 @@
             scrollY: false,
             columns: [
                 { data: 'index', width: '5%', name: 'index', title: 'No' },
-                { data: 'column2_user', width: '10%', name: 'column2_user', title: 'Data User' },
-                { data: 'column3_user', width: '10%', name: 'column3_user', title: 'Role' },
-                { data: 'column4_user', width: '10%', name: 'column4_user', title: 'Waktu' },
-                { data: 'column5_user', width: '10%', className: 'text-center', name: 'column5_user', title: 'Action' }
+                { data: 'column2_trx', width: '10%', name: 'column2_trx', title: 'Tanggal Transaksi' },
+                { data: 'column3_trx', width: '10%', name: 'column3_trx', title: 'Kode Transaksi' },
+                { data: 'column4_trx', width: '10%', name: 'column4_trx', title: 'Kode Aset' },
+                { data: 'column5_trx', width: '10%', name: 'column4_trx', title: 'Jumlah Peminjaman' },
+                { data: 'column6_trx', width: '10%', className: 'text-center', name: 'column5_trx', title: 'Action' }
             ],
             // initComplete: function () {
             //     // Add event listener for the filter change
@@ -179,7 +180,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/users/create', // Assuming this is the route for loading the create form
+                url: '/transaksi-pinjam/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal
@@ -198,13 +199,13 @@
         });
 
         // Handle view button click event
-        $('#data_users').on('click', '.view-app-btn', function () {
+        $('#data_trxs').on('click', '.view-app-btn', function () {
             var appId = $(this).data('app-id');
 
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/users/' + appId,
+                url: '/transaksi-pinjam/' + appId,
                 type: 'GET',
                 success: function (response) {
                     $('#detailModal .modal-content').html(response);
@@ -216,13 +217,13 @@
             });
         });
 
-        $('#data_users').on('click', '.edit-app-btn', function () {
+        $('#data_trxs').on('click', '.edit-app-btn', function () {
             var appId = $(this).data('app-id');
 
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/users/' + appId + '/edit',
+                url: '/transaksi-pinjam/' + appId + '/edit',
                 type: 'GET',
                 success: function (response) {
                     $('#editModal .modal-content').html(response);
@@ -234,7 +235,7 @@
             });
         });
 
-        $('#data_users').on('click', '.delete-app-btn', function () {
+        $('#data_trxs').on('click', '.delete-app-btn', function () {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             var appId = $(this).data('app-id');
 
@@ -249,7 +250,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/users/' + appId,
+                        url: '/transaksi-pinjam/' + appId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken

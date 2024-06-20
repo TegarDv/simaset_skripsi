@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->enum('tipe_transaksi', ['peminjaman', 'pengembalian']);
             $table->string('kode_transaksi');
+            $table->unsignedInteger('stok');
             $table->integer('stok_sebelum');
             $table->integer('stok_sesudah');
             $table->text('keterangan');

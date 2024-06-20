@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AssetsTransaction;
 use Illuminate\Http\Request;
 
-class TrxInController extends Controller
+class TrxPengembalianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('transaksi_masuk.index');
+        //
     }
 
     /**
@@ -21,7 +20,7 @@ class TrxInController extends Controller
      */
     public function create()
     {
-        return view('transaksi_masuk.create');
+        //
     }
 
     /**
@@ -45,8 +44,7 @@ class TrxInController extends Controller
      */
     public function edit(string $id)
     {
-        $data = AssetsTransaction::findOrFail($id);
-        return view('transaksi_masuk.edit', compact('data'));
+        //
     }
 
     /**
