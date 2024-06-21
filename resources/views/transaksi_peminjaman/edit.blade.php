@@ -1,48 +1,61 @@
 <!-- Button trigger modal -->
 <div class="modal-header">
-    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User</h1>
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data Peminjaman</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<form class="row g-3" action="{{ route('users.update', ['user' => $data->id]) }}" method="POST" id="updateForm">
+<form class="row g-3" action="{{ route('transaksi-pinjam.update', ['transaksi_pinjam' => $data->id]) }}" method="POST" id="updateForm">
     @csrf
     @method('PUT')
     <div class="modal-body">
-        
-        <div class="mb-3">
-            <label class="font-weight-bold">Nama Lokasi</label>
-            <input type="text" class="form-control" name="name" value="{{ $data['name'] }}" required>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-2">
+                    <label class="font-weight-bold">Tanggal Peminjaman</label>
+                    <input type="date" class="form-control" name="tanggal" value="{{ $data['tanggal_transaksi'] }}" required>
+                </div>
+                <div class="mb-2">
+                    <label class="font-weight-bold">User yang meminjam</label>
+                    <select class="form-select" name="user" required>
+                        <option value="">Pilih User</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}" {{ $data['user_id'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="font-weight-bold">Jumlah Peminjaman</label>
+                    <input type="number" class="form-control" name="jumlah" id="jumlah" value="{{ $data['stok'] }}" required>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-2">
+                    <label class="font-weight-bold">Pilih Aset</label>
+                    <select class="form-select" name="asset" id="assetSelectEdit" required>
+                        <option value="">Select Asset</option>
+                        @foreach ($assets as $asset)
+                            <option value="{{ $asset->kode_aset }}" data-nama="{{ $asset->nama_aset }}" data-tipe="{{ $asset->tipe_aset }}" data-stok="{{ $asset->stok_sekarang }}" {{ $data['asset_id'] == $asset->id ? 'selected' : '' }}>{{ $asset->kode_aset }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="row g-2">
+                    <div class="col">
+                        <label class="font-weight-bold">Nama</label>
+                        <input type="text" class="form-control" id="nama" value="{{ $asset_select['nama_aset'] }}" disabled>
+                    </div>
+                    <div class="col">
+                        <label class="font-weight-bold">Tipe</label>
+                        <input type="text" class="form-control" id="tipe" value="{{ $asset_select['tipe_aset'] }}" disabled>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="font-weight-bold">Stok saat ini</label>
+                    <input type="text" class="form-control" id="current" value="{{ $asset_select['stok_sekarang'] }}" disabled>
+                </div>
+            </div>
         </div>
-
-        <div class="row g-2">
-            <div class="col">
-                <label class="font-weight-bold">Nama Lengkap</label>
-                <input type="text" class="form-control" name="name" value="{{ $data['name'] }}" required>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Username</label>
-                <input type="text" class="form-control" name="username" value="{{ $data['username'] }}" required>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Email</label>
-                <input type="email" class="form-control" name="email" value="{{ $data['email'] }}" required>
-            </div>
-        </div>
-
-        <div class="row g-2">
-            <div class="col">
-                <label class="font-weight-bold">Role</label>
-                <select class="form-select" name="role" required>
-                    <option value="">Select Role User</option>
-                    <option value="1" {{ $data['role'] == '1' ? 'selected' : '' }}>Super Admin</option>
-                    <option value="2" {{ $data['role'] == '2' ? 'selected' : '' }}>Admin</option>
-                    <option value="3" {{ $data['role'] == '3' ? 'selected' : '' }}>Dosen / Mahasiswa</option>
-                </select>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">New Password</label>
-                <input type="password" class="form-control" name="new_password">
-                <input type="hidden" class="form-control" name="password" value="password">
-            </div>
+        <div class="mb-1">
+            <label class="font-weight-bold">Keterangan Transkasi</label>
+            <textarea class="form-control" rows="3" name="keterangan" required></textarea>
         </div>
 
     </div>
@@ -78,4 +91,15 @@
             }
         });
     }
+
+    document.getElementById('assetSelectEdit').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var namaAset = selectedOption.getAttribute('data-nama');
+        var tipeAset = selectedOption.getAttribute('data-tipe');
+        var stokAset = selectedOption.getAttribute('data-stok');
+
+        document.getElementById('nama').value = namaAset;
+        document.getElementById('tipe').value = tipeAset;
+        document.getElementById('current').value = stokAset;
+    });
 </script>

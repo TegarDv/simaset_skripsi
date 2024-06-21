@@ -106,7 +106,10 @@ class TrxPeminjamanController extends Controller
     public function edit(string $id)
     {
         $data = AssetsTransaction::findOrFail($id);
-        return view('transaksi_peminjaman.edit', compact('data'));
+        $assets = Assets::all();
+        $asset_select = Assets::findOrFail($data->asset_id);
+        $users = User::all();
+        return view('transaksi_peminjaman.edit', compact('data', 'assets', 'users', 'asset_select'));
     }
 
     /**
@@ -114,7 +117,48 @@ class TrxPeminjamanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user_login = auth()->user();
+        $this->validateData($request);
+
+        $data = AssetsTransaction::findOrFail($id);
+        $asset_data = Assets::where('kode_aset', $request->asset)->first();
+        $data_lama = $data->replicate();
+
+        if ($request->jumlah > $asset_data->stok_sekarang) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Stock tidak mencukupi'
+            ], 403);
+        }
+
+        if ($request->new_password == null) {
+            $password = $data->password;
+        } else {
+            $password = Hash::make($request->new_password);
+        }
+        $data->update([
+            'asset_id'          => $asset_data->id,
+            'user_id'           => $request->user,
+            'stok'              => $request->jumlah,
+            'stok_sesudah'      => $asset_data->stok_sebelum - $request->jumlah,
+            'keterangan'        => $request->keterangan,
+            'tanggal_transaksi' => $request->tanggal,
+            'updated_at'        => now(),
+        ]);
+        $data_baru = $data;
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Update User',
+            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json([
+            'error'   => false,
+            'message' => 'Data Berhasil Diubah'
+        ]);
     }
 
     /**
