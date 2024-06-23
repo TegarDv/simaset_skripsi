@@ -45,8 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transaksi-pinjam', TrxPeminjamanController::class);
     Route::get('trxPinjamJson', [TrxPeminjamanController::class, 'trxPinjamDataTableJson'])->name('trxPinjamJson');
 
-    Route::resource('/transaction-out', TrxPengembalianController::class);
-    Route::get('trxOutJson', [TrxPengembalianController::class, 'trxOutDataTableJson'])->name('trxOutJson');
+    Route::resource('/transaction-kembali', TrxPengembalianController::class);
+    Route::get('trxKembaliJson', [TrxPengembalianController::class, 'trxKembaliDataTableJson'])->name('trxKembaliJson');
 });
 
 Route::get('/dashboard', function () {
