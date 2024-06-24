@@ -57,7 +57,7 @@
             <div class="col">
                 <p>
                     <h2 class="text-start">Transaksi - Pengembalian Aset</h2>
-                    <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, eaque.</h5>
+                    <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, eaque. </h5>
                 </p>
             </div>
         </div>
