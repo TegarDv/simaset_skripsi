@@ -13,12 +13,12 @@ class PDFController extends Controller
     {
         $users = User::get();
         $data = [
-            'title' => 'Welcome to ItSolutionStuff.com',
+            'title' => 'Print PDF',
             'date' => date('m/d/Y'),
             'users' => $users
         ]; 
         $pdf = PDF::loadView('pdf.example', $data);
-        return $pdf->download('itsolutionstuff.pdf');
+        return $pdf->download('print.pdf');
 
     }
 }

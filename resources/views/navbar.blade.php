@@ -45,7 +45,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('pengadaan.index') ? 'active' : '' }}" href="/pengadaan">
-                        <i class="bi bi-folder-fill"></i> Pengadaan
+                        <i class="bi bi-folder-fill"></i> List Barang
                     </a>
                 </li>
                 <li class="nav-item">
