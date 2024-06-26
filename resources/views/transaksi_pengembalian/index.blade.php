@@ -180,7 +180,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/transaction-kembali/create', // Assuming this is the route for loading the create form
+                url: '/transaksi-kembali/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal
@@ -205,7 +205,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/transaction-kembali/' + appId,
+                url: '/transaksi-kembali/' + appId,
                 type: 'GET',
                 success: function (response) {
                     $('#detailModal .modal-content').html(response);
@@ -223,7 +223,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/transaction-kembali/' + appId + '/edit',
+                url: '/transaksi-kembali/' + appId + '/edit',
                 type: 'GET',
                 success: function (response) {
                     $('#editModal .modal-content').html(response);
@@ -250,7 +250,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/transaction-kembali/' + appId,
+                        url: '/transaksi-kembali/' + appId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken

@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('template.test');
 });
 
 Route::middleware('auth')->group(function () {
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transaksi-pinjam', TrxPeminjamanController::class);
     Route::get('trxPinjamJson', [TrxPeminjamanController::class, 'trxPinjamDataTableJson'])->name('trxPinjamJson');
 
-    Route::resource('/transaction-kembali', TrxPengembalianController::class);
+    Route::resource('/transaksi-kembali', TrxPengembalianController::class);
     Route::get('trxKembaliJson', [TrxPengembalianController::class, 'trxKembaliDataTableJson'])->name('trxKembaliJson');
 });
 Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
