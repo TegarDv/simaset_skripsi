@@ -16,27 +16,19 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        @can('isOwner')
-            <li class="menu-item">
-                <a href="" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-apps" style="margin-bottom: 2px;"></i>
-                    <div>Dashboard</div>
-                </a>
-            </li>
-        @endcan
+        <li class="menu-item">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-apps" style="margin-bottom: 2px;"></i>
+                <div>Dashboard</div>
+            </a>
+        </li>
 
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Menu</span>
         </li>
-        {{-- <li class="menu-item">
-            <a href="" class="menu-link">
-                <i class="menu-icon tf-icons ti bi-cart3" style="margin-bottom: 2px;"></i>
-                <div>Master Aset</div>
-            </a>
-        </li> --}}
         <li class="menu-item">
             <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-brand-tabler" style="margin-bottom: 2px;"></i>
+                <i class="menu-icon tf-icons ti bi-box-seam" style="margin-bottom: 2px;"></i>
                 <div>Master Aset</div>
             </a>
             <ul class="menu-sub">
@@ -64,7 +56,7 @@
         </li>
         <li class="menu-item">
             <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-brand-tabler" style="margin-bottom: 2px;"></i>
+                <i class="menu-icon tf-icons ti bi-repeat" style="margin-bottom: 2px;"></i>
                 <div>Transaksi</div>
             </a>
             <ul class="menu-sub">
@@ -82,7 +74,7 @@
         </li>
         <li class="menu-item">
             <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-brand-tabler" style="margin-bottom: 2px;"></i>
+                <i class="menu-icon tf-icons ti bi-printer" style="margin-bottom: 2px;"></i>
                 <div>Laporan</div>
             </a>
             <ul class="menu-sub">
@@ -108,40 +100,17 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Other</span>
         </li>
-        {{-- @can('isOwner')
-            <li class="menu-item>
-                <a href="" class="menu-link">
-                    <i class="menu-icon tf-icons ti bi-menu-button-fill" style="margin-bottom: 2px;"></i>
-                    <div>Kelola Users</div>
-                </a>
-            </li>
-        @endcan --}}
         <li class="menu-item">
             <a href="" class="menu-link">
-                <i class="menu-icon tf-icons ti bi-google-play" style="margin-bottom: 2px;"></i>
+                <i class="menu-icon tf-icons ti bi-activity" style="margin-bottom: 2px;"></i>
                 <div>Log Aktivitas</div>
             </a>
         </li>
         <li class="menu-item">
             <a href="" class="menu-link">
-                <i class="menu-icon tf-icons ti bi-person-video3" style="margin-bottom: 2px;"></i>
+                <i class="menu-icon tf-icons ti bi-people" style="margin-bottom: 2px;"></i>
                 <div>Kelola Users</div>
             </a>
         </li>
-        
-        {{-- @endif --}}
-        {{-- <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-code" style="margin-bottom: 2px;"></i>
-                <div>Version 3.0</div>
-                <div class="badge bg-label-success rounded-pill ms-auto">Current</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{!! route('logout') !!}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-logout" style="margin-bottom: 2px;"></i>
-                <div>Log out</div>
-            </a>
-        </li> --}}
     </ul>
 </aside>
