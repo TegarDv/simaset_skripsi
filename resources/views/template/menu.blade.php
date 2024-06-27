@@ -54,19 +54,19 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ Route::is('transaksi-*') ? 'active' : '' }}">
             <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti bi-repeat" style="margin-bottom: 2px;"></i>
                 <div>Transaksi</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('transaksi-pinjam*') ? 'active' : '' }}">
+                    <a href="{!! route('transaksi-pinjam.index') !!}" class="menu-link">
                         <div>Peminjaman</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('transaksi-kembali*') ? 'active' : '' }}">
+                    <a href="{!! route('transaksi-kembali.index') !!}" class="menu-link">
                         <div>Pengembalian</div>
                     </a>
                 </li>
