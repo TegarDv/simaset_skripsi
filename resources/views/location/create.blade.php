@@ -27,14 +27,19 @@
             type: 'POST',
             data: $('#createForm').serialize(),
             success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
+                });
                 $('#createModal').modal('hide');
-                showToast(response.message, 'success');
-                showLoader();
                 reloadDatatable();
                 hideLoader();
             },
                 error: function(xhr, status, error) {
-                console.log(xhr.responseJSON.message);
 
                 Swal.fire({
                     icon: 'error',

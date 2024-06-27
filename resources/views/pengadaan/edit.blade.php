@@ -105,18 +105,28 @@
             type: 'POST',
             data: $('#updateForm').serialize(),
             success: function(response) {
-                $('#editModal').modal('hide');
-                showToast(response.message, 'success');
-
                 showLoader();
+                $('#editModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
+                });
                 reloadDatatable();
                 hideLoader();
             },
-            error: function(xhr, status, error) {
+            error: function(error) {
+                // console.log(error.responseJSON.message);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: xhr.responseJSON.message
+                    title: 'Error',
+                    text: error.responseJSON.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
                 });
             }
         });
