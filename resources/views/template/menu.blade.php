@@ -42,8 +42,8 @@
                         <div>Permintaan Aset</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('asset-location*') ? 'active' : '' }}">
+                    <a href="{!! route('asset-location.index') !!}" class="menu-link">
                         <div>Lokasi Aset</div>
                     </a>
                 </li>

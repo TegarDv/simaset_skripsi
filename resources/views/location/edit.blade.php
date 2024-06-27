@@ -3,7 +3,7 @@
     <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Lokasi</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<form class="row g-3" action="{{ route('location.update', ['location' => $data->id]) }}" method="POST" id="updateForm">
+<form class="row g-3" action="{{ route('asset-location.update', ['asset_location' => $data->id]) }}" method="POST" id="updateForm">
     @csrf
     @method('PUT')
     <div class="modal-body">
