@@ -37,8 +37,8 @@
                         <div>List Aset</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('asset-permintaan*') ? 'active' : '' }}">
+                    <a href="{!! route('asset-permintaan.index') !!}" class="menu-link">
                         <div>Permintaan Aset</div>
                     </a>
                 </li>

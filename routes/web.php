@@ -3,12 +3,14 @@
 use App\Http\Controllers\AsetLocationController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PengadaanController;
+use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TrxPeminjamanController;
 use App\Http\Controllers\TrxPengembalianController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -34,6 +36,9 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('/asset-list', PengadaanController::class);
     Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson');
+
+    Route::resource('/asset-permintaan', PermintaanController::class);
+    Route::get('permintaanJson', [PermintaanController::class, 'datatableJson'])->name('permintaanJson');
 
     Route::resource('/asset-status', StatusController::class);
     Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson');
