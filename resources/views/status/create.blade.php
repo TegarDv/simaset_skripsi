@@ -3,7 +3,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form class="row g-3" action="{{ route('status.store') }}" method="POST" id="createForm">
+    <form class="row g-3" action="{{ route('asset-status.store') }}" method="POST" id="createForm">
         @csrf
         
         <div class="mb-3">
@@ -63,15 +63,19 @@
             type: 'POST',
             data: $('#createForm').serialize(),
             success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
+                });
                 $('#createModal').modal('hide');
-                showToast(response.message, 'success');
-                showLoader();
                 reloadDatatable();
                 hideLoader();
             },
                 error: function(xhr, status, error) {
-                console.log(xhr.responseJSON.message);
-
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

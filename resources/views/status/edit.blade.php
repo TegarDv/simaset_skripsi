@@ -3,7 +3,7 @@
     <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Status {{ $data['nama_status'] }}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<form class="row g-3" action="{{ route('status.update', ['status' => $data->id]) }}" method="POST" id="updateForm">
+<form class="row g-3" action="{{ route('asset-status.update', ['asset_status' => $data->id]) }}" method="POST" id="updateForm">
     @csrf
     @method('PUT')
     <div class="modal-body">
@@ -74,18 +74,28 @@
             type: 'POST',
             data: $('#updateForm').serialize(),
             success: function(response) {
-                $('#editModal').modal('hide');
-                showToast(response.message, 'success');
-
                 showLoader();
+                $('#editModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
+                });
                 reloadDatatable();
                 hideLoader();
             },
-            error: function(xhr, status, error) {
+            error: function(error) {
+                // console.log(error.responseJSON.message);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: xhr.responseJSON.message
+                    title: 'Error',
+                    text: error.responseJSON.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
                 });
             }
         });
