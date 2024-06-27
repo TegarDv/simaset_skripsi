@@ -1,9 +1,9 @@
 <div class="modal-header">
-    <h1 class="modal-title fs-5" id="staticBackdropLabel">Create New Aset</h1>
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Aset Baru</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form class="row g-3" action="{{ route('pengadaan.store') }}" method="POST" id="createForm">
+    <form class="row g-3" action="{{ route('asset-list.store') }}" method="POST" id="createForm">
         @csrf
         
         <div class="row g-2">
@@ -106,15 +106,19 @@
             type: 'POST',
             data: $('#createForm').serialize(),
             success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
+                });
                 $('#createModal').modal('hide');
-                showToast(response.message, 'success');
-                showLoader();
                 reloadDatatable();
                 hideLoader();
             },
                 error: function(xhr, status, error) {
-                console.log(xhr.responseJSON.message);
-
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

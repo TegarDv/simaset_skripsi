@@ -26,14 +26,14 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Menu</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ Route::is('asset-*') ? 'active' : '' }}">
             <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti bi-box-seam" style="margin-bottom: 2px;"></i>
                 <div>Master Aset</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('asset-list*') ? 'active' : '' }}">
+                    <a href="{!! route('asset-list.index') !!}" class="menu-link">
                         <div>List Aset</div>
                     </a>
                 </li>

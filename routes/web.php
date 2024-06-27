@@ -32,13 +32,13 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('/pengadaan', PengadaanController::class);
+    Route::resource('/asset-list', PengadaanController::class);
     Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson');
 
-    Route::resource('/status', StatusController::class);
+    Route::resource('/asset-status', StatusController::class);
     Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson');
 
-    Route::resource('/location', AsetLocationController::class);
+    Route::resource('/asset-location', AsetLocationController::class);
     Route::get('locationJson', [AsetLocationController::class, 'lokasiDataTableJson'])->name('locationJson');
 
     Route::resource('/users', UsersController::class);

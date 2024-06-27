@@ -3,7 +3,7 @@
     <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Aset {{ $data['kode_aset'] }}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<form class="row g-3" action="{{ route('pengadaan.update', ['pengadaan' => $data->id]) }}" method="POST" id="updateForm">
+<form class="row g-3" action="{{ route('asset-list.update', ['asset_list' => $data->id]) }}" method="POST" id="updateForm">
     @csrf
     @method('PUT')
     <div class="modal-body">
