@@ -106,8 +106,8 @@
                 <div>Log Aktivitas</div>
             </a>
         </li>
-        <li class="menu-item">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ Route::is('users*') ? 'active' : '' }}">
+            <a href="{!! route('users.index') !!}" class="menu-link">
                 <i class="menu-icon tf-icons ti bi-people" style="margin-bottom: 2px;"></i>
                 <div>Kelola Users</div>
             </a>
