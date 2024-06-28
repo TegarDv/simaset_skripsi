@@ -3,7 +3,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form class="row g-3" action="{{ route('asset-list.store') }}" method="POST" id="createForm">
+    <form class="row g-3" action="{{ route('asset-permintaan.store') }}" method="POST" id="createForm">
         @csrf
         
         <div class="row g-2">
@@ -23,8 +23,8 @@
         </div>
         <div class="row g-2">
             <div class="col">
-                <label class="font-weight-bold">Stok Aset</label>
-                <input type="number" class="form-control" name="stok_awal" required>
+                <label class="font-weight-bold">Stok Permintaan</label>
+                <input type="number" class="form-control" name="stok_permintaan" required>
             </div>
             <div class="col">
                 <label class="font-weight-bold">Harga Aset</label>
@@ -36,48 +36,6 @@
             <div class="col">
                 <label class="font-weight-bold">Masa Berlaku</label>
                 <input type="date" class="form-control" name="masa_berlaku" required>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Tanggal Penerimaan</label>
-                <input type="date" class="form-control" name="tanggal_penerimaan" required>
-            </div>
-        </div>
-        <div class="row g-2">
-            <div class="col">
-                <label class="font-weight-bold">Status aset</label>
-                <select class="form-select" name="status_aset" required>
-                    <option disabled selected>Pilih Status Aset</option>
-                    @foreach ($status as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Kondisi Aset</label>
-                <select class="form-select" name="kondisi_aset" required>
-                    <option disabled selected>Pilih Kondisi Aset</option>
-                    @foreach ($status as $item)
-                        <option value="{{ $item->id }}"><span class="badge rounded-pill bg-{{ $item->color }}">{{ $item->nama_status }}</span></option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Lokasi Aset</label>
-                <select class="form-select" name="lokasi_aset" required>
-                    <option disabled selected>Pilih Lokasi Aset</option>
-                    @foreach ($lokasi as $item)
-                        <option value="{{ $item->id }}">{{ $item->location }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Pemilik Aset</label>
-                <select class="form-select" name="pemilik_aset" required>
-                    <option disabled selected>Pilih Pemilik Aset</option>
-                    @foreach ($user as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
             </div>
         </div>
         <div class="row g-2">

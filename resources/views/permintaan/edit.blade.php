@@ -3,7 +3,7 @@
     <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Aset {{ $data['kode_aset'] }}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<form class="row g-3" action="{{ route('asset-list.update', ['asset_list' => $data->id]) }}" method="POST" id="updateForm">
+<form class="row g-3" action="{{ route('asset-permintaan.update', ['asset_permintaan' => $data->id]) }}" method="POST" id="updateForm">
     @csrf
     @method('PUT')
     <div class="modal-body">
@@ -11,7 +11,7 @@
         <div class="row g-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Nama Aset</label>
-                <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" readonly>
+                <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" required>
             </div>
             <div class="col-lg">
                 <label class="font-weight-bold">Tipe Aset</label>
@@ -24,9 +24,8 @@
         </div>
         <div class="row g-2">
             <div class="col-lg">
-                <label class="font-weight-bold">Stok Aset</label>
-                <input type="hidden" class="form-control" name="stok_awal" value="{{ $data['stok_awal'] }}">
-                <input type="number" class="form-control" name="stok_sekarang" value="{{ $data['stok_sekarang'] }}" required>
+                <label class="font-weight-bold">Stok Permintaan</label>
+                <input type="number" class="form-control" name="stok_permintaan" value="{{ $data['stok_permintaan'] }}" required>
             </div>
             <div class="col-lg">
                 <label class="font-weight-bold">Harga Aset</label>
@@ -38,44 +37,6 @@
             <div class="col">
                 <label class="font-weight-bold">Masa Berlaku</label>
                 <input type="date" class="form-control" name="masa_berlaku" value="{{ $data['masa_berlaku'] }}" required>
-            </div>
-            <div class="col">
-                <label class="font-weight-bold">Tanggal Penerimaan</label>
-                <input type="date" class="form-control" name="tanggal_penerimaan" value="{{ $data['tanggal_penerimaan'] }}" required>
-            </div>
-        </div>
-        <div class="row g-2">
-            <div class="col-lg">
-                <label class="font-weight-bold">Status aset</label>
-                <select class="form-select" name="status_aset" required>
-                    @foreach ($status as $item)
-                        <option value="{{ $item->id }}" {{ $data['status_aset'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
-                    @endforeach
-                </select>
-            </div>            
-            <div class="col-lg">
-                <label class="font-weight-bold">Kondisi Aset</label>
-                <select class="form-select" name="kondisi_aset" required>
-                    @foreach ($status as $item)
-                        <option value="{{ $item->id }}" {{ $data['kondisi_aset'] == $item->id ? 'selected' : '' }}>{{ $item->nama_status }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-lg">
-                <label class="font-weight-bold">Lokasi Aset</label>
-                <select class="form-select" name="lokasi_aset" required>
-                    @foreach ($lokasi as $item)
-                        <option value="{{ $item->id }}" {{ $data['lokasi_aset'] == $item->id ? 'selected' : '' }}>{{ $item->location }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-lg">
-                <label class="font-weight-bold">Pemilik Aset</label>
-                <select class="form-select" name="pemilik_aset" required>
-                    @foreach ($pemilik as $item)
-                        <option value="{{ $item->id }}" {{ $data['pemilik_aset'] == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                    @endforeach
-                </select>
             </div>
         </div>
         <div class="row g-2">

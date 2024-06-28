@@ -1,6 +1,6 @@
 @extends('template.app')
 
-@section('title', 'List Barang')
+@section('title', 'Permintaan Aset')
 
 @section('content')
 <h4 class="text-start">Asset Permintaan</h4>
@@ -19,7 +19,7 @@
     <div class="card-datatable table-responsive">
         <div class="ms-3">
             <button class="btn btn-primary create-btn">
-                <i class="ti ti-plus me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Aset</span>
+                <i class="ti ti-plus me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Permintaan</span>
             </button>
             <button id="reloadDatatable" class="btn btn-primary">
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
@@ -54,6 +54,15 @@
 
 {{-- Edit Modal --}}
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <!-- Modal content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+{{-- Accept Modal --}}
+<div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <!-- Modal content will be loaded here -->
@@ -131,7 +140,7 @@
     $(document).ready(function () {
         var datatables = $('#data_assets').DataTable({
             ajax: {
-                url: '{{ route('pengadaanJson') }}',
+                url: '{{ route('permintaanJson') }}',
             },
             lengthMenu: [
                 [5, 10, 25, 50, -1],
@@ -140,11 +149,10 @@
             scrollY: false,
             columns: [
                 { data: 'index', width: '5%', name: 'index', title: 'No' },
-                { data: 'column2_aset', width: '10%', name: 'column2_aset', title: 'Kode Aset' },
-                { data: 'column3_aset', width: '10%', name: 'column3_aset', title: 'Data Aset' },
-                { data: 'column4_aset', width: '10%', name: 'column4_aset', title: 'Waktu' },
-                { data: 'column5_aset', width: '10%', className: 'text-center', name: 'column5_aset', title: 'Status' },
-                { data: 'column6_aset', width: '10%', className: 'text-center', name: 'column6_aset', title: 'Action' }
+                { data: 'column2_aset', width: '10%', name: 'column2_aset', title: 'Tanggal' },
+                { data: 'column3_aset', width: '10%', name: 'column3_aset', title: 'Permintaan' },
+                { data: 'column4_aset', width: '10%', name: 'column4_aset', title: 'Tipe Aset' },
+                { data: 'column5_aset', width: '10%', className: 'text-center', name: 'column5_aset', title: 'Action' },
             ],
             // initComplete: function () {
             //     // Add event listener for the filter change
@@ -169,7 +177,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/asset-list/create', // Assuming this is the route for loading the create form
+                url: '/asset-permintaan/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal
@@ -198,7 +206,7 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/asset-list/' + appId,
+                url: '/asset-permintaan/' + appId,
                 type: 'GET',
                 success: function (response) {
                     $('#detailModal .modal-content').html(response);
@@ -216,11 +224,33 @@
             showLoader(); // Show loader while loading the view form
 
             $.ajax({
-                url: '/asset-list/' + appId + '/edit',
+                url: '/asset-permintaan/' + appId + '/edit',
                 type: 'GET',
                 success: function (response) {
                     $('#editModal .modal-content').html(response);
                     $('#editModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while loading the view form.');
+                }
+            });
+        });
+        $('#editModal').on('hidden.bs.modal', function() {
+            datatables.ajax.reload(function() {
+            }, false);
+        });
+
+        $('#data_assets').on('click', '.accept-app-btn', function () {
+            var appId = $(this).data('app-id');
+
+            showLoader(); // Show loader while loading the view form
+
+            $.ajax({
+                url: '/asset-permintaan/' + appId + '/accept',
+                type: 'GET',
+                success: function (response) {
+                    $('#acceptModal .modal-content').html(response);
+                    $('#acceptModal').modal('show');
                 },
                 error: function (xhr, status, error) {
                     alert('An error occurred while loading the view form.');
@@ -247,7 +277,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/asset-list/' + appId,
+                        url: '/asset-permintaan/' + appId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken

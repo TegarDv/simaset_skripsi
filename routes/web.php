@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson');
 
     Route::resource('/asset-permintaan', PermintaanController::class);
+    Route::get('asset-permintaan/{id}/accept', [PermintaanController::class, 'accept_asset'])->name('asset-permintaan.accept');
     Route::get('permintaanJson', [PermintaanController::class, 'datatableJson'])->name('permintaanJson');
 
     Route::resource('/asset-status', StatusController::class);

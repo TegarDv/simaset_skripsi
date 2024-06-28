@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssetLocation;
 use App\Models\AssetsRequest;
+use App\Models\DataStatus;
+use App\Models\LogUsers;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PermintaanController extends Controller
@@ -14,7 +18,7 @@ class PermintaanController extends Controller
     public function index()
     {
         $data = AssetsRequest::all();
-        return view('pengadaan.index', ['data' => $data]);
+        return view('permintaan.index', ['data' => $data]);
     }
 
     /**
@@ -22,7 +26,7 @@ class PermintaanController extends Controller
      */
     public function create()
     {
-        return view('pengadaan.create');
+        return view('permintaan.create');
     }
 
     /**
@@ -30,7 +34,35 @@ class PermintaanController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $user_login = auth()->user();
+        $this->validateData($request);
+
+        $data = AssetsRequest::create([
+            'tipe_aset'            => $request->tipe_aset,
+            'nama_aset'            => $request->nama_aset,
+            'harga'                => $request->harga,
+            'stok_permintaan'      => $request->stok_permintaan,
+            'spesifikasi'          => $request->spesifikasi,
+            'keterangan'           => $request->keterangan,
+            'pemilik_aset'         => $user_login->id,
+            'masa_berlaku'         => $request->masa_berlaku,
+            'created_at'           => now(),
+            'updated_at'           => now(),
+        ]);
+
+        LogUsers::create([
+            'id_user'               => $user_login->id,
+            'action'                => 'Tambah Permintaan Aset',
+            'detail'                => $data,
+            'created_at'            => now(),
+            'updated_at'            => now(),
+        ]);
+
+        // return back()->with('success', 'Data Berhasil Disimpan!');
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Ditambahkan'
+        ]);
     }
 
     /**
@@ -39,7 +71,7 @@ class PermintaanController extends Controller
     public function show(string $id)
     {
         $data = AssetsRequest::findOrFail($id);
-        return view('pengadaan.show', compact('data', 'status'));
+        return view('permintaan.show', compact('data', 'status'));
     }
 
     /**
@@ -48,7 +80,7 @@ class PermintaanController extends Controller
     public function edit(string $id)
     {
         $data = AssetsRequest::findOrFail($id);
-        return view('pengadaan.edit', compact('data'));
+        return view('permintaan.edit', compact('data'));
     }
 
     /**
@@ -56,7 +88,36 @@ class PermintaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user_login = auth()->user();
+        $this->validateData($request);
+
+        $data = AssetsRequest::findOrFail($id);
+        $data_lama = $data->replicate();
+
+        $data->update([
+            'tipe_aset'            => $request->tipe_aset,
+            'nama_aset'            => $request->nama_aset,
+            'harga'                => $request->harga,
+            'stok_permintaan'      => $request->stok_permintaan,
+            'spesifikasi'          => $request->spesifikasi,
+            'keterangan'           => $request->keterangan,
+            'masa_berlaku'         => $request->masa_berlaku,
+            'updated_at'           => now(),
+        ]);
+        $data_baru = $data;
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Update Permintaan Aset',
+            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json([
+            'error'   => false,
+            'message' => 'Data Berhasil Diubah'
+        ]);
     }
 
     /**
@@ -80,6 +141,15 @@ class PermintaanController extends Controller
         }
     }
 
+    public function accept_asset(string $id)
+    {
+        $data = AssetsRequest::findOrFail($id);
+        $status = DataStatus::all();
+        $lokasi = AssetLocation::all();
+        $user = User::all();
+        return view('permintaan.accept', compact('data', 'status', 'lokasi', 'user'));
+    }
+
     private function validateData(Request $request)
     {
         $this->validate($request, [
@@ -99,12 +169,17 @@ class PermintaanController extends Controller
 
         $data = [];
         foreach ($assets as $key => $asset) {
+            $edit_btn = '<button class="btn btn-sm btn-label-secondary m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+            $read_btn = '<button class="btn btn-sm btn-label-secondary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye text-light"></i></button>';
+            $delete_btn = '<button class="btn btn-sm btn-label-secondary m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>';
+            $accept_btn = '<button class="btn btn-sm btn-label-success m-1 accept-app-btn" data-app-id="' . $asset->id . '" title="accept">Setujui permintaan</button>';
             $data[] = [
                 'index' => $key + 1,
                 'id' => $asset->id,
-                'column2_aset' => '<div class="text-light">' . $asset->location . '</div>',
-                'column3_aset' => '<div class="text-light">Dibuat pada: ' . $asset->created_at . '<br>Terakhir di update: ' . $asset->updated_at . '</div>',
-                'column4_aset' => '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>',
+                'column2_aset' => 'Permintaan pada: ' . $asset->created_at . '<br>Terakhir di update: ' . $asset->updated_at,
+                'column3_aset' => 'Nama: ' . $asset->nama_aset . '<br>Stok Permintaan: ' . $asset->stok_permintaan . '<br>Harga: ' . $asset->harga,
+                'column4_aset' => $asset->tipe_aset,
+                'column5_aset' => $edit_btn . $read_btn . $delete_btn . $accept_btn,
             ];
         }
 
