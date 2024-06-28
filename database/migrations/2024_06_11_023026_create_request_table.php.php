@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('spesifikasi');
             $table->text('keterangan');
             $table->integer('stok_permintaan');
+            $table->unsignedBigInteger('pemilik_aset');
+            $table->foreign('pemilik_aset')->references('id')->on('users');
             $table->date('masa_berlaku');
             $table->timestamps();
         });

@@ -21,6 +21,7 @@ class AssetRequestSeeder extends Seeder
                 'spesifikasi' => 'ini spesifikasi',
                 'keterangan' => 'ini keterangan',
                 'stok_permintaan' => 17,
+                'pemilik_aset' => $i + 1,
                 'masa_berlaku' => now(),
                 'created_at' => now(),
                 'updated_at' => now(),
