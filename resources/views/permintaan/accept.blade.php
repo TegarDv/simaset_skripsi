@@ -3,7 +3,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form class="row g-3" action="{{ route('asset-list.store') }}" method="POST" id="createForm">
+    <form class="row g-3" action="{{ route('asset-permintaan-accept.input', ['id' => $data->id]) }}" method="POST" id="createForm">
         @csrf
         
         <div class="row g-2">
@@ -12,12 +12,8 @@
                 <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" disabled>
             </div>
             <div class="col">
-                <label class="font-weight-bold">Tipe Aset</label>
-                <select class="form-select" name="tipe_aset" disabled>
-                    <option value="fisik" {{ $data['tipe_aset'] == 'fisik' ? 'selected' : '' }}>fisik</option>
-                    <option value="digital" {{ $data['tipe_aset'] == 'digital' ? 'selected' : '' }}>digital</option>
-                    <option value="layanan" {{ $data['tipe_aset'] == 'layanan' ? 'selected' : '' }}>layanan</option>
-                </select>
+                <label class="font-weight-bold">Nama Aset</label>
+                <input type="text" class="form-control" name="tipe_aset" value="{{ $data['tipe_aset'] }}" disabled>
             </div>
         </div>
         <div class="row g-2">
@@ -45,6 +41,7 @@
             <div class="col">
                 <label class="font-weight-bold">Status aset</label>
                 <select class="form-select" name="status_aset" required>
+                    <option disabled selected>Pilih Status Aset</option>
                     @foreach ($status as $item)
                         <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
                     @endforeach
@@ -71,9 +68,10 @@
             <div class="col">
                 <label class="font-weight-bold">Pemilik Aset</label>
                 <select class="form-select" name="pemilik_aset" required>
-                    <option disabled selected>Pilih Pemilik Aset</option>
                     @foreach ($user as $item)
-                        <option value="{{ $item->id }}" {{ $data['pemilik_aset'] == $item->id ? 'selected' : '' }} disabled>{{ $item->name }}</option>
+                        @if ($data['pemilik_aset'] == $item->id)
+                            <option value="{{ $item->id }}" {{ $data['pemilik_aset'] == $item->id ? 'selected' : '' }} disabled>{{ $item->name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>

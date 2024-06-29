@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssetLocation;
+use App\Models\Assets;
 use App\Models\AssetsRequest;
 use App\Models\DataStatus;
 use App\Models\LogUsers;
@@ -148,6 +149,72 @@ class PermintaanController extends Controller
         $lokasi = AssetLocation::all();
         $user = User::all();
         return view('permintaan.accept', compact('data', 'status', 'lokasi', 'user'));
+    }
+
+    public function accept_store(Request $request, string $id)
+    {
+        $user_login = auth()->user();
+        $data = AssetsRequest::findOrFail($id);
+        $this->validate($request, [
+            'tanggal_penerimaan'    => 'required|date',
+            'status_aset'           => 'required|numeric',
+            'kondisi_aset'          => 'required|numeric',
+            'lokasi_aset'           => 'required|numeric',
+        ]);
+
+        // Determine asset type code part
+        if ($data->tipe_aset == 'fisik') {
+            $typePart = 'FS';
+        } elseif ($data->tipe_aset == 'digital') {
+            $typePart = 'DG';
+        } elseif ($data->tipe_aset == 'layanan') {
+            $typePart = 'LY';
+        }
+
+        // Generate random characters
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomChars = '';
+        for ($i = 0; $i < 2; $i++) {
+            $randomChars .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        // Generate code parts
+        $datePart = now()->format('ymd');
+        $numberPart = str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
+        $kodeAset = "$typePart-$randomChars$datePart-$numberPart";
+
+        $asset = Assets::create([
+            'tipe_aset'            => $data->tipe_aset,
+            'kode_aset'            => $kodeAset,
+            'nama_aset'            => $data->nama_aset,
+            'harga'                => $data->harga,
+            'spesifikasi'          => $data->spesifikasi,
+            'keterangan'           => $data->keterangan,
+            'stok_awal'            => $data->stok_permintaan,
+            'stok_sekarang'        => $data->stok_permintaan,
+            'masa_berlaku'         => $data->masa_berlaku,
+            'tanggal_penerimaan'   => $request->tanggal_penerimaan,
+            'status_aset'          => $request->status_aset,
+            'kondisi_aset'         => $request->kondisi_aset,
+            'lokasi_aset'          => $request->lokasi_aset,
+            'pemilik_aset'         => $data->pemilik_aset,
+            'created_at'           => now(),
+            'updated_at'           => now(),
+        ]);
+        
+        LogUsers::create([
+            'id_user'               => $user_login->id,
+            'action'                => 'Persetujuan Tambah Aset',
+            'detail'                => 'Aset Baru: ' . "\n" . json_encode($asset->toArray()) . "\n" . 'Aset Permintaan Dihapus: ' . "\n" . json_encode($data->toArray()),
+            'created_at'            => now(),
+            'updated_at'            => now(),
+        ]);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Ditambahkan'
+        ]);
     }
 
     private function validateData(Request $request)
