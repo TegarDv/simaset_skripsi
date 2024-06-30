@@ -17,7 +17,7 @@
 
     <ul class="menu-inner py-1">
         <li class="menu-item">
-            <a href="" class="menu-link">
+            <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-apps" style="margin-bottom: 2px;"></i>
                 <div>Dashboard</div>
             </a>
@@ -100,8 +100,8 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Other</span>
         </li>
-        <li class="menu-item">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ Route::is('log-user*') ? 'active' : '' }}">
+            <a href="{!! route('log-user.index') !!}" class="menu-link">
                 <i class="menu-icon tf-icons ti bi-activity" style="margin-bottom: 2px;"></i>
                 <div>Log Aktivitas</div>
             </a>

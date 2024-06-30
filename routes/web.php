@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsetLocationController;
+use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PermintaanController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\TrxPeminjamanController;
 use App\Http\Controllers\TrxPengembalianController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -56,6 +58,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/transaksi-kembali', TrxPengembalianController::class);
     Route::get('trxKembaliJson', [TrxPengembalianController::class, 'trxKembaliDataTableJson'])->name('trxKembaliJson');
+
+    Route::resource('/log-user', LogActivityController::class);
+    Route::get('logJson', [LogActivityController::class, 'datatableJson'])->name('logJson');
 });
 Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
 

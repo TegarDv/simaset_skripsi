@@ -24,7 +24,7 @@ class LogUsers extends Model
         'updated_at',
     ];
 
-    public function data_apps(): BelongsTo
+    public function data_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
