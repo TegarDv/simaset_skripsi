@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsetLocationController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PengadaanController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\TrxPeminjamanController;
 use App\Http\Controllers\TrxPengembalianController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -61,6 +63,15 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/log-user', LogActivityController::class);
     Route::get('logJson', [LogActivityController::class, 'datatableJson'])->name('logJson');
+
+    Route::get('/laporan-assets', [LaporanController::class, 'laporan_aset'])->name('laporan-assets.index');
+    Route::get('/laporanAssetsJson', [LaporanController::class, 'AsetDatatableJson'])->name('laporanAssetsJson');
+
+    Route::get('/laporan-transaksi', [LaporanController::class, 'laporan_transaksi'])->name('laporan-transaksi.index');
+    Route::get('/laporanTrxJson', [LaporanController::class, 'laporanTrxJson'])->name('laporanTrxJson');
+
+    Route::get('/laporan-activity', [LaporanController::class, 'laporan_activity'])->name('laporan-activity.index');
+    Route::get('/laporanActivityJson', [LaporanController::class, 'laporanActivityJson'])->name('laporanActivityJson');
 });
 Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
 

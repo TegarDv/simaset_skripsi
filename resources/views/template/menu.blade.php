@@ -72,24 +72,24 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ Route::is('laporan-*') ? 'active' : '' }}">
             <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti bi-printer" style="margin-bottom: 2px;"></i>
                 <div>Laporan</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('laporan-assets*') ? 'active' : '' }}">
+                    <a href="{!! route('laporan-assets.index') !!}" class="menu-link">
                         <div>Laporan Data Aset</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('laporan-transaksi*') ? 'active' : '' }}">
+                    <a href="{!! route('laporan-transaksi.index') !!}" class="menu-link">
                         <div>Laporan Transaksi</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Route::is('laporan-activity*') ? 'active' : '' }}">
+                    <a href="{!! route('laporan-activity.index') !!}" class="menu-link">
                         <div>Laporan Aktivitas</div>
                     </a>
                 </li>
