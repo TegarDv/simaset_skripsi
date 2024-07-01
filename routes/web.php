@@ -67,11 +67,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan-assets', [LaporanController::class, 'laporan_aset'])->name('laporan-assets.index');
     Route::get('/laporan-assets/create', [LaporanController::class, 'laporan_aset_create'])->name('laporan-assets.create');
     Route::post('/laporan-assets/pdf', [PDFController::class, 'asset_print'])->name('asset_print');
-    Route::get('/laporan-assets/pdf', [PDFController::class, 'asset_print'])->name('asset_print');
     Route::get('/laporanAssetsJson', [LaporanController::class, 'AsetDatatableJson'])->name('laporanAssetsJson');
-
+    
     Route::get('/laporan-transaksi', [LaporanController::class, 'laporan_transaksi'])->name('laporan-transaksi.index');
     Route::get('/laporan-transaksi/create', [LaporanController::class, 'laporan_transaksi_create'])->name('laporan-transaksi.create');
+    Route::post('/laporan-transaksi/pdf', [PDFController::class, 'transaksi_print'])->name('transaksi_print');
     Route::get('/laporanTrxJson', [LaporanController::class, 'laporanTrxJson'])->name('laporanTrxJson');
 
     Route::get('/laporan-activity', [LaporanController::class, 'laporan_activity'])->name('laporan-activity.index');

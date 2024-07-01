@@ -1,6 +1,6 @@
 @extends('template.app')
 
-@section('title', 'Asset - Data Lokasi')
+@section('title', 'Laporan Data Aset')
 
 @section('content')
 <h4 class="text-start">Laporan Data Aset</h4>
@@ -159,7 +159,8 @@
         // Reload data
         $('#reloadDatatable').on('click', function() {
             showLoader();
-            reloadDatatable();
+            datatables.ajax.reload(function() {
+            }, false);
         });
     });
 </script>
