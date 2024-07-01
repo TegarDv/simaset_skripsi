@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class LogActivityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->authorizeSuperAdmin();
+            // $this->authorizeAdminOrSuperAdmin();
+            // $this->authorizeAllUser();
+            return $next($request);
+        });
+    }
     public function index()
     {
         return view('log_activity.index');

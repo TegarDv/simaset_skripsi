@@ -13,9 +13,15 @@ use Illuminate\Support\Str;
 
 class TrxPengembalianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            // $this->authorizeSuperAdmin();
+            // $this->authorizeAdminOrSuperAdmin();
+            $this->authorizeAllUser();
+            return $next($request);
+        });
+    }
     public function index()
     {
         return view('transaksi_pengembalian.index');

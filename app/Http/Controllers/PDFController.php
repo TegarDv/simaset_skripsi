@@ -12,6 +12,15 @@ use PDF;
 
 class PDFController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->authorizeSuperAdmin();
+            // $this->authorizeAdminOrSuperAdmin();
+            // $this->authorizeAllUser();
+            return $next($request);
+        });
+    }
     public function asset_print(Request $request)
     {
         $this->validate($request, [

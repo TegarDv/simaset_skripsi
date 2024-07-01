@@ -13,11 +13,15 @@ class AsetLocationController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->authorizeAdminOrSuperAdmin();
+            return $next($request);
+        });
+    }
     public function index()
     {
-        if (!Gate::allows('isSuperAdmin') && !Gate::allows('isAdmin')) {
-            abort(403);
-        }
         return view('location.index');
     }
 
