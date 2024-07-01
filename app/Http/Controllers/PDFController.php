@@ -131,18 +131,4 @@ class PDFController extends Controller
         $pdf = PDF::loadView('pdf.activity', $data);
         return $pdf->download('print.pdf');
     }
-
-
-
-    public function generatePDF()
-    {
-        $users = User::get();
-        $data = [
-            'title' => 'Print PDF',
-            'date' => date('m/d/Y'),
-            'users' => $users
-        ]; 
-        $pdf = PDF::loadView('pdf.example', $data);
-        return $pdf->download('print.pdf');
-    }
 }

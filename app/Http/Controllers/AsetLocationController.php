@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssetLocation;
 use App\Models\LogUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AsetLocationController extends Controller
 {
@@ -14,7 +15,9 @@ class AsetLocationController extends Controller
      */
     public function index()
     {
-        $this->authorize('isSuperAdmin');
+        if (!Gate::allows('isSuperAdmin') && !Gate::allows('isAdmin')) {
+            abort(403);
+        }
         return view('location.index');
     }
 
