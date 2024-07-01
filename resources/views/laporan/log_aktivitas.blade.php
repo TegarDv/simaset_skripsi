@@ -3,7 +3,7 @@
 @section('title', 'Laporan - Log')
 
 @section('content')
-<h4 class="text-start">Data Log Aktivitas</h4>
+<h4 class="text-start">Laporan Log Aktivitas</h4>
 <div class="card shadow-lg">
     <h5 class="card-header">Data Aktivitas User</h5>
     <div class="card-datatable table-responsive">
@@ -12,7 +12,7 @@
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
             </button>
             <button class="btn btn-danger create-btn">
-                <i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Aset</span>
+                <i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span>
             </button>
         </div>
         <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
@@ -123,7 +123,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/asset-location/create', // Assuming this is the route for loading the create form
+                url: '/laporan-activity/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal

@@ -3,23 +3,16 @@
 @section('title', 'Asset - Data Lokasi')
 
 @section('content')
-<h4 class="text-start">Data Log Aktivitas</h4>
+<h4 class="text-start">Laporan Data Aset</h4>
 <div class="card shadow-lg">
-    <h5 class="card-header">Data Aktivitas User</h5>
-    <div class="card-body">
-        <div class="alert alert-info d-flex align-items-center" style="color: #000;"  role="alert">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-diamond-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-            </svg>
-            <div>
-                Berisi data log aktivitas yang dilakukan user.
-            </div>
-        </div>
-    </div>
+    <h5 class="card-header">Data Aset</h5>
     <div class="card-datatable table-responsive">
         <div class="ms-3">
             <button id="reloadDatatable" class="btn btn-primary">
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
+            </button>
+            <button class="btn btn-danger create-btn">
+                <i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span>
             </button>
         </div>
         <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
@@ -33,24 +26,6 @@
 
 {{-- Add Modal --}}
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <!-- Modal content will be loaded here -->
-        </div>
-    </div>
-</div>
-
-<!-- Detail modal container -->
-<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <!-- Modal content will be loaded here -->
-        </div>
-    </div>
-</div>
-
-{{-- Edit Modal --}}
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <!-- Modal content will be loaded here -->
@@ -128,7 +103,7 @@
     $(document).ready(function () {
         var datatables = $('#data_assets').DataTable({
             ajax: {
-                url: '{{ route('logJson') }}',
+                url: '{{ route('laporanAssetsJson') }}',
             },
             lengthMenu: [
                 [5, 10, 25, 50, -1],
@@ -137,9 +112,10 @@
             scrollY: false,
             columns: [
                 { data: 'index', width: '5%', name: 'index', title: 'No' },
-                { data: 'column2_table', width: '15%', name: 'column2_table', title: 'Tanggal' },
-                { data: 'column3_table', width: '15%', name: 'column3_table', title: 'Tindakan' },
-                { data: 'column4_table', width: '65%', className: 'text-center', name: 'column4_aset', title: 'Detail' }
+                { data: 'column2_table', width: '15%', name: 'column2_table', title: 'Kode Aset' },
+                { data: 'column3_table', width: '40%', name: 'column3_table', title: 'Detail Aset' },
+                { data: 'column4_table', width: '30%', className: 'text-center', name: 'column4_table', title: 'Tanggal' },
+                { data: 'column5_table', width: '10%', className: 'text-center', name: 'column5_table', title: 'Status' }
             ],
             // initComplete: function () {
             //     // Add event listener for the filter change
@@ -164,7 +140,7 @@
             showLoader(); // Show loader while loading the create form
 
             $.ajax({
-                url: '/asset-location/create', // Assuming this is the route for loading the create form
+                url: '/laporan-assets/create', // Assuming this is the route for loading the create form
                 type: 'GET',
                 success: function (response) {
                     $('#createModal .modal-content').html(response); // Load the create form into the modal
@@ -185,97 +161,6 @@
             showLoader();
             reloadDatatable();
         });
-
-        // Handle view button click event
-        $('#data_assets').on('click', '.view-app-btn', function () {
-            var appId = $(this).data('app-id');
-
-            showLoader(); // Show loader while loading the view form
-
-            $.ajax({
-                url: '/asset-location/' + appId,
-                type: 'GET',
-                success: function (response) {
-                    $('#detailModal .modal-content').html(response);
-                    $('#detailModal').modal('show');
-                },
-                error: function (xhr, status, error) {
-                    alert('An error occurred while loading the view form.');
-                }
-            });
-        });
-
-        $('#data_assets').on('click', '.edit-app-btn', function () {
-            var appId = $(this).data('app-id');
-
-            showLoader(); // Show loader while loading the view form
-
-            $.ajax({
-                url: '/asset-location/' + appId + '/edit',
-                type: 'GET',
-                success: function (response) {
-                    $('#editModal .modal-content').html(response);
-                    $('#editModal').modal('show');
-                },
-                error: function (xhr, status, error) {
-                    alert('An error occurred while loading the view form.');
-                }
-            });
-        });
-        $('#editModal').on('hidden.bs.modal', function() {
-            datatables.ajax.reload(function() {
-            }, false);
-        });
-
-        $('#data_assets').on('click', '.delete-app-btn', function () {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            var appId = $(this).data('app-id');
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/asset-location/' + appId,
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        success: function (response) {
-                            showToast(response.message, 'success');
-                        },
-                        error: function (xhr, status, error) {
-                            showToast('An error occurred while deleting the asset.', 'error');
-                        }
-                    });
-                }
-            });
-        });
-
-        function formatDate(timestamp) {
-            var months = [
-                "January", "February", "March", "April", "May", "June", "July",
-                "August", "September", "October", "November", "December"
-            ];
-
-            var date = new Date(timestamp);
-            var day = date.getDate();
-            var monthIndex = date.getMonth();
-            var year = date.getFullYear();
-
-            return day + ' ' + months[monthIndex] + ' ' + year;
-        }
-
-        function reloadDatatable() {
-            datatables.ajax.reload(function() {
-            }, false);
-        }
     });
 </script>
 @endpush
