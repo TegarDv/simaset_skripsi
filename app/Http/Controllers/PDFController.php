@@ -67,7 +67,7 @@ class PDFController extends Controller
         $query = AssetsTransaction::with('dataAsset' , 'dataUser');
 
         if ($request->tipe_transaksi && $request->tipe_transaksi != 'all') {
-            $query->where('tipe_aset', $request->tipe_aset);
+            $query->where('tipe_transaksi', $request->tipe_transaksi);
         }
 
         if ($request->tanggal_awal || $request->tanggal_akhir) {
