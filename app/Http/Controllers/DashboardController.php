@@ -16,12 +16,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $user_login = auth()->user();
         $asset_count = Assets::all()->count();
         $assets = Assets::with('dataStatus', 'dataKondisi', 'dataLokasi')->latest()->take(5)->get();
         $assets_request = AssetsRequest::with('dataUser')->latest()->take(5)->get();
         $transaksi = AssetsTransaction::with('dataAsset' , 'dataUser')->orderBy('tanggal_transaksi', 'asc')->take(5)->get();
         $log_user = LogUsers::with('data_user')->latest()->take(5)->get();
         return view('dashboard', [
+            'user_login' => $user_login,
             'asset_count' => $asset_count,
             'assets' => $assets,
             'assets_request' => $assets_request,

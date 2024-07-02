@@ -9,7 +9,7 @@
             <div class="d-flex align-items-end row">
                 <div class="col-sm-7">
                     <div class="card-body">
-                        <h5 class="card-title text-primary">Selamat datang Mas Bro</h5>
+                        <h5 class="card-title text-primary">Selamat datang {{ $user_login->name }}</h5>
                         <p class="mb-4">Selamat datang di <span class="fw-medium">Sistem Manajemen Aset</span> JTI Polinema</p>    
                     </div>
                 </div>
