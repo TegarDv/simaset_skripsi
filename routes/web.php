@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsetLocationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\PDFController;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,11 +35,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('template.test');
-});
 
 Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    
     Route::resource('/asset-list', PengadaanController::class);
     Route::get('pengadaanJson', [PengadaanController::class, 'pengadaanDataTableJson'])->name('pengadaanJson');
 

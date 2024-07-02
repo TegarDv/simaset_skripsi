@@ -49,6 +49,11 @@ class Assets extends Model
         return $this->belongsTo(AssetLocation::class, 'lokasi_aset');
     }
 
+    public function dataUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id')->with('dataRole');
+    }
+
     public function getStatusNamaAttribute(): string
     {
         return $this->dataStatus->nama_status ?? '';

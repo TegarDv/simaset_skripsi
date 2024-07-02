@@ -16,8 +16,8 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <li class="menu-item">
-            <a href="#" class="menu-link">
+        <li class="menu-item {{ Route::is('dashboard*') ? 'active' : '' }}">
+            <a href="{!! route('dashboard.index') !!}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-apps" style="margin-bottom: 2px;"></i>
                 <div>Dashboard</div>
             </a>
