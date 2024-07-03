@@ -151,6 +151,9 @@ class TrxPengembalianController extends Controller
 
         $data = [];
         foreach ($get_data as $key => $loop) {
+            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $loop->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $loop->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $loop->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,
                 'id' => $loop->id,
@@ -158,7 +161,7 @@ class TrxPengembalianController extends Controller
                 'column3_trx' => $loop->kode_transaksi,
                 'column4_trx' => $loop->dataAsset->kode_aset,
                 'column5_trx' => $loop->stok,
-                'column6_trx' => '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' . $loop->id . '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' . $loop->id . '" title="View"><i class="bi bi-eye text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' . $loop->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>',
+                'column6_trx' => $edit_btn . $read_btn . $delete_btn,
             ];
         }
 

@@ -242,9 +242,9 @@ class PermintaanController extends Controller
 
         $data = [];
         foreach ($assets as $key => $asset) {
-            $edit_btn = '<button class="btn btn-sm btn-label-secondary m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
-            $read_btn = '<button class="btn btn-sm btn-label-secondary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye text-light"></i></button>';
-            $delete_btn = '<button class="btn btn-sm btn-label-secondary m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>';
+            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $accept_btn = '<button class="btn btn-sm btn-label-success m-1 accept-app-btn" data-app-id="' . $asset->id . '" title="accept">Setujui permintaan</button>';
             $data[] = [
                 'index' => $key + 1,

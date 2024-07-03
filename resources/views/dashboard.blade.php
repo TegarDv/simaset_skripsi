@@ -140,7 +140,7 @@
                             <tr>
                                 <td>{{ $loop_data->created_at }}</td>
                                 <td>{{ $loop_data->action }}</td>
-                                <td>{{ $loop_data->detail }}</td>
+                                <td>{!! nl2br(e($loop_data->detail)) !!}</td>
                             </tr>
                         @endforeach
                     </tbody>
