@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\LogUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,14 +28,29 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $oldData = $user->getOriginal();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->fill($request->validated());
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $newData = $user->getAttributes();
+        $user->save();
 
+        $oldDataFormatted = "Name: {$oldData['name']}, Email: {$oldData['email']}, Username: {$oldData['username']}";
+        $newDataFormatted = "Name: {$newData['name']}, Email: {$newData['email']}, Username: {$newData['username']}";
+
+        // Log the changes
+        LogUsers::create([
+            'id_user'   => $user->id,
+            'action'    => 'Update User Data',
+            'detail'    => "Old Data:\n$oldDataFormatted\nUpdate to\nNew Data:\n$newDataFormatted",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
