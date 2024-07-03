@@ -9,8 +9,8 @@
             <div class="d-flex align-items-end row">
                 <div class="col-sm-7">
                     <div class="card-body">
-                        <h5 class="card-title text-primary">Selamat datang {{ $user_login->name }}</h5>
-                        <p class="mb-4">Selamat datang di <span class="fw-medium">Sistem Manajemen Aset</span> JTI Polinema</p>    
+                        <h5 class="card-title text-primary">Selamat datang {{ Auth::user()->name }}</h5>
+                        <p class="mb-4">Selamat datang di <span class="fw-medium">Sistem Manajemen Aset Server</span> JTI Polinema</p>    
                     </div>
                 </div>
                 <div class="col-sm-5 text-center text-sm-left">

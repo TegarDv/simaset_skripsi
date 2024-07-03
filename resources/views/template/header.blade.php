@@ -41,29 +41,32 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    {{-- <span class="fw-semibold d-block">{{ $data_user['name'] }}</span> --}}
-                                    {{-- <small class="text-muted">{{ \Str::ucfirst($data_user['role']) }}</small> --}}
+                                    <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                                    <small class="text-muted">{{ \Str::ucfirst(Auth::user()->dataRole->name) }}</small>
                                 </div>
                             </div>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a class="dropdown-item" href="#">
                             <i class="ti ti-lifebuoy me-2 ti-sm"></i>
                             <span class="align-middle">Help</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="">
-                            <i class="ti ti-logout me-2 ti-sm"></i>
-                            <span class="align-middle">Log Out</span>
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="ti ti-logout me-2 ti-sm"></i>
+                                <span class="align-middle">Log Out</span>
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </li>
