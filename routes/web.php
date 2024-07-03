@@ -80,16 +80,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/laporan-activity/pdf', [PDFController::class, 'activity_print'])->name('activity_print');
     Route::get('/laporanActivityJson', [LaporanController::class, 'laporanActivityJson'])->name('laporanActivityJson');
 });
-Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
+// Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/dashboard_2', function () {
+    return view('dashboard_2');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
