@@ -10,6 +10,7 @@ use App\Models\LogUsers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class PengadaanController extends Controller
@@ -20,7 +21,7 @@ class PengadaanController extends Controller
     public function index()
     {
         $asset = Assets::all();
-        return view('pengadaan.index', ['assets' => $asset]);
+        return view('pengadaan.index');
     }
 
     /**
@@ -28,6 +29,7 @@ class PengadaanController extends Controller
      */
     public function create()
     {
+        $this->authorizeAdminOrSuperAdmin();
         $status = DataStatus::all();
         $lokasi = AssetLocation::all();
         $user = User::all();
@@ -43,6 +45,7 @@ class PengadaanController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorizeAdminOrSuperAdmin();
         $user_login = auth()->user();
         $this->validateData($request);
         if ($request->tipe_aset == 'fisik') {
@@ -112,6 +115,7 @@ class PengadaanController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorizeAdminOrSuperAdmin();
         $data = Assets::findOrFail($id);
         $status = DataStatus::all();
         $lokasi = AssetLocation::all();
@@ -124,6 +128,7 @@ class PengadaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorizeAdminOrSuperAdmin();
         $user_login = auth()->user();
         $this->validateData($request);
 
@@ -167,6 +172,7 @@ class PengadaanController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorizeAdminOrSuperAdmin();
         $data = Assets::findOrFail($id);
         $data->delete();
         
@@ -218,9 +224,15 @@ class PengadaanController extends Controller
 
         $data = [];
         foreach ($assets as $key => $asset) {
-            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
-            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye"></i></button>';
-            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
+            if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
+                $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+                $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye"></i></button>';
+                $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
+            } else {
+                $edit_btn = '';
+                $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye"></i></button>';
+                $delete_btn = '';
+            }
             $data[] = [
                 'index' => $key + 1,
                 'id' => $asset->id,
