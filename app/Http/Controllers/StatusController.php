@@ -45,7 +45,6 @@ class StatusController extends Controller
 
         DataStatus::create([
             'nama_status'          => $request->nama_status,
-            'status'               => '1',
             'color'                => $request->color,
             'created_at'           => now(),
             'updated_at'           => now(),
@@ -87,7 +86,6 @@ class StatusController extends Controller
 
         $data->update([
             'nama_status'          => $request->nama_status,
-            'status'               => $request->status,
             'color'                => $request->color,
             'updated_at'           => now(),
         ]);
@@ -106,10 +104,7 @@ class StatusController extends Controller
     {
         try {
             $data = DataStatus::findOrFail($id);
-            $data->update([
-                'status'               => '0',
-                'updated_at'           => now(),
-            ]);
+            $data->delete();
             
             return response()->json([
                 'error' => false,
@@ -129,16 +124,38 @@ class StatusController extends Controller
     {
         $this->validate($request, [
             'nama_status'   => 'required',
-            'status'        => 'nullable|in:0,1',
             'color'         => 'required|in:primary,secondary,success,danger,warning,info,light,dark',
         ]);
     }
 
-    public function statusJson()
+    // public function statusJson()
+    // {
+    //     $data_status = DataStatus::select('id', 'nama_status', 'color', 'status', 'created_at', 'updated_at')->get();
+    //     return response()->json([
+    //         'data' => $data_status,
+    //     ]);
+    // }
+
+    public function dataTableJson()
     {
-        $data_status = DataStatus::select('id', 'nama_status', 'color', 'status', 'created_at', 'updated_at')->get();
+        $get_data = DataStatus::all();
+
+        $data = [];
+        foreach ($get_data as $key => $loop_data) {
+            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $loop_data->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $loop_data->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $loop_data->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
+            $data[] = [
+                'index' => $key + 1,
+                'column2_table' => $loop_data->nama_status,
+                'column3_table' => '<span class="badge rounded-pill border text-bg-'. $loop_data->color .'">'. $loop_data->nama_status .'</span>',
+                'column4_table' => 'Dibuat pada: ' . $loop_data->created_at . '<br>Terakhir di update: ' . $loop_data->updated_at,
+                'column5_table' => $edit_btn . $read_btn . $delete_btn,
+            ];
+        }
+
         return response()->json([
-            'data' => $data_status,
+            'data' => $data,
         ]);
     }
 }

@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('permintaanJson', [PermintaanController::class, 'datatableJson'])->name('permintaanJson');
 
     Route::resource('/asset-status', StatusController::class);
-    Route::get('statusJson', [StatusController::class, 'statusJson'])->name('statusJson');
+    Route::get('statusJson', [StatusController::class, 'dataTableJson'])->name('statusJson');
 
     Route::resource('/asset-location', AsetLocationController::class);
     Route::get('locationJson', [AsetLocationController::class, 'lokasiDataTableJson'])->name('locationJson');

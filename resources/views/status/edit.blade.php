@@ -49,14 +49,6 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">
-            <label class="font-weight-bold">Status</label>
-            <select class="form-select mb-2" name="status" required>
-                <option value="" disabled>Select Tipe Aset</option>
-                <option value="1" {{ $data['status'] == '1' ? 'selected' : '' }}>Active</option>
-                <option value="0" {{ $data['status'] == '0' ? 'selected' : '' }}>Off</option>
-            </select>
-        </div>
     </div>
     <div class="modal-footer">
         <div class="text-end mt-3">

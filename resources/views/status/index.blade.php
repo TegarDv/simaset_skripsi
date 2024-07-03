@@ -25,18 +25,7 @@
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
             </button>
         </div>
-        <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets">
-            <thead>
-                <tr>
-                    <th scope="col text-center">No</th>
-                    <th scope="col text-center">Nama</th>
-                    <th scope="col text-center">Warna</th>
-                    <th scope="col text-center">Waktu</th>
-                    <th scope="col text-center">Status</th>
-                    <th scope="col text-center">Action</th>
-                </tr>
-            </thead>
-        </table>
+        <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
     </div>
 </div>
 
@@ -150,71 +139,11 @@
             ],
             scrollY: false,
             columns: [
-                { data: null, width: '5%', render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }},
-                {
-                    data: 'nama_status',
-                    width: '20%', //25
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        return '<div class="text-light">' + data + '</div>';
-                    }
-                },
-                { 
-                    data: 'color',
-                    width: '5%', //30
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        return '<span class="badge rounded-pill border text-bg-' + data + '">' + data + '</span>';
-                    }
-                },
-                { 
-                    data: null,
-                    width: '20%', //50
-                    render: function (data, type, row) {
-                        var created_at = row.created_at ? formatDate(row.created_at) : '';
-                        var updated_at = row.updated_at ? formatDate(row.updated_at) : '';
-
-                        var created_atReturn = '<div class="text-light">Aset dibuat pada: ' + created_at + '</div>';
-                        var updated_atReturn = '<div class="text-light">Terakhir di update pada: ' + updated_at + '</div>';
-                        
-                        var viewReturn = created_atReturn + updated_atReturn;
-
-                        return viewReturn;
-                    }
-                },
-                {
-                    data: 'status',
-                    width: '5%', //55
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        if (data == 1) {
-                            return '<span class="badge rounded-pill border text-bg-success">Active</span>';
-                        } else {
-                            return '<span class="badge rounded-pill border text-bg-danger">Off</span>';
-                        }
-
-                    }
-                },
-                {
-                    data: null,
-                    width: '15%',
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        var id_aset = row.id || '';
-
-                        var id_asetReturn = '<div class="text-light">ID: ' + id_aset + '</div>';
-
-                        var editButton = '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' + id_aset + '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button>';
-                        var showButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' + id_aset + '" title="View"><i class="bi bi-eye text-light"></i></button>';
-                        var deleteButton = '<button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' + id_aset + '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>';
-                        
-                        var viewReturn = editButton + showButton + deleteButton;
-
-                        return viewReturn;
-                    }
-                }
+                { data: 'index', width: '5%', name: 'index', title: 'No' },
+                { data: 'column2_table', width: '10%', name: 'column2_table', title: 'Nama Status' },
+                { data: 'column3_table', width: '10%', name: 'column3_table', title: 'Warna' },
+                { data: 'column4_table', width: '10%', name: 'column4_table', title: 'Waktu' },
+                { data: 'column5_table', width: '10%', className: 'text-center', name: 'column4_table', title: 'Action' }
             ],
             // initComplete: function () {
             //     // Add event listener for the filter change
@@ -322,34 +251,34 @@
                         headers: {
                             'X-CSRF-TOKEN': csrfToken
                         },
-                        success: function (response) {
+                        success: function(response) {
+                            showLoader();
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Deleted!',
-                                text: response.message
+                                title: 'Success',
+                                text: response.message,
+                                customClass: {
+                                    confirmButton: 'swalBtnConfirm swalButton',
+                                }
                             });
+                            reloadDatatable();
+                            hideLoader();
                         },
-                        error: function (xhr, status, error) {
-                            showToast('An error occurred while deleting the asset.', 'error');
+                        error: function(error) {
+                            // console.log(error.responseJSON.message);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: error.responseJSON.message,
+                                customClass: {
+                                    confirmButton: 'swalBtnConfirm swalButton',
+                                }
+                            });
                         }
                     });
                 }
             });
         });
-
-        function formatDate(timestamp) {
-            var months = [
-                "January", "February", "March", "April", "May", "June", "July",
-                "August", "September", "October", "November", "December"
-            ];
-
-            var date = new Date(timestamp);
-            var day = date.getDate();
-            var monthIndex = date.getMonth();
-            var year = date.getFullYear();
-
-            return day + ' ' + months[monthIndex] + ' ' + year;
-        }
 
         function reloadDatatable() {
             datatables.ajax.reload(function() {

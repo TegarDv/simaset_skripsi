@@ -16,7 +16,6 @@ class DataStatus extends Model
 
     protected $fillable = [
         'nama_status',
-        'status',
         'color',
         'created_at',
         'updated_at',

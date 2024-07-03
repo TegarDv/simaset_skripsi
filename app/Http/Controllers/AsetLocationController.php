@@ -136,7 +136,6 @@ class AsetLocationController extends Controller
             $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,
-                'id' => $asset->id,
                 'column2_aset' => '<div class="text-light">' . $asset->location . '</div>',
                 'column3_aset' => '<div class="text-light">Dibuat pada: ' . $asset->created_at . '<br>Terakhir di update: ' . $asset->updated_at . '</div>',
                 'column4_aset' => $edit_btn . $read_btn . $delete_btn,
