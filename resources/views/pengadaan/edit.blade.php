@@ -11,14 +11,14 @@
         <div class="row g-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Nama Aset</label>
-                <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" readonly>
+                <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" required>
             </div>
             <div class="col-lg">
                 <label class="font-weight-bold">Tipe Aset</label>
                 <select class="form-select" name="tipe_aset" required>
-                    <option value="fisik" {{ $data['tipe_aset'] == 'fisik' ? 'selected' : '' }}>fisik</option>
-                    <option value="digital" {{ $data['tipe_aset'] == 'digital' ? 'selected' : '' }}>digital</option>
-                    <option value="layanan" {{ $data['tipe_aset'] == 'layanan' ? 'selected' : '' }}>layanan</option>
+                    <option value="fisik" {{ $data['tipe_aset'] == 'fisik' ? 'selected' : '' }}>Fisik</option>
+                    <option value="digital" {{ $data['tipe_aset'] == 'digital' ? 'selected' : '' }}>Digital</option>
+                    <option value="layanan" {{ $data['tipe_aset'] == 'layanan' ? 'selected' : '' }}>Layanan</option>
                 </select>
             </div>
         </div>

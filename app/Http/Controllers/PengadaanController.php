@@ -167,22 +167,13 @@ class PengadaanController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $data = Assets::findOrFail($id);
-            $data->delete();
-            
-            return response()->json([
-                'error' => false,
-                'toast' => 'success',
-                'message' => 'Data Berhasil Dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'toast' => 'danger',
-                'message' => 'Error occurred while deleting data: ' . $e->getMessage()
-            ]);
-        }
+        $data = Assets::findOrFail($id);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
     }
 
     private function validateData(Request $request)
@@ -227,14 +218,17 @@ class PengadaanController extends Controller
 
         $data = [];
         foreach ($assets as $key => $asset) {
+            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,
                 'id' => $asset->id,
-                'column2_aset' => '<div class="text-light">' . $asset->kode_aset . '</div>',
-                'column3_aset' => '<div class="text-light">Nama: ' . $asset->nama_aset . '<br>Tipe: ' . $asset->tipe_aset . '<br>Sisa stok: ' . $asset->stok_sekarang . '<br>Harga: ' . $asset->harga . '<br>Tipe: ' . $asset->tipe_aset .  '</div>',
-                'column4_aset' => '<div class="text-light">Masa berlaku: ' . $asset->masa_berlaku . '<br>Dibuat pada: ' . $asset->created_at . '<br>Terakhir di update: ' . $asset->updated_at . '</div>',
+                'column2_aset' => $asset->kode_aset,
+                'column3_aset' => 'Nama: ' . $asset->nama_aset . '<br>Tipe: ' . $asset->tipe_aset . '<br>Sisa stok: ' . $asset->stok_sekarang . '<br>Harga: ' . $asset->harga,
+                'column4_aset' => 'Masa berlaku: ' . $asset->masa_berlaku . '<br>Dibuat pada: ' . $asset->created_at . '<br>Terakhir di update: ' . $asset->updated_at,
                 'column5_aset' => '<span class="badge rounded-pill border text-bg-' . $asset->status_color . '">' . $asset->status_nama . '</span>',
-                'column6_aset' => '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>',
+                'column6_aset' => $edit_btn . $read_btn . $delete_btn,
             ];
         }
 

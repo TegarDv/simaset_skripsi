@@ -36,12 +36,12 @@ class Assets extends Model
 
     public function dataStatus(): BelongsTo
     {
-        return $this->belongsTo(DataStatus::class, 'status_aset')->where('status', '1');
+        return $this->belongsTo(DataStatus::class, 'status_aset');
     }
 
     public function dataKondisi(): BelongsTo
     {
-        return $this->belongsTo(DataStatus::class, 'kondisi_aset')->where('status', '1');
+        return $this->belongsTo(DataStatus::class, 'kondisi_aset');
     }
 
     public function dataLokasi(): BelongsTo

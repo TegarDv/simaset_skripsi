@@ -102,22 +102,13 @@ class StatusController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $data = DataStatus::findOrFail($id);
-            $data->delete();
-            
-            return response()->json([
-                'error' => false,
-                'toast' => 'success',
-                'message' => 'Data Berhasil Dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'toast' => 'danger',
-                'message' => 'Error occurred while deleting data: ' . $e->getMessage()
-            ]);
-        }
+        $data = DataStatus::findOrFail($id);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
     }
 
     private function validateData(Request $request)
