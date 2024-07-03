@@ -76,12 +76,14 @@ class LogActivityController extends Controller
 
         $data = [];
         foreach ($get_data as $key => $loop_data) {
+            $detail = nl2br(e($loop_data->detail));
+
             $data[] = [
                 'index' => $key + 1,
                 'id' => $loop_data->id,
                 'column2_table' => 'Tanggal tindakan: ' . $loop_data->created_at,
                 'column3_table' => $loop_data->action . '<br>Oleh: ' . $loop_data->data_user->name,
-                'column4_table' => 'Detail: ' . $loop_data->detail,
+                'column4_table' => $detail,
             ];
         }
 

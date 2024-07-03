@@ -139,7 +139,7 @@
                 { data: 'index', width: '5%', name: 'index', title: 'No' },
                 { data: 'column2_table', width: '15%', name: 'column2_table', title: 'Tanggal' },
                 { data: 'column3_table', width: '15%', name: 'column3_table', title: 'Tindakan' },
-                { data: 'column4_table', width: '65%', className: 'text-center', name: 'column4_aset', title: 'Detail' }
+                { data: 'column4_table', width: '65%', className: 'text-start', name: 'column4_aset', title: 'Detail' }
             ],
             // initComplete: function () {
             //     // Add event listener for the filter change
