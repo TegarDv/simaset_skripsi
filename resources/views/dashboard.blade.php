@@ -39,8 +39,11 @@
         </div>
     </div>
 </div>
+@php
+    $userRole = Auth::user()->role;
+@endphp
 <div class="row g-4 mb-4">
-    <div class="col-lg-6">
+    <div class="{{ Gate::allows('isUser') ? 'col-lg-12' : 'col-lg-6' }}">
         <div class="card">
             <h5 class="card-header">Aset Terbaru</h5>
             <div class="card-datatable table-responsive pt-0">
@@ -71,83 +74,87 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <h5 class="card-header">Permintaan Terbaru</h5>
-            <div class="card-datatable table-responsive pt-0">
-                <table class="datatables-basic table">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Permintaan</th>
-                            <th>Tipe Asset</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($assets_request as $loop_data)
+    @canany(['isSuperAdmin', 'isAdmin'])
+        <div class="col-lg-6">
+            <div class="card">
+                <h5 class="card-header">Permintaan Terbaru</h5>
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="datatables-basic table">
+                        <thead>
                             <tr>
-                                <td>{{ $loop_data->created_at }}</td>
-                                <td>Aset: {{ $loop_data->nama }}<br>Permintaan: {{ $loop_data->stok_permintaan }}<br>Oleh: {{ $loop_data->dataUser->name }}</td>
-                                <td>{{ $loop_data->tipe_aset }}</td>
+                                <th>Tanggal</th>
+                                <th>Permintaan</th>
+                                <th>Tipe Asset</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($assets_request as $loop_data)
+                                <tr>
+                                    <td>{{ $loop_data->created_at }}</td>
+                                    <td>Aset: {{ $loop_data->nama }}<br>Permintaan: {{ $loop_data->stok_permintaan }}<br>Oleh: {{ $loop_data->dataUser->name }}</td>
+                                    <td>{{ $loop_data->tipe_aset }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <h5 class="card-header">Transaksi Terbaru</h5>
-            <div class="card-datatable table-responsive pt-0">
-                <table class="datatables-basic table">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Kode Transaksi</th>
-                            <th>Kode Aset</th>
-                            <th>Jumlah Transaksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($transaksi as $loop_data)
+        <div class="col-lg-6">
+            <div class="card">
+                <h5 class="card-header">Transaksi Terbaru</h5>
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="datatables-basic table">
+                        <thead>
                             <tr>
-                                <td>{{ $loop_data->tanggal_transaksi }}</td>                                
-                                <td>{{ $loop_data->kode_transaksi }}</td>                                
-                                <td>{{ $loop_data->dataAsset->kode_aset }}</td>                                
-                                <td>{{ $loop_data->stok }}</td>                                
+                                <th>Tanggal</th>
+                                <th>Kode Transaksi</th>
+                                <th>Kode Aset</th>
+                                <th>Jumlah Transaksi</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($transaksi as $loop_data)
+                                <tr>
+                                    <td>{{ $loop_data->tanggal_transaksi }}</td>                                
+                                    <td>{{ $loop_data->kode_transaksi }}</td>                                
+                                    <td>{{ $loop_data->dataAsset->kode_aset }}</td>                                
+                                    <td>{{ $loop_data->stok }}</td>                                
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <h5 class="card-header">Aktivitas Terbaru</h5>
-            <div class="card-datatable table-responsive pt-0">
-                <table class="datatables-basic table">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Tindakan</th>
-                            <th>Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($log_user as $loop_data)
+    @endcanany
+    @can('isSuperAdmin')
+        <div class="col-lg-6">
+            <div class="card">
+                <h5 class="card-header">Aktivitas Terbaru</h5>
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="datatables-basic table">
+                        <thead>
                             <tr>
-                                <td>{{ $loop_data->created_at }}</td>
-                                <td>{{ $loop_data->action }}</td>
-                                <td>{!! nl2br(e($loop_data->detail)) !!}</td>
+                                <th>Tanggal</th>
+                                <th>Tindakan</th>
+                                <th>Detail</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($log_user as $loop_data)
+                                <tr>
+                                    <td>{{ $loop_data->created_at }}</td>
+                                    <td>{{ $loop_data->action }}</td>
+                                    <td>{!! nl2br(e($loop_data->detail)) !!}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    @endcan
 </div>
 @endsection
 @push('css')

@@ -10,15 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->authorizeSuperAdmin();
-            // $this->authorizeAdminOrSuperAdmin();
-            // $this->authorizeAllUser();
-            return $next($request);
-        });
-    }
     public function index()
     {
         return view('users.index');
@@ -158,7 +149,7 @@ class UsersController extends Controller
         $data = [];
         foreach ($users as $key => $user) {
             $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $user->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
-            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $user->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $read_btn = '';
             $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $user->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,
