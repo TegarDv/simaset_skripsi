@@ -32,10 +32,12 @@
             <div class="col">
                 <label class="font-weight-bold">Tanggal Awal</label>
                 <input type="date" class="form-control" name="tanggal_awal">
+                <div class="form-text">Jika kosong maka akan print data semua tanggal</div>
             </div>
             <div class="col">
                 <label class="font-weight-bold">Tanggal Akhir</label>
                 <input type="date" class="form-control" name="tanggal_akhir">
+                <div class="form-text">Jika kosong maka akan print data semua tanggal</div>
             </div>
         </div>
 
