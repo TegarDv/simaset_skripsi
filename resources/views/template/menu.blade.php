@@ -42,16 +42,18 @@
                         <div>Permintaan Aset</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('asset-location*') ? 'active' : '' }}">
-                    <a href="{!! route('asset-location.index') !!}" class="menu-link">
-                        <div>Lokasi Aset</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Route::is('asset-status*') ? 'active' : '' }}">
-                    <a href="{!! route('asset-status.index') !!}" class="menu-link">
-                        <div>Status & Kondisi Aset</div>
-                    </a>
-                </li>
+                @canany(['isSuperAdmin', 'isAdmin'])
+                    <li class="menu-item {{ Route::is('asset-location*') ? 'active' : '' }}">
+                        <a href="{!! route('asset-location.index') !!}" class="menu-link">
+                            <div>Lokasi Aset</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Route::is('asset-status*') ? 'active' : '' }}">
+                        <a href="{!! route('asset-status.index') !!}" class="menu-link">
+                            <div>Status & Kondisi Aset</div>
+                        </a>
+                    </li>
+                @endcanany
             </ul>
         </li>
         <li class="menu-item {{ Route::is('transaksi-*') ? 'active' : '' }}">
@@ -72,45 +74,50 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ Route::is('laporan-*') ? 'active' : '' }}">
-            <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti bi-printer" style="margin-bottom: 2px;"></i>
-                <div>Laporan</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Route::is('laporan-assets*') ? 'active' : '' }}">
-                    <a href="{!! route('laporan-assets.index') !!}" class="menu-link">
-                        <div>Laporan Data Aset</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Route::is('laporan-transaksi*') ? 'active' : '' }}">
-                    <a href="{!! route('laporan-transaksi.index') !!}" class="menu-link">
-                        <div>Laporan Transaksi</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Route::is('laporan-activity*') ? 'active' : '' }}">
-                    <a href="{!! route('laporan-activity.index') !!}" class="menu-link">
-                        <div>Laporan Aktivitas</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        @canany(['isSuperAdmin', 'isAdmin'])
+            <li class="menu-item {{ Route::is('laporan-*') ? 'active' : '' }}">
+                <a href="#" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons ti bi-printer" style="margin-bottom: 2px;"></i>
+                    <div>Laporan</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ Route::is('laporan-assets*') ? 'active' : '' }}">
+                        <a href="{!! route('laporan-assets.index') !!}" class="menu-link">
+                            <div>Laporan Data Aset</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Route::is('laporan-transaksi*') ? 'active' : '' }}">
+                        <a href="{!! route('laporan-transaksi.index') !!}" class="menu-link">
+                            <div>Laporan Transaksi</div>
+                        </a>
+                    </li>
+                    @can('isSuperAdmin')
+                        <li class="menu-item {{ Route::is('laporan-activity*') ? 'active' : '' }}">
+                            <a href="{!! route('laporan-activity.index') !!}" class="menu-link">
+                                <div>Laporan Aktivitas</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcanany
 
-
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Other</span>
-        </li>
-        <li class="menu-item {{ Route::is('log-user*') ? 'active' : '' }}">
-            <a href="{!! route('log-user.index') !!}" class="menu-link">
-                <i class="menu-icon tf-icons ti bi-activity" style="margin-bottom: 2px;"></i>
-                <div>Log Aktivitas</div>
-            </a>
-        </li>
-        <li class="menu-item {{ Route::is('users*') ? 'active' : '' }}">
-            <a href="{!! route('users.index') !!}" class="menu-link">
-                <i class="menu-icon tf-icons ti bi-people" style="margin-bottom: 2px;"></i>
-                <div>Kelola Users</div>
-            </a>
-        </li>
+        @can('isSuperAdmin')
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Other</span>
+            </li>
+            <li class="menu-item {{ Route::is('log-user*') ? 'active' : '' }}">
+                <a href="{!! route('log-user.index') !!}" class="menu-link">
+                    <i class="menu-icon tf-icons ti bi-activity" style="margin-bottom: 2px;"></i>
+                    <div>Log Aktivitas</div>
+                </a>
+            </li>
+            <li class="menu-item {{ Route::is('users*') ? 'active' : '' }}">
+                <a href="{!! route('users.index') !!}" class="menu-link">
+                    <i class="menu-icon tf-icons ti bi-people" style="margin-bottom: 2px;"></i>
+                    <div>Kelola Users</div>
+                </a>
+            </li>
+        @endcan
     </ul>
 </aside>
