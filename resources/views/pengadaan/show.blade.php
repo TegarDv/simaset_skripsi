@@ -1,58 +1,70 @@
-<!-- Button trigger modal -->
 <div class="modal-header">
-    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Transaksi</h1>
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Aset {{ $data['kode_aset'] ?? '' }}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form class="row g-3" action="{{ route('pengadaan.update', ['pengadaan' => $data->id]) }}" method="POST" id="updateForm">
-        @csrf
-        @method('PUT')
-
-        <div class="form-group col-md-12">
-            <label class="font-weight-bold">No Transaksi / Order id <small class="text-warning">No transaksi tidak dapat diedit</small></label>
-            <input type="text" class="form-control @error('id') is-invalid @enderror" name="id" value="{{ $data['id'] }}" readonly>
-        
-            <!-- error message untuk id -->
-            @error('id')
-                <div class="alert alert-danger mt-2">
-                    {{ $message }}
-                </div>
-            @enderror
+    <div class="row g-2">
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Nama Aset</label>
+            <p>{{ $data['nama_aset'] ?? '' }}</p>
         </div>
-    </form> 
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Tipe Aset</label>
+            <p>{{ ucfirst($data['tipe_aset'] ?? '') }}</p>
+        </div>
+    </div>
+    <hr class="mt-2 mb-2">
+    <div class="row g-2">
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Stok Aset</label>
+            <p>{{ $data['stok_sekarang'] ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Harga Aset</label>
+            <p>Rp {{ number_format($data['harga'] ?? 0, 0, ',', '.') }}</p>
+        </div>
+        <div class="col">
+            <label class="font-weight-bold text-primary">Masa Berlaku</label>
+            <p>{{ $data['masa_berlaku'] ?? '' }}</p>
+        </div>
+        <div class="col">
+            <label class="font-weight-bold text-primary">Tanggal Penerimaan</label>
+            <p>{{ $data['tanggal_penerimaan'] ?? '' }}</p>
+        </div>
+    </div>
+    <hr class="mt-2 mb-2">
+    <div class="row g-2">
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Status Aset</label>
+            <p>{{ $data->dataStatus->nama_status ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Kondisi Aset</label>
+            <p>{{ $data->dataKondisi->nama_status ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Lokasi Aset</label>
+            <p>{{ $data->dataLokasi->location ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Pemilik Aset</label>
+            <p>{{ $data->dataUser->name ?? '' }}</p>
+        </div>
+    </div>
+    <hr class="mt-2 mb-2">
+    <div class="row g-2">
+        <div class="col-lg-6">
+            <label class="font-weight-bold text-primary">Spesifikasi</label>
+            <p>{{ $data['spesifikasi'] ?? '' }}</p>
+        </div>
+        <div class="col">
+            <label class="font-weight-bold text-primary">Keterangan</label>
+            <p>{{ $data['keterangan'] ?? '' }}</p>
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
     <div class="text-end mt-3">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="submitForm()" class="btn btn-md btn-primary">Save</button>
-        {{-- <button class="btn btn-primary" type="button" onclick="submitForm()" name="tombol" value="submit">Simpan</button> --}}
-        {{-- <button type="reset" class="btn btn-md btn-warning">RESET</button> --}}
+        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
     </div>
 </div>
-<script>
-    function submitForm() {
-        console.log('Submitting form data:', $('#updateForm').serialize());
-        // Submit the form using AJAX
-        $.ajax({
-            url: $('#updateForm').attr('action'),
-            type: 'POST',
-            data: $('#updateForm').serialize(),
-            success: function(response) {
-                // Close the modal upon success
-                $('#editModal').modal('hide');
-                // Show a success toast
-                showToast(response.message, 'success');
-
-                // Reload Animation
-                showLoader();
-                hideLoader();
-            },
-            error: function(error) {
-                // Handle errors if needed
-                console.log(error.responseJSON.message);
-                // Show a failure toast
-                showToast(error.responseJSON.message, 'danger');
-            }
-        });
-    }
-</script>

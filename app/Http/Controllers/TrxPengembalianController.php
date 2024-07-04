@@ -103,7 +103,8 @@ class TrxPengembalianController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = AssetsTransaction::findOrFail($id);
+        return view('transaksi_pengembalian.show', compact('data'));
     }
 
     /**
@@ -123,7 +124,51 @@ class TrxPengembalianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user_login = auth()->user();
+        $this->validateData($request);
+
+        $data = AssetsTransaction::findOrFail($id);
+        $asset_data_lama = Assets::findOrFail($data->asset_id);
+        $asset_data_baru = Assets::where('kode_aset', $request->asset)->first();
+        $data_lama = $data->replicate();
+
+        if ($request->jumlah > $asset_data_baru->stok_sekarang) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Stock tidak mencukupi'
+            ], 403);
+        }
+        $asset_data_lama->update([
+            'stok_sekarang'        => $asset_data_lama->stok_sekarang - $data->stok,
+        ]);
+
+        $data->update([
+            'asset_id'          => $asset_data_baru->id,
+            'user_id'           => $request->user,
+            'stok'              => $request->jumlah,
+            'stok_sesudah'      => $data->stok_sebelum + $request->jumlah,
+            'keterangan'        => $request->keterangan,
+            'tanggal_transaksi' => $request->tanggal,
+            'updated_at'        => now(),
+        ]);
+        $asset_data_baru->update([
+            'stok_sekarang'        => $asset_data_baru->stok_sekarang + $request->jumlah,
+            'updated_at'           => now(),
+        ]);
+        $data_baru = $data;
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Update Transaksi Pengembalian',
+            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json([
+            'error'   => false,
+            'message' => 'Data Berhasil Diubah'
+        ]);
     }
 
     /**
@@ -131,7 +176,17 @@ class TrxPengembalianController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = AssetsTransaction::findOrFail($id);
+        $asset_data_lama = Assets::findOrFail($data->asset_id);
+        $asset_data_lama->update([
+            'stok_sekarang'        => $asset_data_lama->stok_sekarang - $data->stok,
+        ]);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
     }
 
     private function validateData(Request $request)

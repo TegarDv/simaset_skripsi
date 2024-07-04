@@ -55,7 +55,7 @@
         </div>
         <div class="mb-1">
             <label class="font-weight-bold">Keterangan Transkasi</label>
-            <textarea class="form-control" rows="3" name="keterangan" required></textarea>
+            <textarea class="form-control" rows="3" name="keterangan" required>{{ $asset_select['keterangan'] }}</textarea>
         </div>
 
     </div>

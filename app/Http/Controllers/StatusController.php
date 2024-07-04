@@ -134,7 +134,7 @@ class StatusController extends Controller
         $data = [];
         foreach ($get_data as $key => $loop_data) {
             $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $loop_data->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
-            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $loop_data->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $read_btn = '';
             $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $loop_data->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,

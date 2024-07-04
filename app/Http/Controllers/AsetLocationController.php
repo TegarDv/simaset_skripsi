@@ -115,7 +115,13 @@ class AsetLocationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = AssetLocation::findOrFail($id);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
     }
 
     private function validateData(Request $request)
@@ -132,7 +138,7 @@ class AsetLocationController extends Controller
         $data = [];
         foreach ($assets as $key => $asset) {
             $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $asset->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
-            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $asset->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $read_btn = '';
             $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $asset->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,

@@ -78,7 +78,7 @@ class PermintaanController extends Controller
     public function show(string $id)
     {
         $data = AssetsRequest::findOrFail($id);
-        return view('permintaan.show', compact('data', 'status'));
+        return view('permintaan.show', compact('data'));
     }
 
     /**
@@ -132,20 +132,13 @@ class PermintaanController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $data = AssetsRequest::findOrFail($id);
-            $data->delete();
-            
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Berhasil Dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Error occurred while deleting data: ' . $e->getMessage()
-            ]);
-        }
+        $data = AssetsRequest::findOrFail($id);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
     }
 
     public function accept_asset(string $id)

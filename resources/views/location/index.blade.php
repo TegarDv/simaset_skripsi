@@ -186,7 +186,8 @@
         // Reload data
         $('#reloadDatatable').on('click', function() {
             showLoader();
-            reloadDatatable();
+            datatables.ajax.reload(function() {
+            }, false);
         });
 
         // Handle view button click event
@@ -250,11 +251,29 @@
                         headers: {
                             'X-CSRF-TOKEN': csrfToken
                         },
-                        success: function (response) {
-                            showToast(response.message, 'success');
+                        success: function(response) {
+                            showLoader();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message,
+                                customClass: {
+                                    confirmButton: 'swalBtnConfirm swalButton',
+                                }
+                            });
+                            reloadDatatable();
+                            hideLoader();
                         },
-                        error: function (xhr, status, error) {
-                            showToast('An error occurred while deleting the asset.', 'error');
+                        error: function(error) {
+                            // console.log(error.responseJSON.message);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: error.responseJSON.message,
+                                customClass: {
+                                    confirmButton: 'swalBtnConfirm swalButton',
+                                }
+                            });
                         }
                     });
                 }

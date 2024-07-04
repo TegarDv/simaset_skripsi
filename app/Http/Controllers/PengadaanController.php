@@ -48,6 +48,7 @@ class PengadaanController extends Controller
         $this->authorizeAdminOrSuperAdmin();
         $user_login = auth()->user();
         $this->validateData($request);
+
         if ($request->tipe_aset == 'fisik') {
             $typePart = 'FS';
         } elseif ($request->tipe_aset == 'digital') {
@@ -55,8 +56,6 @@ class PengadaanController extends Controller
         } elseif ($request->tipe_aset == 'layanan') {
             $typePart = 'LY';
         }
-
-        $randomChars = strtoupper(str_shuffle(preg_replace('/[^A-Z]/', '', Str::random(3))));
 
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomChars = '';
@@ -85,20 +84,39 @@ class PengadaanController extends Controller
             'created_at'           => now(),
             'updated_at'           => now(),
         ]);
+
+        // Format the data for logging
+        $newDataFormatted = "Tipe Aset: {$data->tipe_aset}\n" .
+                            "Kode Aset: {$data->kode_aset}\n" .
+                            "Nama Aset: {$data->nama_aset}\n" .
+                            "Harga: {$data->harga}\n" .
+                            "Spesifikasi: {$data->spesifikasi}\n" .
+                            "Keterangan: {$data->keterangan}\n" .
+                            "Stok Awal: {$data->stok_awal}\n" .
+                            "Stok Sekarang: {$data->stok_sekarang}\n" .
+                            "Masa Berlaku: {$data->masa_berlaku}\n" .
+                            "Tanggal Penerimaan: {$data->tanggal_penerimaan}\n" .
+                            "Status Aset: {$data->status_aset}\n" .
+                            "Kondisi Aset: {$data->kondisi_aset}\n" .
+                            "Lokasi Aset: {$data->lokasi_aset}\n" .
+                            "Pemilik Aset: {$data->pemilik_aset}\n" .
+                            "Created At: {$data->created_at}\n" .
+                            "Updated At: {$data->updated_at}";
+
         LogUsers::create([
-            'id_user'               => $user_login->id,
-            'action'                => 'Tambah Aset',
-            'detail'                => $data,
-            'created_at'            => now(),
-            'updated_at'            => now(),
+            'id_user'   => $user_login->id,
+            'action'    => 'Tambah Aset',
+            'detail'    => $newDataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        // return back()->with('success', 'Data Berhasil Disimpan!');
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Ditambahkan'
         ]);
     }
+
 
     /**
      * Display the specified resource.
@@ -133,7 +151,7 @@ class PengadaanController extends Controller
         $this->validateData($request);
 
         $data = Assets::findOrFail($id);
-        $data_lama = $data->replicate();
+        $data_lama = $data->replicate()->toArray();
 
         $data->update([
             'tipe_aset'            => $request->tipe_aset,
@@ -150,12 +168,41 @@ class PengadaanController extends Controller
             'pemilik_aset'         => $request->pemilik_aset,
             'updated_at'           => now(),
         ]);
-        $data_baru = $data;
+        $data_baru = $data->toArray();
+
+        // Prepare old and new data in a readable format
+        $oldDataFormatted = "Tipe Aset: {$data_lama['tipe_aset']}\n" .
+                            "Nama Aset: {$data_lama['nama_aset']}\n" .
+                            "Harga: {$data_lama['harga']}\n" .
+                            "Spesifikasi: {$data_lama['spesifikasi']}\n" .
+                            "Keterangan: {$data_lama['keterangan']}\n" .
+                            "Stok Sekarang: {$data_lama['stok_sekarang']}\n" .
+                            "Masa Berlaku: {$data_lama['masa_berlaku']}\n" .
+                            "Tanggal Penerimaan: {$data_lama['tanggal_penerimaan']}\n" .
+                            "Status Aset: {$data_lama['status_aset']}\n" .
+                            "Kondisi Aset: {$data_lama['kondisi_aset']}\n" .
+                            "Lokasi Aset: {$data_lama['lokasi_aset']}\n" .
+                            "Pemilik Aset: {$data_lama['pemilik_aset']}\n" .
+                            "Updated At: " . ($data_lama['updated_at'] ?? 'N/A');
+
+        $newDataFormatted = "Tipe Aset: {$data_baru['tipe_aset']}\n" .
+                            "Nama Aset: {$data_baru['nama_aset']}\n" .
+                            "Harga: {$data_baru['harga']}\n" .
+                            "Spesifikasi: {$data_baru['spesifikasi']}\n" .
+                            "Keterangan: {$data_baru['keterangan']}\n" .
+                            "Stok Sekarang: {$data_baru['stok_sekarang']}\n" .
+                            "Masa Berlaku: {$data_baru['masa_berlaku']}\n" .
+                            "Tanggal Penerimaan: {$data_baru['tanggal_penerimaan']}\n" .
+                            "Status Aset: {$data_baru['status_aset']}\n" .
+                            "Kondisi Aset: {$data_baru['kondisi_aset']}\n" .
+                            "Lokasi Aset: {$data_baru['lokasi_aset']}\n" .
+                            "Pemilik Aset: {$data_baru['pemilik_aset']}\n" .
+                            "Updated At: " . ($data_baru['updated_at'] ?? 'N/A');
 
         LogUsers::create([
             'id_user'   => $user_login->id,
             'action'    => 'Update Aset',
-            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'detail'    => "Old Data:\n$oldDataFormatted\nUpdate to\nNew Data:\n$newDataFormatted",
             'created_at' => now(),
             'updated_at' => now(),
         ]);
