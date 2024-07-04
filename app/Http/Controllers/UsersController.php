@@ -129,7 +129,14 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->authorizeAdminOrSuperAdmin();
+        $data = User::findOrFail($id);
+        $data->delete();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
     }
 
     private function validateData(Request $request)
@@ -150,13 +157,16 @@ class UsersController extends Controller
 
         $data = [];
         foreach ($users as $key => $user) {
+            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $user->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $user->id . '" title="View"><i class="bi bi-eye"></i></button>';
+            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $user->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,
                 'id' => $user->id,
                 'column2_user' => 'Nama: ' . $user->name . '<br>Email: ' . $user->email . '<br>Username: ' . $user->username,
                 'column3_user' => $user->dataRole->name,
                 'column4_user' => 'Dibuat pada: ' . $user->created_at . '<br>Terakhir di update: ' . $user->updated_at,
-                'column5_user' => '<button class="btn btn-sm btn-outline-secondary m-1 edit-app-btn" data-app-id="' . $user->id . '" title="Edit"><i class="bi bi-pencil-square text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 view-app-btn" data-app-id="' . $user->id . '" title="View"><i class="bi bi-eye text-light"></i></button><button class="btn btn-sm btn-outline-secondary btn-action m-1 delete-app-btn" data-app-id="' . $user->id . '" title="Delete"><i class="bi bi-trash3 text-light"></i></button>',
+                'column5_user' => $edit_btn . $read_btn . $delete_btn,
             ];
         }
 
