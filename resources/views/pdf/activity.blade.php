@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Data Aktivitas</title>
+    <title>{{ $title }}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <h1>{{ $title }}</h1>
     <p>{{ $date }}</p>
     <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        {{ $desk }}
     </p>
     <table class="table table-bordered">
         <tr>
@@ -21,7 +21,11 @@
         <tr>
             <td>{{ $looping->created_at }}</td>
             <td>{{ $looping->action }}</td>
-            <td>{{ $looping->data_user->name }}</td>
+            <td>
+                Nama: {{ $looping->data_user->name }}<br>
+                Email: {{ $looping->data_user->email }}<br>
+                Username: {{ $looping->data_user->username }}<br>
+            </td>
             <td>{{ $looping->detail }}</td>
         </tr>
         @endforeach

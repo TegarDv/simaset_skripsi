@@ -51,7 +51,7 @@ class Assets extends Model
 
     public function dataUser(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id')->with('dataRole');
+        return $this->belongsTo(User::class, 'pemilik_aset')->with('dataRole');
     }
 
     public function getStatusNamaAttribute(): string
