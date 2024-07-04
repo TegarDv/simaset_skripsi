@@ -13,14 +13,22 @@
             </svg>
             <div>
                 Berisi data transaksi peminjaman aset.
+                @canany(['isSuperAdmin', 'isAdmin'])
+                    Berisi data transaksi peminjaman aset.
+                @endcanany
+                @can('isUser')
+                    Untuk melakukan peminjaman silahkan hubungi 08123456789.
+                @endcan
             </div>
         </div>
     </div>
     <div class="card-datatable table-responsive">
         <div class="ms-3">
-            <button class="btn btn-primary create-btn">
-                <i class="ti ti-plus me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Data</span>
-            </button>
+            @canany(['isSuperAdmin', 'isAdmin'])
+                <button class="btn btn-primary create-btn">
+                    <i class="ti ti-plus me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Data</span>
+                </button>
+            @endcan
             <button id="reloadDatatable" class="btn btn-primary">
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
             </button>

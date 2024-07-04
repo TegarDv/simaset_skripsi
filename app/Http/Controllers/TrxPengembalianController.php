@@ -8,6 +8,7 @@ use App\Models\AssetsTransaction;
 use App\Models\LogUsers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -206,9 +207,15 @@ class TrxPengembalianController extends Controller
 
         $data = [];
         foreach ($get_data as $key => $loop) {
-            $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $loop->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
-            $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $loop->id . '" title="View"><i class="bi bi-eye"></i></button>';
-            $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $loop->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
+            if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
+                $edit_btn = '<button class="btn btn-sm btn-label-warning m-1 edit-app-btn" data-app-id="' . $loop->id . '" title="Edit"><i class="bi bi-pencil-square"></i></button>';
+                $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $loop->id . '" title="View"><i class="bi bi-eye"></i></button>';
+                $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $loop->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
+            } else {
+                $edit_btn = '';
+                $read_btn = '<button class="btn btn-sm btn-label-primary m-1 view-app-btn" data-app-id="' . $loop->id . '" title="View"><i class="bi bi-eye"></i></button>';
+                $delete_btn = '';
+            }
             $data[] = [
                 'index' => $key + 1,
                 'id' => $loop->id,
