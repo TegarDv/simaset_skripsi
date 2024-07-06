@@ -7,12 +7,49 @@
 <div class="card shadow-lg">
     <h5 class="card-header">Data Aset</h5>
     <div class="card-datatable table-responsive">
+        <form class="row g-3 m-2 needs-validation" id="printForm" action="{{ route('asset_print') }}" method="POST" novalidate>
+            @csrf
+            <label for="">Filter Data</label>
+            <div class="col-lg-2">
+                <select class="form-select" id="filter1" name="tipe_aset" required>
+                    <option value="" disabled selected>Filter Tipe Aset</option>
+                    <option value="all">All</option>
+                    <option value="fisik">Fisik</option>
+                    <option value="digital">Digital</option>
+                    <option value="layanan">Layanan</option>
+                </select>
+                <div class="invalid-feedback">
+                    Input harus di isi.
+                </div>
+            </div>
+        
+            <div class="col-lg-2">
+                <select class="form-select" id="filter2" name="status_aset" required>
+                    <option value="" disabled selected>Filter Status</option>
+                    <option value="all">All</option>
+                    @foreach ($status as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback">
+                    Input harus di isi.
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" name="tanggal_awal" placeholder="Tanggal Awal" id="tanggal_awal" onfocus="(this.type='date')">
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" onfocus="(this.type='date')">
+            </div>
+        
+            <div class="col-lg-4">
+                <button type="reset" class="btn btn-warning me-3"><i class="bi bi-arrow-clockwise me-sm-1"></i><span class="d-none d-sm-inline-block">Clear</span></button>
+                <button type="submit" class="btn btn-danger"><i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span></button>
+            </div>
+        </form>
         <div class="ms-3">
             <button id="reloadDatatable" class="btn btn-primary">
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
-            </button>
-            <button class="btn btn-danger create-btn">
-                <i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span>
             </button>
         </div>
         <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
@@ -101,6 +138,8 @@
     }
 
     $(document).ready(function () {
+        var filter1 = '';
+        var filter2 = '';
         var datatables = $('#data_assets').DataTable({
             ajax: {
                 url: '{{ route('laporanAssetsJson') }}',
@@ -114,25 +153,67 @@
                 { data: 'index', width: '5%', name: 'index', title: 'No' },
                 { data: 'column2_table', width: '15%', name: 'column2_table', title: 'Kode Aset' },
                 { data: 'column3_table', width: '40%', name: 'column3_table', title: 'Detail Aset' },
-                { data: 'column4_table', width: '30%', className: 'text-center', name: 'column4_table', title: 'Tanggal' },
-                { data: 'column5_table', width: '10%', className: 'text-center', name: 'column5_table', title: 'Status' }
+                { data: 'column4_table', width: '10%', className: 'text-center', name: 'column4_table', title: 'Status' },
+                { data: 'column5_table', width: '30%', className: 'text-center', name: 'column5_table', title: 'Tanggal' }
             ],
-            // initComplete: function () {
-            //     // Add event listener for the filter change
-            //     $('#userFilter').on('change', function () {
-            //         userFilter = $(this).val();
+            initComplete: function () {
+                $('#filter1').on('change', function () {
+                    const filter1 = $(this).val();
 
-            //         // Apply the filter to the "Username" column
-            //         datatables.column(1).search(userFilter).draw();
-            //     });
+                    if (filter1 === "all") {
+                        datatables.column(2).search("").draw();
+                    } else {
+                        datatables.column(2).search(filter1).draw();
+                    }
+                });
 
-            //     $('#statusFilter').on('change', function () {
-            //         statusFilter = $(this).val();
+                $('#filter2').on('change', function () {
+                    filter2 = $(this).val();
 
-            //         // Apply the filter to the "Action" column
-            //         datatables.column(6).search(statusFilter).draw();
-            //     });
-            // }
+                    if (filter2 === "all") {
+                        datatables.column(3).search("").draw();
+                    } else {
+                        datatables.column(3).search(filter2).draw();
+                    }
+                });
+            }
+        });
+
+        $('#printForm').submit(function(event) {
+            const filter1 = $('#filter1');
+            const filter2 = $('#filter2');
+            const tanggalAwal = $('#tanggal_awal');
+            const printForm = $('#printForm')
+
+            if (filter1.val() === "" || filter1.val() === null) {
+                filter1.addClass('is-invalid');
+                event.preventDefault();
+            } else {
+                filter1.removeClass('is-invalid');
+                filter1.addClass('is-valid');
+                setTimeout(function() {
+                    filter1.removeClass('is-valid');
+                }, 3000);
+            }
+
+            if (filter2.val() === "" || filter2.val() === null) {
+                filter2.addClass('is-invalid');
+                event.preventDefault();
+            } else {
+                filter2.removeClass('is-invalid');
+                filter2.addClass('is-valid');
+                setTimeout(function() {
+                    filter2.removeClass('is-valid');
+                }, 3000);
+            }
+
+            if (!this.checkValidity()) {
+                event.preventDefault();
+            }
+        });
+        $('#printForm').on('reset', function(event) {
+            datatables.column(2).search("").draw();
+            datatables.column(3).search("").draw();
         });
 
         // Handle a create button

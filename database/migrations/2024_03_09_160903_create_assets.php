@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             // $table->unsignedInteger('id_user');
-            $table->string('tipe_aset');
+            $table->enum('tipe_aset', ['fisik', 'layanan', 'digital']);
             $table->string('kode_aset')->unique();
             $table->string('nama_aset');
             $table->bigInteger('harga');

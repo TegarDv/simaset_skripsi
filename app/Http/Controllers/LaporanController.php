@@ -10,20 +10,14 @@ use App\Models\LogUsers;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->authorizeSuperAdmin();
-            // $this->authorizeAdminOrSuperAdmin();
-            // $this->authorizeAllUser();
-            return $next($request);
-        });
-    }
-    
+{    
     public function laporan_aset()
     {
-        return view('laporan.assets');
+        $this->authorizeAdminOrSuperAdmin();
+        $status = DataStatus::all();
+        return view('laporan.assets', [
+            'status' => $status,
+        ]);
     }
 
     public function laporan_aset_create()
@@ -36,6 +30,7 @@ class LaporanController extends Controller
 
     public function laporan_transaksi()
     {
+        $this->authorizeAdminOrSuperAdmin();
         return view('laporan.transaksi');
     }
 
@@ -46,6 +41,7 @@ class LaporanController extends Controller
 
     public function laporan_activity()
     {
+        $this->authorizeSuperAdmin();
         return view('laporan.log_aktivitas');
     }
 
@@ -69,8 +65,8 @@ class LaporanController extends Controller
                 'id' => $asset->id,
                 'column2_table' => $asset->kode_aset,
                 'column3_table' => 'Nama: ' . $asset->nama_aset . "<br>" . 'Tipe: ' . $asset->tipe_aset . "<br>" . 'Sisa stok: ' . $asset->stok_sekarang . "<br>" . 'Harga: ' . $asset->harga . "<br>" . 'Tipe: ' . $asset->tipe_aset,
-                'column4_table' => 'Masa berlaku: ' . $asset->masa_berlaku . "<br>" . 'Dibuat pada: ' . $asset->created_at . "<br>" . 'Terakhir di update: ' . $asset->updated_at,
-                'column5_table' => '<span class="badge rounded-pill border text-bg-' . $asset->status_color . '">' . $asset->status_nama . '</span>',
+                'column4_table' => '<span class="badge rounded-pill border text-bg-' . $asset->status_color . '">' . $asset->status_nama . '</span>',
+                'column5_table' => 'Masa berlaku: ' . $asset->masa_berlaku . "<br>" . 'Dibuat pada: ' . $asset->created_at . "<br>" . 'Terakhir di update: ' . $asset->updated_at,
             ];
         }
 
