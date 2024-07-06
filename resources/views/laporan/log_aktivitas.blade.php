@@ -7,12 +7,24 @@
 <div class="card shadow-lg">
     <h5 class="card-header">Data Aktivitas User</h5>
     <div class="card-datatable table-responsive">
+        <form class="row g-3 m-2 needs-validation" id="printForm" action="{{ route('activity_print') }}" method="POST" novalidate>
+            @csrf
+            <label for="">Filter Data</label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control" name="tanggal_awal" placeholder="Tanggal Awal" id="tanggal_awal" onfocus="(this.type='date')">
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" onfocus="(this.type='date')">
+            </div>
+        
+            <div class="col-lg-6">
+                <button type="reset" class="btn btn-warning me-3"><i class="bi bi-arrow-clockwise me-sm-1"></i><span class="d-none d-sm-inline-block">Clear</span></button>
+                <button type="submit" class="btn btn-danger"><i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span></button>
+            </div>
+        </form>
         <div class="ms-3">
             <button id="reloadDatatable" class="btn btn-primary">
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
-            </button>
-            <button class="btn btn-danger create-btn">
-                <i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span>
             </button>
         </div>
         <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
