@@ -59,14 +59,15 @@ class LaporanController extends Controller
         });
 
         $data = [];
-        foreach ($assets as $key => $asset) {
+        foreach ($assets as $key => $loop_data) {
             $data[] = [
                 'index' => $key + 1,
-                'id' => $asset->id,
-                'column2_table' => $asset->kode_aset,
-                'column3_table' => 'Nama: ' . $asset->nama_aset . "<br>" . 'Tipe: ' . $asset->tipe_aset . "<br>" . 'Sisa stok: ' . $asset->stok_sekarang . "<br>" . 'Harga: ' . $asset->harga . "<br>" . 'Tipe: ' . $asset->tipe_aset,
-                'column4_table' => '<span class="badge rounded-pill border text-bg-' . $asset->status_color . '">' . $asset->status_nama . '</span>',
-                'column5_table' => 'Masa berlaku: ' . $asset->masa_berlaku . "<br>" . 'Dibuat pada: ' . $asset->created_at . "<br>" . 'Terakhir di update: ' . $asset->updated_at,
+                'id' => $loop_data->id,
+                'column2_table' => $loop_data->kode_aset,
+                'column3_table' => 'Nama: ' . $loop_data->nama_aset . "<br>" . 'Tipe: ' . $loop_data->tipe_aset . "<br>" . 'Sisa stok: ' . $loop_data->stok_sekarang . "<br>" . 'Harga: ' . $loop_data->harga . "<br>" . 'Tipe: ' . $loop_data->tipe_aset,
+                'column4_table' => '<span class="badge rounded-pill border text-bg-' . $loop_data->status_color . '">' . $loop_data->status_nama . '</span>',
+                'column5_table' => 'Masa berlaku: ' . $loop_data->masa_berlaku . "<br>" . 'Dibuat pada: ' . $loop_data->created_at . "<br>" . 'Terakhir di update: ' . $loop_data->updated_at,
+                'created_at' => $loop_data->created_at,
             ];
         }
 
@@ -79,15 +80,16 @@ class LaporanController extends Controller
         $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->orderBy('tanggal_transaksi', 'asc')->get();
 
         $data = [];
-        foreach ($get_data as $key => $loop) {
+        foreach ($get_data as $key => $loop_data) {
             $data[] = [
                 'index' => $key + 1,
-                'id' => $loop->id,
-                'column2_table' => $loop->tanggal_transaksi,
-                'column3_table' => $loop->tipe_transaksi,
-                'column4_table' => $loop->kode_transaksi,
-                'column5_table' => $loop->dataAsset->kode_aset,
-                'column6_table' => $loop->stok,
+                'id' => $loop_data->id,
+                'column2_table' => $loop_data->tanggal_transaksi,
+                'column3_table' => $loop_data->tipe_transaksi,
+                'column4_table' => $loop_data->kode_transaksi,
+                'column5_table' => $loop_data->dataAsset->kode_aset,
+                'column6_table' => $loop_data->stok,
+                'created_at' => $loop_data->created_at,
             ];
         }
 
@@ -107,6 +109,7 @@ class LaporanController extends Controller
                 'column2_table' => 'Tanggal tindakan: ' . $loop_data->created_at,
                 'column3_table' => $loop_data->action . "<br>" . 'Oleh: ' . $loop_data->data_user->name,
                 'column4_table' => 'Detail: ' . $loop_data->detail,
+                'created_at' => $loop_data->created_at,
             ];
         }
 
