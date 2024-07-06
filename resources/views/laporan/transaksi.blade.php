@@ -7,12 +7,35 @@
 <div class="card shadow-lg">
     <h5 class="card-header">Transaksi Aset</h5>
     <div class="card-datatable table-responsive">
+        <form class="row g-3 m-2 needs-validation" id="printForm" action="{{ route('transaksi_print') }}" method="POST" novalidate>
+            @csrf
+            <label for="">Filter Data</label>
+            <div class="col-lg-4">
+                <select class="form-select" id="filter1" name="tipe_transaksi" required>
+                    <option value="">Select Tipe Transaksi</option>
+                    <option value="all">All</option>
+                    <option value="peminjaman">Peminjaman</option>
+                    <option value="pengembalian">pengembalian</option>
+                </select>
+                <div class="invalid-feedback">
+                    Input harus di isi.
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" name="tanggal_awal" placeholder="Tanggal Awal" id="tanggal_awal" onfocus="(this.type='date')">
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" onfocus="(this.type='date')">
+            </div>
+        
+            <div class="col-lg-4">
+                <button type="reset" class="btn btn-warning me-3"><i class="bi bi-arrow-clockwise me-sm-1"></i><span class="d-none d-sm-inline-block">Clear</span></button>
+                <button type="submit" class="btn btn-danger"><i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span></button>
+            </div>
+        </form>
         <div class="ms-3">
             <button id="reloadDatatable" class="btn btn-primary">
                 <i class="bi bi-arrow-clockwise me-sm-1"></i> <span class="d-none d-sm-inline-block">Reload Data</span>
-            </button>
-            <button class="btn btn-danger create-btn">
-                <i class="bi bi-printer me-sm-1"></i><span class="d-none d-sm-inline-block">Print Data</span>
             </button>
         </div>
         <table class="table table-bordered text-light" style="min-width: 100%;" id="data_assets"></table>
@@ -89,6 +112,7 @@
 
 @push('js')
 <script>
+    var filter1 = '';
     function showLoader() {
         $('#loader-modal').css('display', 'flex');
         setTimeout(function() {
@@ -118,22 +142,39 @@
                 { data: 'column5_table', name: 'column5_table', title: 'Kode Aset' },
                 { data: 'column6_table', name: 'column6_table', title: 'Stock' }
             ],
-            // initComplete: function () {
-            //     // Add event listener for the filter change
-            //     $('#userFilter').on('change', function () {
-            //         userFilter = $(this).val();
+            initComplete: function () {
+                $('#filter1').on('change', function () {
+                    const filter1 = $(this).val();
 
-            //         // Apply the filter to the "Username" column
-            //         datatables.column(1).search(userFilter).draw();
-            //     });
+                    if (filter1 === "all") {
+                        datatables.column(2).search("").draw();
+                    } else {
+                        datatables.column(2).search(filter1).draw();
+                    }
+                });
+            }
+        });
+        $('#printForm').submit(function(event) {
+            const filter1 = $('#filter1');
 
-            //     $('#statusFilter').on('change', function () {
-            //         statusFilter = $(this).val();
+            if (filter1.val() === "" || filter1.val() === null) {
+                filter1.addClass('is-invalid');
+                event.preventDefault();
+            } else {
+                filter1.removeClass('is-invalid');
+                filter1.addClass('is-valid');
+                setTimeout(function() {
+                    filter1.removeClass('is-valid');
+                }, 3000);
+            }
 
-            //         // Apply the filter to the "Action" column
-            //         datatables.column(6).search(statusFilter).draw();
-            //     });
-            // }
+            if (!this.checkValidity()) {
+                event.preventDefault();
+            }
+        });
+        $('#printForm').on('reset', function(event) {
+            datatables.column(2).search("").draw();
+            datatables.column(3).search("").draw();
         });
 
         // Handle a create button
