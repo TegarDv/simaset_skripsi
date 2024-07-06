@@ -25,7 +25,7 @@
                 <input type="text" class="form-control" name="tanggal_awal" placeholder="Tanggal Awal" id="tanggal_awal" onfocus="(this.type='date')">
             </div>
             <div class="col-lg-2">
-                <input type="text" class="form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" onfocus="(this.type='date')">
+                <input type="text" class="form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" id="tanggal_akhir" onfocus="(this.type='date')">
             </div>
         
             <div class="col-lg-4">
@@ -113,6 +113,8 @@
 @push('js')
 <script>
     var filter1 = '';
+    var tanggal_awal = '';
+    var tanggal_akhir = '';
     function showLoader() {
         $('#loader-modal').css('display', 'flex');
         setTimeout(function() {
@@ -140,7 +142,8 @@
                 { data: 'column3_table', name: 'column3_table', title: 'Tipe Transaksi' },
                 { data: 'column4_table', name: 'column4_table', title: 'Kode Transaksi' },
                 { data: 'column5_table', name: 'column5_table', title: 'Kode Aset' },
-                { data: 'column6_table', name: 'column6_table', title: 'Stock' }
+                { data: 'column6_table', name: 'column6_table', title: 'Stock' },
+                { data: 'created_at', name: 'created_at', title: 'Tanggal', visible: false }
             ],
             initComplete: function () {
                 $('#filter1').on('change', function () {
@@ -152,6 +155,33 @@
                         datatables.column(2).search(filter1).draw();
                     }
                 });
+                function filterByDate() {
+                    const tanggal_awal = $('#tanggal_awal').val();
+                    const tanggal_akhir = $('#tanggal_akhir').val();
+                    const formattedDateAwal = tanggal_awal ? new Date(tanggal_awal).toISOString().split('T')[0] : null;
+                    const formattedDateAkhir = tanggal_akhir ? new Date(tanggal_akhir).toISOString().split('T')[0] : null;
+
+                    $.fn.dataTable.ext.search = [];
+
+                    $.fn.dataTable.ext.search.push(
+                        function(settings, data, dataIndex) {
+                            const tanggal = data[6]; // Use the index of the column5_table column
+                            const tanggalDate = new Date(tanggal);
+
+                            if (
+                                (formattedDateAwal === null || tanggalDate >= new Date(formattedDateAwal)) &&
+                                (formattedDateAkhir === null || tanggalDate <= new Date(formattedDateAkhir))
+                            ) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    );
+                    datatables.draw();
+                }
+
+                $('#tanggal_awal').on('change', filterByDate);
+                $('#tanggal_akhir').on('change', filterByDate);
             }
         });
         $('#printForm').submit(function(event) {
@@ -175,6 +205,8 @@
         $('#printForm').on('reset', function(event) {
             datatables.column(2).search("").draw();
             datatables.column(3).search("").draw();
+            $.fn.dataTable.ext.search = [];
+            datatables.draw();
         });
 
         // Handle a create button

@@ -157,8 +157,7 @@
                 { data: 'column3_table', width: '40%', name: 'column3_table', title: 'Detail Aset' },
                 { data: 'column4_table', width: '10%', className: 'text-center', name: 'column4_table', title: 'Status' },
                 { data: 'column5_table', width: '30%', className: 'text-center', name: 'column5_table', title: 'Tanggal' },
-                { data: 'created_at', name: 'created_at1', title: 'Tanggal', visible: false },
-                { data: 'created_at', name: 'created_at2', title: 'Tanggal', visible: false }
+                { data: 'created_at', name: 'created_at', title: 'Tanggal', visible: false }
             ],
             initComplete: function () {
                 $('#filter1').on('change', function () {
@@ -181,56 +180,33 @@
                     }
                 });
 
-                $('#tanggal_awal').on('change', function () {
-                    const tanggal_awal = $(this).val();
-                    const formattedDate = new Date(tanggal_awal).toISOString().split('T')[0]; // Format the date to 'YYYY-MM-DD'
+                function filterByDate() {
+                    const tanggal_awal = $('#tanggal_awal').val();
+                    const tanggal_akhir = $('#tanggal_akhir').val();
+                    const formattedDateAwal = tanggal_awal ? new Date(tanggal_awal).toISOString().split('T')[0] : null;
+                    const formattedDateAkhir = tanggal_akhir ? new Date(tanggal_akhir).toISOString().split('T')[0] : null;
 
                     $.fn.dataTable.ext.search = [];
-                    
+
                     $.fn.dataTable.ext.search.push(
                         function(settings, data, dataIndex) {
                             const tanggal = data[5]; // Use the index of the column5_table column
                             const tanggalDate = new Date(tanggal);
 
-                            if (tanggalDate >= new Date(formattedDate)) {
+                            if (
+                                (formattedDateAwal === null || tanggalDate >= new Date(formattedDateAwal)) &&
+                                (formattedDateAkhir === null || tanggalDate <= new Date(formattedDateAkhir))
+                            ) {
                                 return true;
                             }
                             return false;
                         }
                     );
-
                     datatables.draw();
-                });
-                $('#tanggal_akhir').on('change', function () {
-                    const tanggal_akhir = $(this).val();
-                    const formattedDate = new Date(tanggal_akhir).toISOString().split('T')[0]; // Format the date to 'YYYY-MM-DD'
+                }
 
-                    $.fn.dataTable.ext.search = [];
-
-                    $.fn.dataTable.ext.search.push(
-                        function(settings, data, dataIndex) {
-                            const tanggal = data[6]; // Use the index of the column5_table column
-                            const tanggalDate = new Date(tanggal);
-
-                            if (tanggalDate <= new Date(formattedDate)) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    );
-
-                    datatables.draw();
-                });
-
-                // $('#tanggal_awal').on('change', function () {
-                //     const filter1 = $(this).val();
-
-                //     if (filter1 === "all") {
-                //         datatables.column(2).search("").draw();
-                //     } else {
-                //         datatables.column(2).search(filter1).draw();
-                //     }
-                // });
+                $('#tanggal_awal').on('change', filterByDate);
+                $('#tanggal_akhir').on('change', filterByDate);
             }
         });
 
@@ -269,6 +245,8 @@
         $('#printForm').on('reset', function(event) {
             datatables.column(2).search("").draw();
             datatables.column(3).search("").draw();
+            $.fn.dataTable.ext.search = [];
+            datatables.draw();
         });
 
         // Handle a create button

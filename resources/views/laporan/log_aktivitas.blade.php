@@ -101,6 +101,8 @@
 
 @push('js')
 <script>
+    var tanggal_awal = '';
+    var tanggal_akhir = '';
     function showLoader() {
         $('#loader-modal').css('display', 'flex');
         setTimeout(function() {
@@ -126,8 +128,43 @@
                 { data: 'index', width: '5%', name: 'index', title: 'No' },
                 { data: 'column2_table', width: '15%', name: 'column2_table', title: 'Tanggal' },
                 { data: 'column3_table', width: '15%', name: 'column3_table', title: 'Tindakan' },
-                { data: 'column4_table', width: '65%', className: 'text-center', name: 'column4_aset', title: 'Detail' }
+                { data: 'column4_table', width: '65%', className: 'text-center', name: 'column4_aset', title: 'Detail' },
+                { data: 'created_at', name: 'created_at', title: 'Tanggal', visible: false }
             ],
+            initComplete: function () {
+                function filterByDate() {
+                    const tanggal_awal = $('#tanggal_awal').val();
+                    const tanggal_akhir = $('#tanggal_akhir').val();
+                    const formattedDateAwal = tanggal_awal ? new Date(tanggal_awal).toISOString().split('T')[0] : null;
+                    const formattedDateAkhir = tanggal_akhir ? new Date(tanggal_akhir).toISOString().split('T')[0] : null;
+
+                    $.fn.dataTable.ext.search = [];
+
+                    $.fn.dataTable.ext.search.push(
+                        function(settings, data, dataIndex) {
+                            const tanggal = data[4]; // Use the index of the column5_table column
+                            const tanggalDate = new Date(tanggal);
+
+                            if (
+                                (formattedDateAwal === null || tanggalDate >= new Date(formattedDateAwal)) &&
+                                (formattedDateAkhir === null || tanggalDate <= new Date(formattedDateAkhir))
+                            ) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    );
+                    datatables.draw();
+                }
+
+                $('#tanggal_awal').on('change', filterByDate);
+                $('#tanggal_akhir').on('change', filterByDate);
+            }
+        });
+
+        $('#printForm').on('reset', function(event) {
+            $.fn.dataTable.ext.search = [];
+            datatables.draw();
         });
 
         // Handle a create button

@@ -89,7 +89,7 @@ class LaporanController extends Controller
                 'column4_table' => $loop_data->kode_transaksi,
                 'column5_table' => $loop_data->dataAsset->kode_aset,
                 'column6_table' => $loop_data->stok,
-                'created_at' => $loop_data->created_at,
+                'created_at' => $loop_data->tanggal_transaksi,
             ];
         }
 
