@@ -232,7 +232,12 @@ class PermintaanController extends Controller
 
     public function datatableJson()
     {
-        $assets = AssetsRequest::all();
+        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
+            $assets = AssetsRequest::all();
+        }  else {
+            $user_login = auth()->user();
+            $assets = AssetsRequest::where('pemilik_aset', $user_login->id)->get();
+        }
 
         $data = [];
         foreach ($assets as $key => $asset) {
