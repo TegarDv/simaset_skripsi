@@ -203,7 +203,12 @@ class TrxPeminjamanController extends Controller
 
     public function trxPinjamDataTableJson()
     {
-        $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'peminjaman')->orderBy('tanggal_transaksi', 'asc')->get();
+        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
+            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'peminjaman')->orderBy('tanggal_transaksi', 'asc')->get();
+        }  else {
+            $user_login = auth()->user();
+            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'peminjaman')->where('user_id', $user_login->id)->orderBy('tanggal_transaksi', 'asc')->get();
+        }
 
         $data = [];
         foreach ($get_data as $key => $loop) {
