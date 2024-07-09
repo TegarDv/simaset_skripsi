@@ -100,7 +100,9 @@ class PermintaanController extends Controller
         $this->validateData($request);
 
         $data = AssetsRequest::findOrFail($id);
-        $data_lama = $data->replicate();
+        $data_lama = $data->replicate()->toArray();
+        $data_lama['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_lama['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         $data->update([
             'tipe_aset'            => $request->tipe_aset,
@@ -112,12 +114,35 @@ class PermintaanController extends Controller
             'masa_berlaku'         => $request->masa_berlaku,
             'updated_at'           => now(),
         ]);
-        $data_baru = $data;
+        $data_baru = $data->toArray();
+        $data_baru['created_at'] = $data_baru->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data_baru->updated_at->format('d/M/Y H:i');
+
+        // Prepare old and new data in a readable format
+        $oldDataFormatted = "Tipe Aset: {$data_lama['tipe_aset']}\n" .
+                            "Nama Aset: {$data_lama['nama_aset']}\n" .
+                            "Harga: {$data_lama['harga']}\n" .
+                            "Stok Permintaan: {$data_lama['stok_permintaan']}\n" .
+                            "Spesifikasi: {$data_lama['spesifikasi']}\n" .
+                            "Keterangan: {$data_lama['keterangan']}\n" .
+                            "Masa Berlaku: {$data_lama['masa_berlaku']}\n" .
+                            "Created At: {$data_lama['created_at']}\n" .
+                            "Updated At: " . $data_lama['updated_at'];
+
+        $newDataFormatted = "Tipe Aset: {$data_baru['tipe_aset']}\n" .
+                            "Nama Aset: {$data_baru['nama_aset']}\n" .
+                            "Harga: {$data_baru['harga']}\n" .
+                            "Stok Permintaan: {$data_baru['stok_permintaan']}\n" .
+                            "Spesifikasi: {$data_baru['spesifikasi']}\n" .
+                            "Keterangan: {$data_baru['keterangan']}\n" .
+                            "Masa Berlaku: {$data_baru['masa_berlaku']}\n" .
+                            "Created At: {$data_baru['created_at']}\n" .
+                            "Updated At: " . $data_baru['updated_at'];
 
         LogUsers::create([
             'id_user'   => $user_login->id,
             'action'    => 'Update Permintaan Aset',
-            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'detail'    => "Old Data:\n$oldDataFormatted\n\nUpdate to:\n$newDataFormatted",
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\DataStatus;
+use App\Models\LogUsers;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class StatusController extends Controller
 {
@@ -80,19 +81,45 @@ class StatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user_login = auth()->user();
         $this->validateData($request);
 
         $data = DataStatus::findOrFail($id);
+        $data_lama = $data->replicate()->toArray();
+        $data_lama['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_lama['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         $data->update([
-            'nama_status'          => $request->nama_status,
-            'color'                => $request->color,
-            'updated_at'           => now(),
+            'nama_status' => $request->nama_status,
+            'color'       => $request->color,
+            'updated_at'  => now(),
+        ]);
+        $data_baru = $data->toArray();
+        $data_baru['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data->updated_at->format('d/M/Y H:i');
+
+        // Prepare old and new data in a readable format
+        $oldDataFormatted = "Nama Status: {$data_lama['nama_status']}\n" .
+                            "Color: {$data_lama['color']}\n" .
+                            "Created At: {$data_lama['created_at']}\n" .
+                            "Updated At: {$data_lama['updated_at']}";
+
+        $newDataFormatted = "Nama Status: {$data_baru['nama_status']}\n" .
+                            "Color: {$data_baru['color']}\n" .
+                            "Created At: {$data_baru['created_at']}\n" .
+                            "Updated At: {$data_baru['updated_at']}";
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Update Data Status',
+            'detail'    => "Old Data:\n$oldDataFormatted\n\nUpdate to:\n$newDataFormatted",
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return response()->json([
-            'error' => false,
-            'toast' => 'success',
+            'error'   => false,
+            'toast'   => 'success',
             'message' => 'Data Berhasil Diubah'
         ]);
     }

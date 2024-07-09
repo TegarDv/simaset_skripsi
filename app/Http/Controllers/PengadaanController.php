@@ -152,6 +152,8 @@ class PengadaanController extends Controller
 
         $data = Assets::findOrFail($id);
         $data_lama = $data->replicate()->toArray();
+        $data_lama['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_lama['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         $data->update([
             'tipe_aset'            => $request->tipe_aset,
@@ -169,6 +171,8 @@ class PengadaanController extends Controller
             'updated_at'           => now(),
         ]);
         $data_baru = $data->toArray();
+        $data_baru['created_at'] = $data_baru->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data_baru->updated_at->format('d/M/Y H:i');
 
         // Prepare old and new data in a readable format
         $oldDataFormatted = "Tipe Aset: {$data_lama['tipe_aset']}\n" .
@@ -183,6 +187,7 @@ class PengadaanController extends Controller
                             "Kondisi Aset: {$data_lama['kondisi_aset']}\n" .
                             "Lokasi Aset: {$data_lama['lokasi_aset']}\n" .
                             "Pemilik Aset: {$data_lama['pemilik_aset']}\n" .
+                            "Created At: {$data_lama['created_at']}\n" .
                             "Updated At: " . ($data_lama['updated_at'] ?? 'N/A');
 
         $newDataFormatted = "Tipe Aset: {$data_baru['tipe_aset']}\n" .
@@ -197,12 +202,13 @@ class PengadaanController extends Controller
                             "Kondisi Aset: {$data_baru['kondisi_aset']}\n" .
                             "Lokasi Aset: {$data_baru['lokasi_aset']}\n" .
                             "Pemilik Aset: {$data_baru['pemilik_aset']}\n" .
+                            "Created At: {$data_baru['created_at']}\n" .
                             "Updated At: " . ($data_baru['updated_at'] ?? 'N/A');
 
         LogUsers::create([
             'id_user'   => $user_login->id,
             'action'    => 'Update Aset',
-            'detail'    => "Old Data:\n$oldDataFormatted\nUpdate to\nNew Data:\n$newDataFormatted",
+            'detail'    => "Old Data:\n$oldDataFormatted\n\nUpdate to:\n$newDataFormatted",
             'created_at' => now(),
             'updated_at' => now(),
         ]);

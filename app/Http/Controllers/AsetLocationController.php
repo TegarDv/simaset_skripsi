@@ -88,18 +88,31 @@ class AsetLocationController extends Controller
         $this->validateData($request);
 
         $data = AssetLocation::findOrFail($id);
-        $data_lama = $data->replicate();
+        $data_lama = $data->replicate()->toArray();
+        $data_lama['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_lama['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         $data->update([
-            'location'  => $request->location,
+            'location'   => $request->location,
             'updated_at' => now(),
         ]);
-        $data_baru = $data;
+        $data_baru = $data->toArray();
+        $data_baru['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data->updated_at->format('d/M/Y H:i');
+
+        // Prepare old and new data in a readable format
+        $oldDataFormatted = "Location: {$data_lama['location']}\n" .
+                            "Created At: {$data_lama['created_at']}\n" .
+                            "Updated At: {$data_lama['updated_at']}";
+
+        $newDataFormatted = "Location: {$data_baru['location']}\n" .
+                            "Created At: {$data_baru['created_at']}\n" .
+                            "Updated At: {$data_baru['updated_at']}";
 
         LogUsers::create([
             'id_user'   => $user_login->id,
             'action'    => 'Update Lokasi',
-            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'detail'    => "Old Data:\n$oldDataFormatted\n\nUpdate to:\n$newDataFormatted",
             'created_at' => now(),
             'updated_at' => now(),
         ]);
