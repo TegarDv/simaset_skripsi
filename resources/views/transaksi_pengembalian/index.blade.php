@@ -150,7 +150,7 @@
                 { data: 'column2_trx', width: '10%', name: 'column2_trx', title: 'Tanggal Transaksi' },
                 { data: 'column3_trx', width: '10%', name: 'column3_trx', title: 'Kode Transaksi' },
                 { data: 'column4_trx', width: '10%', name: 'column4_trx', title: 'Kode Aset' },
-                { data: 'column5_trx', width: '10%', name: 'column4_trx', title: 'Jumlah Peminjaman' },
+                { data: 'column5_trx', width: '10%', name: 'column4_trx', title: 'Jumlah Pengembalian' },
                 { data: 'column6_trx', width: '10%', className: 'text-center', name: 'column5_trx', title: 'Action' }
             ],
             // initComplete: function () {

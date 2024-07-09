@@ -131,18 +131,9 @@ class TrxPengembalianController extends Controller
         $data = AssetsTransaction::findOrFail($id);
         $asset_data_lama = Assets::findOrFail($data->asset_id);
         $asset_data_baru = Assets::where('kode_aset', $request->asset)->first();
-        $data_lama = $data->replicate();
-
-        // return response()->json([
-        //     'error' => true,
-        //     'asset_id'          => $asset_data_baru->id,
-        //     'user_id'           => $request->user,
-        //     'stok'              => $request->jumlah,
-        //     'stok_sesudah'      => $asset_data_baru->stok_sekarang + $request->jumlah,
-        //     'keterangan'        => $request->keterangan,
-        //     'tanggal_transaksi' => $request->tanggal,
-        //     'message' => 'Stock melebihi stock awal'
-        // ], 403);
+        $data_lama = $data->replicate()->toArray();
+        $data_lama['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_lama['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         if ($request->jumlah > $asset_data_baru->stok_sekarang) {
             return response()->json([
@@ -150,8 +141,9 @@ class TrxPengembalianController extends Controller
                 'message' => 'Stock melebihi stock awal'
             ], 403);
         }
+
         $asset_data_lama->update([
-            'stok_sekarang'        => $asset_data_lama->stok_sekarang - $data->stok,
+            'stok_sekarang' => $asset_data_lama->stok_sekarang - $data->stok,
         ]);
 
         $data->update([
@@ -163,17 +155,42 @@ class TrxPengembalianController extends Controller
             'tanggal_transaksi' => $request->tanggal,
             'updated_at'        => now(),
         ]);
+
         $asset_data_baru2 = Assets::where('kode_aset', $request->asset)->first();
         $asset_data_baru2->update([
-            'stok_sekarang'        => $asset_data_baru2->stok_sekarang + $request->jumlah,
-            'updated_at'           => now(),
+            'stok_sekarang' => $asset_data_baru2->stok_sekarang + $request->jumlah,
+            'updated_at'    => now(),
         ]);
-        $data_baru = $data;
+
+        $data_baru = $data->toArray();
+        $data_baru['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data->updated_at->format('d/M/Y H:i');
+
+        // Prepare old and new data in a readable format
+        $oldDataFormatted = "Asset ID: {$data_lama['asset_id']}\n" .
+                            "User ID: {$data_lama['user_id']}\n" .
+                            "Stok: {$data_lama['stok']}\n" .
+                            "Stok Sebelum: {$data_lama['stok_sebelum']}\n" .
+                            "Stok Sesudah: {$data_lama['stok_sesudah']}\n" .
+                            "Keterangan: {$data_lama['keterangan']}\n" .
+                            "Tanggal Transaksi: {$data_lama['tanggal_transaksi']}\n" .
+                            "Created At: {$data_lama['created_at']}\n" .
+                            "Updated At: {$data_lama['updated_at']}";
+
+        $newDataFormatted = "Asset ID: {$data_baru['asset_id']}\n" .
+                            "User ID: {$data_baru['user_id']}\n" .
+                            "Stok: {$data_baru['stok']}\n" .
+                            "Stok Sebelum: {$data_baru['stok_sebelum']}\n" .
+                            "Stok Sesudah: {$data_baru['stok_sesudah']}\n" .
+                            "Keterangan: {$data_baru['keterangan']}\n" .
+                            "Tanggal Transaksi: {$data_baru['tanggal_transaksi']}\n" .
+                            "Created At: {$data_baru['created_at']}\n" .
+                            "Updated At: {$data_baru['updated_at']}";
 
         LogUsers::create([
             'id_user'   => $user_login->id,
             'action'    => 'Update Transaksi Pengembalian',
-            'detail'    => 'Old Data: ' . json_encode($data_lama->toArray()) . "\n" . 'Update to' . "\n" . 'New Data: ' . json_encode($data_baru->toArray()),
+            'detail'    => "Old Data:\n$oldDataFormatted\n\nUpdate to:\n$newDataFormatted",
             'created_at' => now(),
             'updated_at' => now(),
         ]);

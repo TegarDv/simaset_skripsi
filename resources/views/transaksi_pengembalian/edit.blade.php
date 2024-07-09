@@ -1,20 +1,20 @@
 <!-- Button trigger modal -->
 <div class="modal-header">
-    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data Peminjaman</h1>
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data Pengembalian</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<form class="row g-3" action="{{ route('transaksi-pinjam.update', ['transaksi_pinjam' => $data->id]) }}" method="POST" id="updateForm">
+<form class="row g-3" action="{{ route('transaksi-kembali.update', ['transaksi_kembali' => $data->id]) }}" method="POST" id="updateForm">
     @csrf
     @method('PUT')
     <div class="modal-body">
         <div class="row">
             <div class="col-lg-6">
                 <div class="mb-2">
-                    <label class="font-weight-bold">Tanggal Peminjaman</label>
+                    <label class="font-weight-bold">Tanggal Pengembalian</label>
                     <input type="date" class="form-control" name="tanggal" value="{{ $data['tanggal_transaksi'] }}" required>
                 </div>
                 <div class="mb-2">
-                    <label class="font-weight-bold">User yang meminjam</label>
+                    <label class="font-weight-bold">User yang mengembalikan</label>
                     <select class="form-select" name="user" required>
                         <option value="">Pilih User</option>
                         @foreach ($users as $user)
@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="font-weight-bold">Jumlah Peminjaman</label>
+                    <label class="font-weight-bold">Jumlah Pengembalian</label>
                     <input type="number" class="form-control" name="jumlah" id="jumlah" value="{{ $data['stok'] }}" required>
                 </div>
             </div>
@@ -33,29 +33,35 @@
                     <select class="form-select" name="asset" id="assetSelectEdit" required>
                         <option value="">Select Asset</option>
                         @foreach ($assets as $asset)
-                            <option value="{{ $asset->kode_aset }}" data-nama="{{ $asset->nama_aset }}" data-tipe="{{ $asset->tipe_aset }}" data-stok="{{ $asset->stok_sekarang }}" {{ $data['asset_id'] == $asset->id ? 'selected' : '' }}>{{ $asset->kode_aset }}</option>
+                            <option value="{{ $asset->kode_aset }}" data-nama="{{ $asset->nama_aset }}" data-tipe="{{ $asset->tipe_aset }}" data-stok="{{ $asset->stok_sekarang }}" data-stok_awal="{{ $asset->stok_awal }}" {{ $data['asset_id'] == $asset->id ? 'selected' : '' }}>{{ $asset->kode_aset }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="row g-2">
                     <div class="col">
                         <label class="font-weight-bold">Nama</label>
-                        <input type="text" class="form-control" id="nama" value="{{ $asset_select['nama_aset'] }}" disabled>
+                        <input type="text" class="form-control" id="namaEdit" value="{{ $asset_select['nama_aset'] }}" disabled>
                     </div>
                     <div class="col">
                         <label class="font-weight-bold">Tipe</label>
-                        <input type="text" class="form-control" id="tipe" value="{{ $asset_select['tipe_aset'] }}" disabled>
+                        <input type="text" class="form-control" id="tipeEdit" value="{{ $asset_select['tipe_aset'] }}" disabled>
                     </div>
                 </div>
-                <div class="mb-1">
-                    <label class="font-weight-bold">Stok saat ini</label>
-                    <input type="text" class="form-control" id="current" value="{{ $asset_select['stok_sekarang'] }}" disabled>
+                <div class="row g-2">
+                    <div class="col">
+                        <label class="font-weight-bold">Stok saat ini</label>
+                        <input type="text" class="form-control" id="currentEdit" value="{{ $asset_select['stok_sekarang'] }}" disabled>
+                    </div>
+                    <div class="col">
+                        <label class="font-weight-bold">Stok awal</label>
+                        <input type="text" class="form-control" id="firstEdit" value="{{ $asset_select['stok_awal'] }}" disabled>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="mb-1">
             <label class="font-weight-bold">Keterangan Transkasi</label>
-            <textarea class="form-control" rows="3" name="keterangan" required></textarea>
+            <textarea class="form-control" rows="3" name="keterangan" required>{{ $data['keterangan'] }}</textarea>
         </div>
 
     </div>
@@ -107,9 +113,11 @@
         var namaAset = selectedOption.getAttribute('data-nama');
         var tipeAset = selectedOption.getAttribute('data-tipe');
         var stokAset = selectedOption.getAttribute('data-stok');
+        var stokAwalAset = selectedOption.getAttribute('data-stok_awal');
 
-        document.getElementById('nama').value = namaAset;
-        document.getElementById('tipe').value = tipeAset;
-        document.getElementById('current').value = stokAset;
+        document.getElementById('namaEdit').value = namaAset;
+        document.getElementById('tipeEdit').value = tipeAset;
+        document.getElementById('currentEdit').value = stokAset;
+        document.getElementById('firstEdit').value = stokAwalAset;
     });
 </script>

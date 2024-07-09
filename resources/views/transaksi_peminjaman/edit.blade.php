@@ -40,22 +40,22 @@
                 <div class="row g-2">
                     <div class="col">
                         <label class="font-weight-bold">Nama</label>
-                        <input type="text" class="form-control" id="nama" value="{{ $asset_select['nama_aset'] }}" disabled>
+                        <input type="text" class="form-control" id="namaEdit" value="{{ $asset_select['nama_aset'] }}" disabled>
                     </div>
                     <div class="col">
                         <label class="font-weight-bold">Tipe</label>
-                        <input type="text" class="form-control" id="tipe" value="{{ $asset_select['tipe_aset'] }}" disabled>
+                        <input type="text" class="form-control" id="tipeEdit" value="{{ $asset_select['tipe_aset'] }}" disabled>
                     </div>
                 </div>
                 <div class="mb-1">
                     <label class="font-weight-bold">Stok saat ini</label>
-                    <input type="text" class="form-control" id="current" value="{{ $asset_select['stok_sekarang'] }}" disabled>
+                    <input type="text" class="form-control" id="currentEdit" value="{{ $asset_select['stok_sekarang'] }}" disabled>
                 </div>
             </div>
         </div>
         <div class="mb-1">
             <label class="font-weight-bold">Keterangan Transkasi</label>
-            <textarea class="form-control" rows="3" name="keterangan" required>{{ $asset_select['keterangan'] }}</textarea>
+            <textarea class="form-control" rows="3" name="keterangan" required>{{ $data['keterangan'] }}</textarea>
         </div>
 
     </div>
@@ -108,8 +108,8 @@
         var tipeAset = selectedOption.getAttribute('data-tipe');
         var stokAset = selectedOption.getAttribute('data-stok');
 
-        document.getElementById('nama').value = namaAset;
-        document.getElementById('tipe').value = tipeAset;
-        document.getElementById('current').value = stokAset;
+        document.getElementById('namaEdit').value = namaAset;
+        document.getElementById('tipeEdit').value = tipeAset;
+        document.getElementById('currentEdit').value = stokAset;
     });
 </script>
