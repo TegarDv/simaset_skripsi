@@ -1,6 +1,6 @@
 @extends('template.app')
 
-@section('title', 'Asset - Data Status')
+@section('title', 'Data Status')
 
 @section('content')
 <h4 class="text-start">Data Status & Kondisi Aset</h4>

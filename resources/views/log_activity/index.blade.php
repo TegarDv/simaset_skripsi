@@ -1,6 +1,6 @@
 @extends('template.app')
 
-@section('title', 'Asset - Data Lokasi')
+@section('title', 'Log Aktivitas User')
 
 @section('content')
 <h4 class="text-start">Data Log Aktivitas</h4>

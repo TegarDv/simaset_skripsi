@@ -110,7 +110,7 @@
                         confirmButton: 'swalBtnConfirm swalButton',
                     }
                 });
-                $('#createModal').modal('hide');
+                $('#acceptModal').modal('hide');
                 reloadDatatable();
                 hideLoader();
             },
