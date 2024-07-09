@@ -2,7 +2,20 @@
 <html>
 <head>
     <title>{{ $title }}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        /* Define styles for table-bordered class */
+        .table-bordered {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #ddd; /* Border color */
+            padding: 8px; /* Padding inside cells */
+        }
+        .table-bordered th {
+            background-color: #f2f2f2; /* Header background color */
+        }
+    </style>
 </head>
 <body>
     <h1>{{ $title }}</h1>
