@@ -133,10 +133,21 @@ class TrxPengembalianController extends Controller
         $asset_data_baru = Assets::where('kode_aset', $request->asset)->first();
         $data_lama = $data->replicate();
 
+        // return response()->json([
+        //     'error' => true,
+        //     'asset_id'          => $asset_data_baru->id,
+        //     'user_id'           => $request->user,
+        //     'stok'              => $request->jumlah,
+        //     'stok_sesudah'      => $asset_data_baru->stok_sekarang + $request->jumlah,
+        //     'keterangan'        => $request->keterangan,
+        //     'tanggal_transaksi' => $request->tanggal,
+        //     'message' => 'Stock melebihi stock awal'
+        // ], 403);
+
         if ($request->jumlah > $asset_data_baru->stok_sekarang) {
             return response()->json([
                 'error' => true,
-                'message' => 'Stock tidak mencukupi'
+                'message' => 'Stock melebihi stock awal'
             ], 403);
         }
         $asset_data_lama->update([
@@ -147,13 +158,14 @@ class TrxPengembalianController extends Controller
             'asset_id'          => $asset_data_baru->id,
             'user_id'           => $request->user,
             'stok'              => $request->jumlah,
-            'stok_sesudah'      => $data->stok_sebelum + $request->jumlah,
+            'stok_sesudah'      => $asset_data_baru->stok_sekarang + $request->jumlah,
             'keterangan'        => $request->keterangan,
             'tanggal_transaksi' => $request->tanggal,
             'updated_at'        => now(),
         ]);
-        $asset_data_baru->update([
-            'stok_sekarang'        => $asset_data_baru->stok_sekarang + $request->jumlah,
+        $asset_data_baru2 = Assets::where('kode_aset', $request->asset)->first();
+        $asset_data_baru2->update([
+            'stok_sekarang'        => $asset_data_baru2->stok_sekarang + $request->jumlah,
             'updated_at'           => now(),
         ]);
         $data_baru = $data;
