@@ -47,7 +47,6 @@ class TrxPengembalianController extends Controller
         $this->validateData($request);
 
         $typePart = 'TRX-PNG';
-        $randomChars = strtoupper(str_shuffle(preg_replace('/[^A-Z]/', '', Str::random(3))));
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomChars = '';
         for ($i = 0; $i < 2; $i++) {
@@ -72,7 +71,7 @@ class TrxPengembalianController extends Controller
             'kode_transaksi'    => $kode,
             'stok'              => $request->jumlah,
             'stok_sebelum'      => $asset_data->stok_sekarang,
-            'stok_sesudah'      => $asset_data->stok_sekarang - $request->jumlah,
+            'stok_sesudah'      => $asset_data->stok_sekarang + $request->jumlah,
             'keterangan'        => $request->keterangan,
             'tanggal_transaksi' => $request->tanggal,
             'created_at'        => now(),
@@ -84,15 +83,26 @@ class TrxPengembalianController extends Controller
             'updated_at'           => now(),
         ]);
 
+        $dataFormatted = "Asset ID: {$data->asset_id}\n" .
+                        "User ID: {$data->user_id}\n" .
+                        "Tipe Transaksi: {$data->tipe_transaksi}\n" .
+                        "Kode Transaksi: {$data->kode_transaksi}\n" .
+                        "Stok: {$data->stok}\n" .
+                        "Stok Sebelum: {$data->stok_sebelum}\n" .
+                        "Stok Sesudah: {$data->stok_sesudah}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Tanggal Transaksi: {$data->tanggal_transaksi}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         LogUsers::create([
-            'id_user'               => $user_login->id,
-            'action'                => 'Tambah Transaksi Pengembalian',
-            'detail'                => $data,
-            'created_at'            => now(),
-            'updated_at'            => now(),
+            'id_user'   => $user_login->id,
+            'action'    => 'Tambah Transaksi Pengembalian',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        // return back()->with('success', 'Data Berhasil Disimpan!');
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Ditambahkan'
@@ -206,12 +216,34 @@ class TrxPengembalianController extends Controller
      */
     public function destroy(string $id)
     {
+        $user_login = auth()->user();
         $data = AssetsTransaction::findOrFail($id);
+
         $asset_data_lama = Assets::findOrFail($data->asset_id);
         $asset_data_lama->update([
             'stok_sekarang'        => $asset_data_lama->stok_sekarang - $data->stok,
         ]);
+        $dataFormatted = "Asset ID: {$data->asset_id}\n" .
+                        "User ID: {$data->user_id}\n" .
+                        "Tipe Transaksi: {$data->tipe_transaksi}\n" .
+                        "Kode Transaksi: {$data->kode_transaksi}\n" .
+                        "Stok: {$data->stok}\n" .
+                        "Stok Sebelum: {$data->stok_sebelum}\n" .
+                        "Stok Sesudah: {$data->stok_sesudah}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Tanggal Transaksi: {$data->tanggal_transaksi}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         $data->delete();
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Hapus Transaksi Aset Pengembalian',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         
         return response()->json([
             'error' => false,
@@ -233,10 +265,10 @@ class TrxPengembalianController extends Controller
     public function trxKembaliDataTableJson()
     {
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
-            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'pengembalian')->orderBy('tanggal_transaksi', 'asc')->get();
+            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'pengembalian')->orderBy('tanggal_transaksi', 'desc')->get();
         }  else {
             $user_login = auth()->user();
-            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'pengembalian')->where('user_id', $user_login->id)->orderBy('tanggal_transaksi', 'asc')->get();
+            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'pengembalian')->where('user_id', $user_login->id)->orderBy('tanggal_transaksi', 'desc')->get();
         }
 
         $data = [];

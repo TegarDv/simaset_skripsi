@@ -47,7 +47,6 @@ class TrxPeminjamanController extends Controller
         $this->validateData($request);
 
         $typePart = 'TRX-PMJ';
-        $randomChars = strtoupper(str_shuffle(preg_replace('/[^A-Z]/', '', Str::random(3))));
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomChars = '';
         for ($i = 0; $i < 2; $i++) {
@@ -84,15 +83,26 @@ class TrxPeminjamanController extends Controller
             'updated_at'           => now(),
         ]);
 
+        $dataFormatted = "Asset ID: {$data->asset_id}\n" .
+                        "User ID: {$data->user_id}\n" .
+                        "Tipe Transaksi: {$data->tipe_transaksi}\n" .
+                        "Kode Transaksi: {$data->kode_transaksi}\n" .
+                        "Stok: {$data->stok}\n" .
+                        "Stok Sebelum: {$data->stok_sebelum}\n" .
+                        "Stok Sesudah: {$data->stok_sesudah}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Tanggal Transaksi: {$data->tanggal_transaksi}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         LogUsers::create([
-            'id_user'               => $user_login->id,
-            'action'                => 'Tambah Transaksi Peminjaman',
-            'detail'                => $data,
-            'created_at'            => now(),
-            'updated_at'            => now(),
+            'id_user'   => $user_login->id,
+            'action'    => 'Tambah Transaksi Peminjaman',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        // return back()->with('success', 'Data Berhasil Disimpan!');
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Ditambahkan'
@@ -206,13 +216,36 @@ class TrxPeminjamanController extends Controller
      */
     public function destroy(string $id)
     {
+        $user_login = auth()->user();
         $data = AssetsTransaction::findOrFail($id);
+
         $asset_data_lama = Assets::findOrFail($data->asset_id);
         $asset_data_lama->update([
-            'stok_sekarang'        => $asset_data_lama->stok_sekarang + $data->stok,
+            'stok_sekarang' => $asset_data_lama->stok_sekarang + $data->stok,
         ]);
+
+        $dataFormatted = "Asset ID: {$data->asset_id}\n" .
+                        "User ID: {$data->user_id}\n" .
+                        "Tipe Transaksi: {$data->tipe_transaksi}\n" .
+                        "Kode Transaksi: {$data->kode_transaksi}\n" .
+                        "Stok: {$data->stok}\n" .
+                        "Stok Sebelum: {$data->stok_sebelum}\n" .
+                        "Stok Sesudah: {$data->stok_sesudah}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Tanggal Transaksi: {$data->tanggal_transaksi}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         $data->delete();
-        
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Hapus Transaksi Aset Peminjaman',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Dihapus'
@@ -236,7 +269,7 @@ class TrxPeminjamanController extends Controller
             $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'peminjaman')->orderBy('tanggal_transaksi', 'desc')->get();
         }  else {
             $user_login = auth()->user();
-            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'peminjaman')->where('user_id', $user_login->id)->orderBy('tanggal_transaksi', 'asc')->get();
+            $get_data = AssetsTransaction::with('dataAsset' , 'dataUser')->where('tipe_transaksi', 'peminjaman')->where('user_id', $user_login->id)->orderBy('tanggal_transaksi', 'desc')->get();
         }
 
         $data = [];

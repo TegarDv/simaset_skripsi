@@ -171,8 +171,8 @@ class PengadaanController extends Controller
             'updated_at'           => now(),
         ]);
         $data_baru = $data->toArray();
-        $data_baru['created_at'] = $data_baru->created_at->format('d/M/Y H:i');
-        $data_baru['updated_at'] = $data_baru->updated_at->format('d/M/Y H:i');
+        $data_baru['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         // Prepare old and new data in a readable format
         $oldDataFormatted = "Tipe Aset: {$data_lama['tipe_aset']}\n" .
@@ -226,14 +226,42 @@ class PengadaanController extends Controller
     public function destroy(string $id)
     {
         $this->authorizeAdminOrSuperAdmin();
+        $user_login = auth()->user();
         $data = Assets::findOrFail($id);
-        $data->delete();
         
+        $dataFormatted = "Tipe Aset: {$data->tipe_aset}\n" .
+                        "Kode Aset: {$data->kode_aset}\n" .
+                        "Nama Aset: {$data->nama_aset}\n" .
+                        "Harga: {$data->harga}\n" .
+                        "Spesifikasi: {$data->spesifikasi}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Stok Awal: {$data->stok_awal}\n" .
+                        "Stok Sekarang: {$data->stok_sekarang}\n" .
+                        "Masa Berlaku: {$data->masa_berlaku}\n" .
+                        "Tanggal Penerimaan: {$data->tanggal_penerimaan}\n" .
+                        "Status Aset: {$data->status_aset}\n" .
+                        "Kondisi Aset: {$data->kondisi_aset}\n" .
+                        "Lokasi Aset: {$data->lokasi_aset}\n" .
+                        "Pemilik Aset: {$data->pemilik_aset}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
+        $data->delete();
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Hapus Aset',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Dihapus'
         ]);
     }
+
 
     private function validateData(Request $request)
     {
@@ -269,7 +297,7 @@ class PengadaanController extends Controller
 
     public function pengadaanDataTableJson()
     {
-        $assets = Assets::with('dataStatus', 'dataKondisi', 'dataLokasi')->get();
+        $assets = Assets::with('dataStatus', 'dataKondisi', 'dataLokasi')->latest()->get();
 
         $assets->each(function ($asset) {
             $asset->append('status_nama', 'status_color');

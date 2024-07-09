@@ -16,9 +16,7 @@ class StatusController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            // $this->authorizeSuperAdmin();
-            // $this->authorizeAdminOrSuperAdmin();
-            $this->authorizeAllUser();
+            $this->authorizeAdminOrSuperAdmin();
             return $next($request);
         });
     }
@@ -42,13 +40,27 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
+        $user_login = auth()->user();
         $this->validateData($request);
 
-        DataStatus::create([
+        $data = DataStatus::create([
             'nama_status'          => $request->nama_status,
             'color'                => $request->color,
             'created_at'           => now(),
             'updated_at'           => now(),
+        ]);
+
+        $dataFormatted = "Nama Status: {$data->nama_status}\n" .
+                        "Color: {$data->color}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Tambah Status Data',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return response()->json([
@@ -129,9 +141,24 @@ class StatusController extends Controller
      */
     public function destroy(string $id)
     {
+        $user_login = auth()->user();
         $data = DataStatus::findOrFail($id);
+
+        $dataFormatted = "Nama Status: {$data->nama_status}\n" .
+                        "Color: {$data->color}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         $data->delete();
-        
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Hapus Data Status',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Dihapus'
@@ -156,7 +183,7 @@ class StatusController extends Controller
 
     public function dataTableJson()
     {
-        $get_data = DataStatus::all();
+        $get_data = DataStatus::latest()->get();
 
         $data = [];
         foreach ($get_data as $key => $loop_data) {

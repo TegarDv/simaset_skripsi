@@ -24,7 +24,7 @@ class LogActivityController extends Controller
 
     public function datatableJson()
     {
-        $get_data = LogUsers::with('data_user')->get();
+        $get_data = LogUsers::with('data_user')->latest()->get();
 
         $data = [];
         foreach ($get_data as $key => $loop_data) {

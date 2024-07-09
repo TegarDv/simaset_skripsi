@@ -47,15 +47,18 @@ class AsetLocationController extends Controller
             'updated_at'           => now(),
         ]);
 
+        $dataFormatted = "Location: {$data->location}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         LogUsers::create([
-            'id_user'               => $user_login->id,
-            'action'                => 'Tambah Lokasi',
-            'detail'                => $data,
-            'created_at'            => now(),
-            'updated_at'            => now(),
+            'id_user'   => $user_login->id,
+            'action'    => 'Tambah Lokasi',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        // return back()->with('success', 'Data Berhasil Disimpan!');
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Ditambahkan'
@@ -128,9 +131,23 @@ class AsetLocationController extends Controller
      */
     public function destroy(string $id)
     {
+        $user_login = auth()->user();
         $data = AssetLocation::findOrFail($id);
+
+        $dataFormatted = "Location: {$data->location}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         $data->delete();
-        
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Hapus Lokasi',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Dihapus'
@@ -146,7 +163,7 @@ class AsetLocationController extends Controller
 
     public function lokasiDataTableJson()
     {
-        $assets = AssetLocation::all();
+        $assets = AssetLocation::latest()->get();
 
         $data = [];
         foreach ($assets as $key => $asset) {

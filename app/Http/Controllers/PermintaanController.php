@@ -17,8 +17,6 @@ class PermintaanController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            // $this->authorizeSuperAdmin();
-            // $this->authorizeAdminOrSuperAdmin();
             $this->authorizeAllUser();
             return $next($request);
         });
@@ -58,15 +56,25 @@ class PermintaanController extends Controller
             'updated_at'           => now(),
         ]);
 
+        $dataFormatted = "Tipe Aset: {$data->tipe_aset}\n" .
+                        "Nama Aset: {$data->nama_aset}\n" .
+                        "Harga: {$data->harga}\n" .
+                        "Stok Permintaan: {$data->stok_permintaan}\n" .
+                        "Spesifikasi: {$data->spesifikasi}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Pemilik Aset: {$data->pemilik_aset}\n" .
+                        "Masa Berlaku: {$data->masa_berlaku}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         LogUsers::create([
-            'id_user'               => $user_login->id,
-            'action'                => 'Tambah Permintaan Aset',
-            'detail'                => $data,
-            'created_at'            => now(),
-            'updated_at'            => now(),
+            'id_user'   => $user_login->id,
+            'action'    => 'Tambah Permintaan Aset',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        // return back()->with('success', 'Data Berhasil Disimpan!');
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Ditambahkan'
@@ -115,8 +123,8 @@ class PermintaanController extends Controller
             'updated_at'           => now(),
         ]);
         $data_baru = $data->toArray();
-        $data_baru['created_at'] = $data_baru->created_at->format('d/M/Y H:i');
-        $data_baru['updated_at'] = $data_baru->updated_at->format('d/M/Y H:i');
+        $data_baru['created_at'] = $data->created_at->format('d/M/Y H:i');
+        $data_baru['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         // Prepare old and new data in a readable format
         $oldDataFormatted = "Tipe Aset: {$data_lama['tipe_aset']}\n" .
@@ -158,9 +166,30 @@ class PermintaanController extends Controller
      */
     public function destroy(string $id)
     {
+        $user_login = auth()->user();
         $data = AssetsRequest::findOrFail($id);
+
+        $dataFormatted = "Tipe Aset: {$data->tipe_aset}\n" .
+                        "Nama Aset: {$data->nama_aset}\n" .
+                        "Harga: {$data->harga}\n" .
+                        "Spesifikasi: {$data->spesifikasi}\n" .
+                        "Keterangan: {$data->keterangan}\n" .
+                        "Stok Permintaan: {$data->stok_permintaan}\n" .
+                        "Pemilik Aset: {$data->pemilik_aset}\n" .
+                        "Masa Berlaku: {$data->masa_berlaku}\n" .
+                        "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $data->updated_at->format('d/M/Y H:i');
+
         $data->delete();
-        
+
+        LogUsers::create([
+            'id_user'   => $user_login->id,
+            'action'    => 'Hapus Permintaan Aset',
+            'detail'    => $dataFormatted,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return response()->json([
             'error' => false,
             'message' => 'Data Berhasil Dihapus'
@@ -226,11 +255,28 @@ class PermintaanController extends Controller
             'created_at'           => now(),
             'updated_at'           => now(),
         ]);
+
+        $assetFormatted = "Tipe Aset: {$asset->tipe_aset}\n" .
+                        "Kode Aset: {$asset->kode_aset}\n" .
+                        "Nama Aset: {$asset->nama_aset}\n" .
+                        "Harga: {$asset->harga}\n" .
+                        "Spesifikasi: {$asset->spesifikasi}\n" .
+                        "Keterangan: {$asset->keterangan}\n" .
+                        "Stok Awal: {$asset->stok_awal}\n" .
+                        "Stok Sekarang: {$asset->stok_sekarang}\n" .
+                        "Masa Berlaku: {$asset->masa_berlaku}\n" .
+                        "Tanggal Penerimaan: {$asset->tanggal_penerimaan}\n" .
+                        "Status Aset: {$asset->status_aset}\n" .
+                        "Kondisi Aset: {$asset->kondisi_aset}\n" .
+                        "Lokasi Aset: {$asset->lokasi_aset}\n" .
+                        "Pemilik Aset: {$asset->pemilik_aset}\n" .
+                        "Created At: " . $asset->created_at->format('d/M/Y H:i') . "\n" .
+                        "Updated At: " . $asset->updated_at->format('d/M/Y H:i');
         
         LogUsers::create([
             'id_user'               => $user_login->id,
             'action'                => 'Persetujuan Tambah Aset',
-            'detail'                => 'Aset Baru: ' . "\n" . json_encode($asset->toArray()) . "\n" . 'Aset Permintaan Dihapus: ' . "\n" . json_encode($data->toArray()),
+            'detail'                => "Aset Baru Dari Permintaan:\n{$assetFormatted}",
             'created_at'            => now(),
             'updated_at'            => now(),
         ]);
@@ -258,10 +304,10 @@ class PermintaanController extends Controller
     public function datatableJson()
     {
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
-            $assets = AssetsRequest::all();
+            $assets = AssetsRequest::latest()->get();
         }  else {
             $user_login = auth()->user();
-            $assets = AssetsRequest::where('pemilik_aset', $user_login->id)->get();
+            $assets = AssetsRequest::where('pemilik_aset', $user_login->id)->latest()->get();
         }
 
         $data = [];
