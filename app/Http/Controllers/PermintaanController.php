@@ -293,10 +293,10 @@ class PermintaanController extends Controller
         $this->validate($request, [
             'tipe_aset'             => 'required',
             'nama_aset'             => 'required',
-            'harga'                 => 'required|numeric',
+            'harga'                 => 'required|numeric|min:1',
             'spesifikasi'           => 'required',
             'keterangan'            => 'required',
-            'stok_permintaan'       => 'nullable',
+            'stok_permintaan'       => 'nullable|numeric|min:1',
             'masa_berlaku'          => 'required|date',
         ]);
     }

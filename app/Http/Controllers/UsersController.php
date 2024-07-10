@@ -159,7 +159,7 @@ class UsersController extends Controller
             'username'      => 'required',
             'password'      => 'required',
             'new_password'  => 'nullable',
-            'role'          => 'required',
+            'role'          => 'required|numeric',
         ]);
     }
 

@@ -268,17 +268,17 @@ class PengadaanController extends Controller
         $this->validate($request, [
             'tipe_aset'             => 'required',
             'nama_aset'             => 'required',
-            'harga'                 => 'required|numeric',
+            'harga'                 => 'required|numeric|min:1',
             'spesifikasi'           => 'required',
             'keterangan'            => 'required',
-            'stok_awal'             => 'required',
-            'stok_sekarang'         => 'nullable',
+            'stok_awal'             => 'required|numeric|min:1',
+            'stok_sekarang'         => 'nullable|numeric|min:1',
             'masa_berlaku'          => 'required|date',
             'tanggal_penerimaan'    => 'required|date',
             'status_aset'           => 'required|numeric',
-            'kondisi_aset'          => 'required',
-            'lokasi_aset'           => 'required',
-            'pemilik_aset'          => 'required',
+            'kondisi_aset'          => 'required|numeric',
+            'lokasi_aset'           => 'required|numeric',
+            'pemilik_aset'          => 'required|numeric',
         ]);
     }
 
