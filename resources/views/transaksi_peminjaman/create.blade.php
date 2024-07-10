@@ -90,7 +90,10 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: xhr.responseJSON.message
+                    text: xhr.responseJSON.message,
+                    customClass: {
+                        confirmButton: 'swalBtnConfirm swalButton',
+                    }
                 });
             }
         });
