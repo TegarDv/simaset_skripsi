@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('tipe_aset');
             $table->string('nama_aset');
-            $table->bigInteger('harga');
+            $table->unsignedBigInteger('harga');
             $table->text('spesifikasi');
             $table->text('keterangan');
-            $table->integer('stok_permintaan');
+            $table->unsignedInteger('stok_permintaan');
             $table->unsignedBigInteger('pemilik_aset');
             $table->foreign('pemilik_aset')->references('id')->on('users');
             $table->date('masa_berlaku');

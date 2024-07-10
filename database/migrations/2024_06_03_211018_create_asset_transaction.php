@@ -18,8 +18,8 @@ return new class extends Migration
             $table->enum('tipe_transaksi', ['peminjaman', 'pengembalian']);
             $table->string('kode_transaksi')->unique();
             $table->unsignedInteger('stok');
-            $table->integer('stok_sebelum');
-            $table->integer('stok_sesudah');
+            $table->unsignedInteger('stok_sebelum');
+            $table->unsignedInteger('stok_sesudah');
             $table->text('keterangan');
             $table->date('tanggal_transaksi');
             $table->timestamps();
