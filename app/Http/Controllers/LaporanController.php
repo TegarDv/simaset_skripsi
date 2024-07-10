@@ -67,6 +67,8 @@ class LaporanController extends Controller
                 'column3_table' => 'Nama: ' . $loop_data->nama_aset . "<br>" . 'Tipe: ' . $loop_data->tipe_aset . "<br>" . 'Sisa stok: ' . $loop_data->stok_sekarang . "<br>" . 'Harga: ' . $loop_data->harga . "<br>" . 'Tipe: ' . $loop_data->tipe_aset,
                 'column4_table' => '<span class="badge rounded-pill border text-bg-' . $loop_data->status_color . '">' . $loop_data->status_nama . '</span>',
                 'column5_table' => 'Masa berlaku: ' . $loop_data->masa_berlaku . "<br>" . 'Dibuat pada: ' . $loop_data->created_at . "<br>" . 'Terakhir di update: ' . $loop_data->updated_at,
+                'tipe_aset' => $loop_data->tipe_aset,
+                'status_aset' => $loop_data->status_nama,
                 'created_at' => $loop_data->created_at,
             ];
         }

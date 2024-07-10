@@ -28,7 +28,7 @@
                     <option value="" disabled selected>Filter Status</option>
                     <option value="all">All</option>
                     @foreach ($status as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                        <option value="{{ $item->id }}" data-select-filter="{{ $item->nama_status }}">{{ $item->nama_status }}</option>
                     @endforeach
                 </select>
                 <div class="invalid-feedback">
@@ -157,6 +157,8 @@
                 { data: 'column3_table', width: '40%', name: 'column3_table', title: 'Detail Aset' },
                 { data: 'column4_table', width: '10%', className: 'text-center', name: 'column4_table', title: 'Status' },
                 { data: 'column5_table', width: '30%', className: 'text-center', name: 'column5_table', title: 'Tanggal' },
+                { data: 'tipe_aset', name: 'tipe_aset', title: 'Tipe Aset', visible: false },
+                { data: 'status_aset', name: 'status_aset', title: 'Status ASet', visible: false },
                 { data: 'created_at', name: 'created_at', title: 'Tanggal', visible: false }
             ],
             initComplete: function () {
@@ -164,19 +166,20 @@
                     const filter1 = $(this).val();
 
                     if (filter1 === "all") {
-                        datatables.column(2).search("").draw();
+                        datatables.column(5).search("").draw();
                     } else {
-                        datatables.column(2).search(filter1).draw();
+                        datatables.column(5).search(filter1).draw();
                     }
                 });
 
                 $('#filter2').on('change', function () {
-                    filter2 = $(this).val();
+                    var selectedOption = $(this).find('option:selected');
+                    filter2 = selectedOption.data('select-filter');
 
                     if (filter2 === "all") {
-                        datatables.column(3).search("").draw();
+                        datatables.column(6).search("").draw();
                     } else {
-                        datatables.column(3).search(filter2).draw();
+                        datatables.column(6).search(filter2).draw();
                     }
                 });
 
