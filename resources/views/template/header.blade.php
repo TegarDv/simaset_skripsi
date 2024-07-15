@@ -60,9 +60,14 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
+                        <a class="dropdown-item waves-effect" href="{{ route('profile.edit') }}">
+                            <i class="ti ti-user me-2 ti-sm"></i><span class="align-middle">Profil</span>
+                        </a>
+                    </li>
+                    <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="dropdown-item">
+                            <button type="submit" class="dropdown-item waves-effect">
                                 <i class="ti ti-logout me-2 ti-sm"></i>
                                 <span class="align-middle">Log Out</span>
                             </button>
