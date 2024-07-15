@@ -39,7 +39,7 @@
                 </li>
                 <li class="menu-item {{ Route::is('asset-permintaan*') ? 'active' : '' }}">
                     <a href="{!! route('asset-permintaan.index') !!}" class="menu-link">
-                        <div>Permintaan Aset</div>
+                        <div>Permintaan Pengadaan Aset</div>
                     </a>
                 </li>
                 @canany(['isSuperAdmin', 'isAdmin'])
