@@ -15,7 +15,25 @@ class DataStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        DB::table('data_status')->insert([
+            'nama_status' => 'Aset Normal',
+            'color' => 'primary',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('data_status')->insert([
+            'nama_status' => 'Aset Diperbaiki',
+            'color' => 'primary',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('data_status')->insert([
+            'nama_status' => 'Aset Rusak',
+            'color' => 'primary',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        for ($i = 0; $i < 7; $i++) {
             DB::table('data_status')->insert([
                 'nama_status' => 'Status ' . ($i + 1),
                 'color' => 'primary',

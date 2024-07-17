@@ -67,6 +67,11 @@
                         <div>Peminjaman</div>
                     </a>
                 </li>
+                <li class="menu-item {{ Route::is('transaksi-permintaan*') ? 'active' : '' }}">
+                    <a href="{!! route('transaksi-permintaan.index') !!}" class="menu-link">
+                        <div>Permintaan Peminjaman</div>
+                    </a>
+                </li>
                 <li class="menu-item {{ Route::is('transaksi-kembali*') ? 'active' : '' }}">
                     <a href="{!! route('transaksi-kembali.index') !!}" class="menu-link">
                         <div>Pengembalian</div>

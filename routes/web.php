@@ -7,12 +7,14 @@ use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PermintaanController;
+use App\Http\Controllers\PermintaanPeminjamanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TrxPeminjamanController;
 use App\Http\Controllers\TrxPengembalianController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -61,6 +63,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/transaksi-kembali', TrxPengembalianController::class);
     Route::get('trxKembaliJson', [TrxPengembalianController::class, 'trxKembaliDataTableJson'])->name('trxKembaliJson');
+
+    Route::resource('/transaksi-permintaan', PermintaanPeminjamanController::class);
+    Route::post('/transaksi-permintaan/{id}/accept', [PermintaanPeminjamanController::class, 'accept_store'])->name('asset-permintaan-accept.input');
+    Route::post('/transaksi-permintaan/{id}/reject', [PermintaanPeminjamanController::class, 'reject_store'])->name('asset-permintaan-reject.input');
+    Route::get('trx_permintaanJson', [PermintaanPeminjamanController::class, 'datatableJson'])->name('trx_permintaanJson');
 
     Route::resource('/log-user', LogActivityController::class);
     Route::get('logJson', [LogActivityController::class, 'datatableJson'])->name('logJson');
