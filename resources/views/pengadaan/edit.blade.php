@@ -24,9 +24,12 @@
         </div>
         <div class="row g-2">
             <div class="col-lg">
-                <label class="font-weight-bold">Stok Aset</label>
-                <input type="hidden" class="form-control" name="stok_awal" value="{{ $data['stok_awal'] }}">
-                <input type="number" class="form-control" name="stok_sekarang" value="{{ $data['stok_sekarang'] }}" required>
+                <label class="font-weight-bold">Stok Aset Sekarang</label>
+                <input type="number" class="form-control" name="stok_sekarang" value="{{ $data['stok_sekarang'] }}">
+            </div>
+            <div class="col-lg">
+                <label class="font-weight-bold">Stok Awal Aset</label>
+                <input type="number" class="form-control" name="stok_awal" value="{{ $data['stok_awal'] }}">
             </div>
             <div class="col-lg">
                 <label class="font-weight-bold">Harga Aset</label>

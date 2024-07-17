@@ -5,6 +5,25 @@
 <div class="modal-body">
     <div class="row g-2">
         <div class="col-lg">
+            <label class="font-weight-bold text-primary">Nama Peminjam</label>
+            <p>{{ $data->dataUser->name ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">Role</label>
+            <p>{{ $data->dataUser->dataRole->name ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">NIM</label>
+            <p>{{ $data->dataUser->nim ?? '' }}</p>
+        </div>
+        <div class="col-lg">
+            <label class="font-weight-bold text-primary">NIP</label>
+            <p>{{ $data->dataUser->nip ?? '' }}</p>
+        </div>
+    </div>
+    <hr class="mt-2 mb-2">
+    <div class="row g-2">
+        <div class="col-lg">
             <label class="font-weight-bold text-primary">Nama Aset</label>
             <p>{{ $data->dataAsset['nama_aset'] ?? '' }}</p>
         </div>

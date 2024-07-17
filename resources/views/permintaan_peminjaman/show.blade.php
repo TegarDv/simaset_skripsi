@@ -14,11 +14,11 @@
         </div>
         <div class="col-lg">
             <label class="font-weight-bold text-primary">NIM</label>
-            <p>{{ $data->dataUser->dataRole->name ?? '' }}</p>
+            <p>{{ $data->dataUser->nim ?? '' }}</p>
         </div>
         <div class="col-lg">
             <label class="font-weight-bold text-primary">NIP</label>
-            <p>{{ $data->dataUser->dataRole->name ?? '' }}</p>
+            <p>{{ $data->dataUser->nip ?? '' }}</p>
         </div>
     </div>
     <hr class="mt-2 mb-2">

@@ -161,6 +161,7 @@ class PengadaanController extends Controller
             'harga'                => $request->harga,
             'spesifikasi'          => $request->spesifikasi,
             'keterangan'           => $request->keterangan,
+            'stok_awal'            => $request->stok_awal,
             'stok_sekarang'        => $request->stok_sekarang,
             'masa_berlaku'         => $request->masa_berlaku,
             'tanggal_penerimaan'   => $request->tanggal_penerimaan,
@@ -181,6 +182,7 @@ class PengadaanController extends Controller
                             "Spesifikasi: {$data_lama['spesifikasi']}\n" .
                             "Keterangan: {$data_lama['keterangan']}\n" .
                             "Stok Sekarang: {$data_lama['stok_sekarang']}\n" .
+                            "Stok Awal: {$data_lama['stok_awal']}\n" .
                             "Masa Berlaku: {$data_lama['masa_berlaku']}\n" .
                             "Tanggal Penerimaan: {$data_lama['tanggal_penerimaan']}\n" .
                             "Status Aset: {$data_lama['status_aset']}\n" .
@@ -196,6 +198,7 @@ class PengadaanController extends Controller
                             "Spesifikasi: {$data_baru['spesifikasi']}\n" .
                             "Keterangan: {$data_baru['keterangan']}\n" .
                             "Stok Sekarang: {$data_baru['stok_sekarang']}\n" .
+                            "Stok Awal: {$data_baru['stok_awal']}\n" .
                             "Masa Berlaku: {$data_baru['masa_berlaku']}\n" .
                             "Tanggal Penerimaan: {$data_baru['tanggal_penerimaan']}\n" .
                             "Status Aset: {$data_baru['status_aset']}\n" .
@@ -272,7 +275,7 @@ class PengadaanController extends Controller
             'spesifikasi'           => 'required',
             'keterangan'            => 'required',
             'stok_awal'             => 'required|numeric|min:1',
-            'stok_sekarang'         => 'nullable|numeric|min:1',
+            'stok_sekarang'         => 'nullable|numeric|min:1|lte:stok_awal',
             'masa_berlaku'          => 'required|date',
             'tanggal_penerimaan'    => 'required|date',
             'status_aset'           => 'required|numeric',

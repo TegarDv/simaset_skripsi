@@ -77,4 +77,10 @@ return [
     'uploaded'             => 'Isian :attribute gagal diunggah.',
     'url'                  => 'Format isian :attribute tidak valid.',
     'uuid'                 => 'Isian :attribute harus berupa UUID yang valid.',
+    'lte'                  => [
+        'numeric' => 'Isian :attribute harus kurang dari atau sama dengan :value.',
+        'file'    => 'Berkas :attribute harus kurang dari atau sama dengan :value kilobytes.',
+        'string'  => 'Isian :attribute harus kurang dari atau sama dengan :value karakter.',
+        'array'   => 'Isian :attribute tidak boleh lebih dari :value anggota.',
+    ],
 ];
