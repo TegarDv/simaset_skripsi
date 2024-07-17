@@ -39,6 +39,24 @@
         </div>
 
         <div class="mb-3">
+            <label for="nim" class="form-label">{{ __('NIM') }}</label>
+            <input id="nim" name="nim" type="text" class="form-control" value="{{ old('nim', $user->nim) }}" required autofocus autocomplete="nim">
+            <div class="form-text">Jika anda seorang bukan mahasiswa silahkan isi NIM dengan 0</div>
+            @error('nim')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="nip" class="form-label">{{ __('NIP') }}</label>
+            <input id="nip" name="nip" type="text" class="form-control" value="{{ old('nip', $user->nip) }}" required autofocus autocomplete="nip">
+            <div class="form-text">Jika anda seorang bukan staf atau dosen polinema silahkan isi NIP dengan 0</div>
+            @error('nip')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="email" class="form-label">{{ __('Email') }}</label>
             <input id="email" name="email" type="email" class="form-control" value="{{ old('email', $user->email) }}" required autocomplete="username">
             @error('email')

@@ -21,6 +21,16 @@
                 <input type="email" class="form-control" name="email" value="{{ $data['email'] }}" required>
             </div>
         </div>
+        <div class="row g-2">
+            <div class="col">
+                <label class="font-weight-bold">NIM</label>
+                <input type="text" class="form-control" name="nim" value="{{ $data['nim'] }}" required>
+            </div>
+            <div class="col">
+                <label class="font-weight-bold">NIP</label>
+                <input type="text" class="form-control" name="nip" value="{{ $data['nip'] }}" required>
+            </div>
+        </div>
 
         <div class="row g-2">
             <div class="col">

@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'username',
+        'nim',
+        'nip',
         'password',
         'role',
         'created_at',

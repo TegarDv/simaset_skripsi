@@ -98,6 +98,8 @@ class UsersController extends Controller
             'name'       => $request->name,
             'email'      => $request->email,
             'username'   => $request->username,
+            'nim'        => $request->nim,
+            'nip'        => $request->nip,
             'password'   => $password,
             'role'       => $request->role,
             'updated_at' => now(),
@@ -111,6 +113,8 @@ class UsersController extends Controller
         $oldDataFormatted = "Name: {$data_lama['name']}\n" .
                             "Email: {$data_lama['email']}\n" .
                             "Username: {$data_lama['username']}\n" .
+                            "NIM: {$data_lama['nim']}\n" .
+                            "NIP: {$data_lama['nip']}\n" .
                             "Role: {$data_lama['role']}\n" .
                             "Created At: {$data_lama['created_at']}\n" .
                             "Updated At: {$data_lama['updated_at']}";
@@ -118,6 +122,8 @@ class UsersController extends Controller
         $newDataFormatted = "Name: {$data_baru['name']}\n" .
                             "Email: {$data_baru['email']}\n" .
                             "Username: {$data_baru['username']}\n" .
+                            "NIM: {$data_baru['nim']}\n" .
+                            "NIP: {$data_baru['nip']}\n" .
                             "Role: {$data_baru['role']}\n" .
                             "Created At: {$data_baru['created_at']}\n" .
                             "Updated At: {$data_baru['updated_at']}";
@@ -157,6 +163,8 @@ class UsersController extends Controller
             'name'          => 'required',
             'email'         => 'required',
             'username'      => 'required',
+            'nim'           => 'required|numeric|digits_between:1,20',
+            'nip'           => 'required|numeric|digits_between:1,20',
             'password'      => 'required',
             'new_password'  => 'nullable',
             'role'          => 'required|numeric',

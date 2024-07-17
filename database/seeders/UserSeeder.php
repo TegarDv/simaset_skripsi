@@ -18,6 +18,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Super Admin',
             'username' => 'superadmin',
+            'nim' => '0',
+            'nip' => '0',
             'email' => 'superadmin@example.com',
             'password' => Hash::make('password'),
             'role' => '1',
@@ -27,6 +29,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin',
             'username' => 'admin',
+            'nim' => '0',
+            'nip' => '0',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role' => '2',
@@ -36,6 +40,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'User',
             'username' => 'user',
+            'nim' => '0',
+            'nip' => '0',
             'email' => 'user@example.com',
             'password' => Hash::make('password'),
             'role' => '3',
@@ -46,9 +52,11 @@ class UserSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => Str::random(10),
                 'username' => Str::random(6),
+                'nim' => '0',
+                'nip' => '0',
                 'email' => Str::random(10).'@example.com',
                 'password' => Hash::make('password'),
-                'role' => '1',
+                'role' => '3',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

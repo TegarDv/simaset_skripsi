@@ -40,8 +40,8 @@ class ProfileController extends Controller
         $newData = $user->getAttributes();
         $user->save();
 
-        $oldDataFormatted = "Name: {$oldData['name']}, Email: {$oldData['email']}, Username: {$oldData['username']}";
-        $newDataFormatted = "Name: {$newData['name']}, Email: {$newData['email']}, Username: {$newData['username']}";
+        $oldDataFormatted = "Name: {$oldData['name']}, Email: {$oldData['email']}, Username: {$oldData['username']}, NIM: {$oldData['nim']}, NIP: {$oldData['nip']}";
+        $newDataFormatted = "Name: {$newData['name']}, Email: {$newData['email']}, Username: {$newData['username']}, NIM: {$newData['nim']}, NIP: {$newData['nip']}";
 
         // Log the changes
         LogUsers::create([
