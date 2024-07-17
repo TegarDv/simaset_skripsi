@@ -16,7 +16,7 @@ class TransactionRequestSeeder extends Seeder
         for ($i = 0; $i < 3; $i++) {
             DB::table('request_peminjaman_aset')->insert([
                 'asset_id' => $i + 1,
-                'user_id' => 1,
+                'user_id' => 3,
                 'jumlah' => 10 - $i,
                 'keterangan' => 'Ini keterangan ' . ($i + 1),
                 'tanggal_permintaan' => now(),
@@ -29,7 +29,7 @@ class TransactionRequestSeeder extends Seeder
         for ($i = 0; $i < 2; $i++) {
             DB::table('request_peminjaman_aset')->insert([
                 'asset_id' => $i + 1,
-                'user_id' => 1,
+                'user_id' => 3,
                 'jumlah' => 10 - $i,
                 'keterangan' => 'Ini keterangan ' . ($i + 1),
                 'tanggal_permintaan' => now(),

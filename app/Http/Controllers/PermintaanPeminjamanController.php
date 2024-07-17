@@ -226,6 +226,7 @@ class PermintaanPeminjamanController extends Controller
 
     public function accept_store(Request $request, string $id, TrxPeminjamanController $trxPeminjamanController)
     {
+        $this->authorizeAdminOrSuperAdmin();
         $user_login = auth()->user();
         $data = TransactionRequest::findOrFail($id);
         $asset_data = Assets::where('id', $data->asset_id)->first();
@@ -308,6 +309,7 @@ class PermintaanPeminjamanController extends Controller
 
     public function reject_store(Request $request, string $id)
     {
+        $this->authorizeAdminOrSuperAdmin();
         $user_login = auth()->user();
         $data = TransactionRequest::findOrFail($id);
         if ($data->status_permintaan == 'disetujui') {
