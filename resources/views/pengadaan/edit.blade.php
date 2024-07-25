@@ -8,7 +8,7 @@
     @method('PUT')
     <div class="modal-body">
         
-        <div class="row g-2">
+        <div class="row g-2 mb-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Nama Aset</label>
                 <input type="text" class="form-control" name="nama_aset" value="{{ $data['nama_aset'] }}" required>
@@ -22,7 +22,7 @@
                 </select>
             </div>
         </div>
-        <div class="row g-2">
+        <div class="row g-2 mb-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Stok Aset Sekarang</label>
                 <input type="number" class="form-control" name="stok_sekarang" value="{{ $data['stok_sekarang'] }}">
@@ -47,7 +47,7 @@
                 <input type="date" class="form-control" name="tanggal_penerimaan" value="{{ $data['tanggal_penerimaan'] }}" required>
             </div>
         </div>
-        <div class="row g-2">
+        <div class="row g-2 mb-2">
             <div class="col-lg">
                 <label class="font-weight-bold">Status aset</label>
                 <select class="form-select" name="status_aset" required>
@@ -81,14 +81,21 @@
                 </select>
             </div>
         </div>
-        <div class="row g-2">
-            <div class="col-lg-6">
+        <div class="row g-2 mb-2">
+            <div class="col-lg">
                 <label class="font-weight-bold">Spesifikasi</label>
                 <textarea class="form-control" rows="3" name="spesifikasi" required>{{ $data['spesifikasi'] }}</textarea>
             </div>
-            <div class="col">
+            <div class="col-lg">
                 <label class="font-weight-bold">Keterangan</label>
                 <textarea class="form-control" rows="3" name="keterangan" required>{{ $data['keterangan'] }}</textarea>
+            </div>
+        </div>
+        <div class="row g-2 mb-2">
+            <div class="col">
+                <label class="font-weight-bold">Data Kredensial</label>
+                <div class="form-text">Data kredensial jika ada. <span class="text-muted">Boleh kosong</span></div>
+                <textarea class="form-control" rows="3" name="data_kredensial">{{ $data['data_kredensial'] }}</textarea>
             </div>
         </div>
     </div>

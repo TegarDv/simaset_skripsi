@@ -73,6 +73,7 @@ class PengadaanController extends Controller
             'harga'                => $request->harga,
             'spesifikasi'          => $request->spesifikasi,
             'keterangan'           => $request->keterangan,
+            'data_kredensial'      => $request->data_kredensial,
             'stok_awal'            => $request->stok_awal,
             'stok_sekarang'        => $request->stok_awal,
             'masa_berlaku'         => $request->masa_berlaku,
@@ -92,6 +93,7 @@ class PengadaanController extends Controller
                             "Harga: {$data->harga}\n" .
                             "Spesifikasi: {$data->spesifikasi}\n" .
                             "Keterangan: {$data->keterangan}\n" .
+                            "data_kredensial: {$data->data_kredensial}\n" .
                             "Stok Awal: {$data->stok_awal}\n" .
                             "Stok Sekarang: {$data->stok_sekarang}\n" .
                             "Masa Berlaku: {$data->masa_berlaku}\n" .
@@ -161,6 +163,7 @@ class PengadaanController extends Controller
             'harga'                => $request->harga,
             'spesifikasi'          => $request->spesifikasi,
             'keterangan'           => $request->keterangan,
+            'data_kredensial'      => $request->data_kredensial,
             'stok_awal'            => $request->stok_awal,
             'stok_sekarang'        => $request->stok_sekarang,
             'masa_berlaku'         => $request->masa_berlaku,
@@ -181,6 +184,7 @@ class PengadaanController extends Controller
                             "Harga: {$data_lama['harga']}\n" .
                             "Spesifikasi: {$data_lama['spesifikasi']}\n" .
                             "Keterangan: {$data_lama['keterangan']}\n" .
+                            "data_kredensial: {$data_lama['data_kredensial']}\n" .
                             "Stok Sekarang: {$data_lama['stok_sekarang']}\n" .
                             "Stok Awal: {$data_lama['stok_awal']}\n" .
                             "Masa Berlaku: {$data_lama['masa_berlaku']}\n" .
@@ -197,6 +201,7 @@ class PengadaanController extends Controller
                             "Harga: {$data_baru['harga']}\n" .
                             "Spesifikasi: {$data_baru['spesifikasi']}\n" .
                             "Keterangan: {$data_baru['keterangan']}\n" .
+                            "data_kredensial: {$data_baru['data_kredensial']}\n" .
                             "Stok Sekarang: {$data_baru['stok_sekarang']}\n" .
                             "Stok Awal: {$data_baru['stok_awal']}\n" .
                             "Masa Berlaku: {$data_baru['masa_berlaku']}\n" .
@@ -274,6 +279,7 @@ class PengadaanController extends Controller
             'harga'                 => 'required|numeric|min:1',
             'spesifikasi'           => 'required',
             'keterangan'            => 'required',
+            'data_kredensial'       => 'nullable',
             'stok_awal'             => 'required|numeric|min:1',
             'stok_sekarang'         => 'nullable|numeric|min:1|lte:stok_awal',
             'masa_berlaku'          => 'required|date',

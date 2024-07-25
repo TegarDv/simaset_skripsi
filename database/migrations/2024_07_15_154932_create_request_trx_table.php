@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('status_permintaan', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->text('catatan_permintaan');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('asset_id')->references('id')->on('assets');
         });
     }
 

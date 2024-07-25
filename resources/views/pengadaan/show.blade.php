@@ -53,14 +53,20 @@
     </div>
     <hr class="mt-2 mb-2">
     <div class="row g-2">
-        <div class="col-lg-6">
+        <div class="col-lg">
             <label class="font-weight-bold text-primary">Spesifikasi</label>
-            <p>{{ $data['spesifikasi'] ?? '' }}</p>
+            <p>{!! nl2br(e($data['spesifikasi'] ?? '-')) !!}</p>
         </div>
-        <div class="col">
+        <div class="col-lg">
             <label class="font-weight-bold text-primary">Keterangan</label>
-            <p>{{ $data['keterangan'] ?? '' }}</p>
+            <p>{!! nl2br(e($data['keterangan'] ?? '-')) !!}</p>
         </div>
+        @canany(['isSuperAdmin', 'isAdmin'])
+            <div class="col-lg">
+                <label class="font-weight-bold text-primary">Data Kredensial | <span class="text-warning">Khusus Admin</span></label>
+                <p>{!! nl2br(e($data['data_kredensial'] ?? '-')) !!}</p>
+            </div>
+        @endcanany
     </div>
 </div>
 <div class="modal-footer">

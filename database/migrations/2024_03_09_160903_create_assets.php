@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('harga');
             $table->text('spesifikasi');
             $table->text('keterangan');
+            $table->text('data_kredensial')->nullable();
             // $table->unsignedInteger('status_aset');
             // $table->unsignedInteger('kondisi_aset');
             $table->unsignedInteger('stok_awal');

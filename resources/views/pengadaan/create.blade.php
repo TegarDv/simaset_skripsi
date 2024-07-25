@@ -90,6 +90,13 @@
                 <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" name="keterangan" required></textarea>
             </div>
         </div>
+        <div class="row g-2">
+            <div class="col">
+                <label class="font-weight-bold">Data Kredensial</label>
+                <div class="form-text">Data kredensial jika ada. <span class="text-muted">Boleh kosong</span></div>
+                <textarea class="form-control" rows="3" name="data_kredensial"></textarea>
+            </div>
+        </div>
         <div class="modal-footer">
             <div class="text-end mt-3">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

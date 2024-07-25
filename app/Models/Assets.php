@@ -22,6 +22,7 @@ class Assets extends Model
         'harga',
         'spesifikasi',
         'keterangan',
+        'data_kredensial',
         'stok_awal',
         'stok_sekarang',
         'masa_berlaku',
