@@ -68,6 +68,28 @@
             </div>
         @endcanany
     </div>
+    <hr class="mt-2 mb-2">
+    <div class="accordion mt-4">
+        <div class="card accordion-item">
+            <h2 class="accordion-header d-flex align-items-center">
+              <button
+                type="button"
+                class="accordion-button collapsed"
+                data-bs-toggle="collapse"
+                data-bs-target="#accordionWithIcon-1"
+                aria-expanded="true">
+                <i class="ti ti-qrcode me-2"></i>
+                Tampikan QR Code
+              </button>
+            </h2>
+
+            <div id="accordionWithIcon-1" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                {!! QrCode::size(200)->backgroundColor(255, 255, 255)->color(0, 0, 0)->margin(1)->generate($data['kode_aset']) !!}
+              </div>
+            </div>
+          </div>
+    </div>
 </div>
 <div class="modal-footer">
     <div class="text-end mt-3">

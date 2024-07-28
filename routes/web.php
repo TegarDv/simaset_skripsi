@@ -13,6 +13,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TrxPeminjamanController;
 use App\Http\Controllers\TrxPengembalianController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -86,6 +87,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan-activity/create', [LaporanController::class, 'laporan_activity_create'])->name('laporan-activity.create');
     Route::post('/laporan-activity/pdf', [PDFController::class, 'activity_print'])->name('activity_print');
     Route::get('/laporanActivityJson', [LaporanController::class, 'laporanActivityJson'])->name('laporanActivityJson');
+
+    // Route::get('/qrcode-test', [QrCodeController::class, 'show']);
+    // Route::get('/qrcode-download', [QrCodeController::class, 'download']);
 });
 
 Route::middleware('auth')->group(function () {
