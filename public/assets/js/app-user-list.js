@@ -42,7 +42,8 @@ $(function () {
       ajax: assetsPath + 'json/user-list.json', // JSON file to add data
       columns: [
         // columns according to JSON
-        { data: '' },
+        { data: 'id' },
+        { data: 'id' },
         { data: 'full_name' },
         { data: 'role' },
         { data: 'current_plan' },
@@ -63,8 +64,20 @@ $(function () {
           }
         },
         {
-          // User full name and email
+          // For Checkboxes
           targets: 1,
+          orderable: false,
+          checkboxes: {
+            selectAllRender: '<input type="checkbox" class="form-check-input">'
+          },
+          render: function () {
+            return '<input type="checkbox" class="dt-checkboxes form-check-input" >';
+          },
+          searchable: false
+        },
+        {
+          // User full name and email
+          targets: 2,
           responsivePriority: 4,
           render: function (data, type, full, meta) {
             var $name = full['full_name'],
@@ -88,17 +101,17 @@ $(function () {
             var $row_output =
               '<div class="d-flex justify-content-start align-items-center user-name">' +
               '<div class="avatar-wrapper">' +
-              '<div class="avatar avatar-sm me-3">' +
+              '<div class="avatar avatar-sm me-4">' +
               $output +
               '</div>' +
               '</div>' +
               '<div class="d-flex flex-column">' +
               '<a href="' +
               userView +
-              '" class="text-body text-truncate"><span class="fw-semibold">' +
+              '" class="text-heading text-truncate"><span class="fw-medium">' +
               $name +
               '</span></a>' +
-              '<small class="text-muted">' +
+              '<small>' +
               $email +
               '</small>' +
               '</div>' +
@@ -108,36 +121,36 @@ $(function () {
         },
         {
           // User Role
-          targets: 2,
+          targets: 3,
           render: function (data, type, full, meta) {
             var $role = full['role'];
             var roleBadgeObj = {
-              Subscriber:
-                '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i class="ti ti-user ti-sm"></i></span>',
-              Author:
-                '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="ti ti-circle-check ti-sm"></i></span>',
-              Maintainer:
-                '<span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i class="ti ti-chart-pie-2 ti-sm"></i></span>',
-              Editor:
-                '<span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30 me-2"><i class="ti ti-edit ti-sm"></i></span>',
-              Admin:
-                '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i class="ti ti-device-laptop ti-sm"></i></span>'
+              Subscriber: '<i class="ti ti-crown ti-md text-primary me-2"></i>',
+              Author: '<i class="ti ti-edit ti-md text-warning me-2"></i>',
+              Maintainer: '<i class="ti ti-user ti-md text-success me-2"></i>',
+              Editor: '<i class="ti ti-chart-pie ti-md text-info me-2"></i>',
+              Admin: '<i class="ti ti-device-desktop ti-md text-danger me-2"></i>'
             };
-            return "<span class='text-truncate d-flex align-items-center'>" + roleBadgeObj[$role] + $role + '</span>';
+            return (
+              "<span class='text-truncate d-flex align-items-center text-heading'>" +
+              roleBadgeObj[$role] +
+              $role +
+              '</span>'
+            );
           }
         },
         {
           // Plans
-          targets: 3,
+          targets: 4,
           render: function (data, type, full, meta) {
             var $plan = full['current_plan'];
 
-            return '<span class="fw-semibold">' + $plan + '</span>';
+            return '<span class="text-heading">' + $plan + '</span>';
           }
         },
         {
           // User Status
-          targets: 5,
+          targets: 6,
           render: function (data, type, full, meta) {
             var $status = full['status'];
 
@@ -159,13 +172,13 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-flex align-items-center">' +
-              '<a href="javascript:;" class="text-body"><i class="ti ti-edit ti-sm me-2"></i></a>' +
-              '<a href="javascript:;" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>' +
-              '<a href="javascript:;" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>' +
-              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a href="javascript:;" class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill delete-record"><i class="ti ti-trash ti-md"></i></a>' +
               '<a href="' +
               userView +
-              '" class="dropdown-item">View</a>' +
+              '" class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill"><i class="ti ti-eye ti-md"></i></a>' +
+              '<a href="javascript:;" class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-md"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a href="javascript:;"" class="dropdown-item">Edit</a>' +
               '<a href="javascript:;" class="dropdown-item">Suspend</a>' +
               '</div>' +
               '</div>'
@@ -173,27 +186,31 @@ $(function () {
           }
         }
       ],
-      order: [[1, 'desc']],
+      order: [[2, 'desc']],
       dom:
-        '<"row me-2"' +
-        '<"col-md-2"<"me-3"l>>' +
-        '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>' +
+        '<"row"' +
+        '<"col-md-2"<"ms-n2"l>>' +
+        '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-6 mb-md-0 mt-n6 mt-md-0"fB>>' +
         '>t' +
-        '<"row mx-2"' +
+        '<"row"' +
         '<"col-sm-12 col-md-6"i>' +
         '<"col-sm-12 col-md-6"p>' +
         '>',
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        searchPlaceholder: 'Search..'
+        searchPlaceholder: 'Search User',
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
       },
       // Buttons with Dropdown
       buttons: [
         {
           extend: 'collection',
-          className: 'btn btn-label-secondary dropdown-toggle mx-3',
-          text: '<i class="ti ti-screen-share me-1 ti-xs"></i>Export',
+          className: 'btn btn-label-secondary dropdown-toggle mx-4 waves-effect waves-light',
+          text: '<i class="ti ti-upload me-2 ti-xs"></i>Export',
           buttons: [
             {
               extend: 'print',
@@ -332,7 +349,7 @@ $(function () {
         },
         {
           text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New User</span>',
-          className: 'add-new btn btn-primary',
+          className: 'add-new btn btn-primary waves-effect waves-light',
           attr: {
             'data-bs-toggle': 'offcanvas',
             'data-bs-target': '#offcanvasAddUser'
@@ -375,7 +392,7 @@ $(function () {
       initComplete: function () {
         // Adding role filter once table initialized
         this.api()
-          .columns(2)
+          .columns(3)
           .every(function () {
             var column = this;
             var select = $(
@@ -397,7 +414,7 @@ $(function () {
           });
         // Adding plan filter once table initialized
         this.api()
-          .columns(3)
+          .columns(4)
           .every(function () {
             var column = this;
             var select = $(
@@ -419,7 +436,7 @@ $(function () {
           });
         // Adding status filter once table initialized
         this.api()
-          .columns(5)
+          .columns(6)
           .every(function () {
             var column = this;
             var select = $(
@@ -504,7 +521,7 @@ $(function () {
         eleValidClass: '',
         rowSelector: function (field, ele) {
           // field is the field name & ele is the field element
-          return '.mb-3';
+          return '.mb-6';
         }
       }),
       submitButton: new FormValidation.plugins.SubmitButton(),

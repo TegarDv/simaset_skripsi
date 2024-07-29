@@ -98,7 +98,13 @@ $(function () {
     var dt_ajax = dt_ajax_table.dataTable({
       processing: true,
       ajax: assetsPath + 'json/ajax.php',
-      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>'
+      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      }
     });
   }
 
@@ -110,7 +116,15 @@ $(function () {
     $('.dt-column-search thead tr').clone(true).appendTo('.dt-column-search thead');
     $('.dt-column-search thead tr:eq(1) th').each(function (i) {
       var title = $(this).text();
-      $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');
+      var $input = $('<input type="text" class="form-control" placeholder="Search ' + title + '" />');
+
+      // Add left and right border styles to the parent element
+      $(this).css('border-left', 'none');
+      if (i === $('.dt-column-search thead tr:eq(1) th').length - 1) {
+        $(this).css('border-right', 'none');
+      }
+
+      $(this).html($input);
 
       $('input', this).on('keyup change', function () {
         if (dt_filter.column(i).search() !== this.value) {
@@ -130,7 +144,13 @@ $(function () {
         { data: 'salary' }
       ],
       orderCellsTop: true,
-      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>'
+      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      }
     });
   }
 
@@ -162,6 +182,12 @@ $(function () {
           }
         }
       ],
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      },
       orderCellsTop: true,
       responsive: {
         details: {
@@ -254,7 +280,13 @@ $(function () {
       ],
       // scrollX: true,
       destroy: true,
-      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      },
       responsive: {
         details: {
           display: $.fn.dataTable.Responsive.display.modal({

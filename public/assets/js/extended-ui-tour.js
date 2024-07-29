@@ -8,8 +8,8 @@
   const startBtn = document.querySelector('#shepherd-example');
 
   function setupTour(tour) {
-    const backBtnClass = 'btn btn-sm btn-label-secondary md-btn-flat',
-      nextBtnClass = 'btn btn-sm btn-primary btn-next';
+    const backBtnClass = 'btn btn-sm btn-label-secondary md-btn-flat waves-effect waves-light',
+      nextBtnClass = 'btn btn-sm btn-primary btn-next waves-effect waves-light';
     tour.addStep({
       title: 'Navbar',
       text: 'This is your navbar',
@@ -113,8 +113,8 @@
   const startBtnDocs = document.querySelector('#shepherd-docs-example');
 
   function setupTourDocs(tour) {
-    const backBtnClass = 'btn btn-sm btn-label-secondary md-btn-flat',
-      nextBtnClass = 'btn btn-sm btn-primary btn-next';
+    const backBtnClass = 'btn btn-sm btn-label-secondary md-btn-flat waves-effect waves-light',
+      nextBtnClass = 'btn btn-sm btn-primary btn-next waves-effect waves-light';
     tour.addStep({
       title: 'Navbar',
       text: 'This is your navbar',

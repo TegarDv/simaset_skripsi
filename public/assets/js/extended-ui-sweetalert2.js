@@ -40,7 +40,7 @@
       Swal.fire({
         title: 'Any fool can use a computer',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -54,7 +54,7 @@
         title: 'The Internet?,',
         text: 'That thing is still around?',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -70,7 +70,7 @@
         text: 'Something went wrong!',
         footer: '<a href>Why do I have this issue?</a>',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -81,7 +81,7 @@
   if (htmlAlert) {
     htmlAlert.onclick = function () {
       Swal.fire({
-        title: '<strong>HTML <u>example</u></strong>',
+        title: '<span class="fw-medium">HTML <u>example</u></span>',
         icon: 'info',
         html:
           'You can use <b>bold text</b>, ' +
@@ -95,8 +95,8 @@
         cancelButtonText: '<i class="ti ti-thumb-down"></i>',
         cancelButtonAriaLabel: 'Thumbs down',
         customClass: {
-          confirmButton: 'btn btn-primary me-3',
-          cancelButton: 'btn btn-label-secondary'
+          confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+          cancelButton: 'btn btn-label-secondary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -116,7 +116,7 @@
         showConfirmButton: false,
         timer: 1500,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -133,7 +133,7 @@
         showConfirmButton: false,
         timer: 1500,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -150,7 +150,7 @@
         showConfirmButton: false,
         timer: 1500,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -167,7 +167,7 @@
         showConfirmButton: false,
         timer: 1500,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -186,7 +186,7 @@
           popup: 'animate__animated animate__bounceIn'
         },
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -202,7 +202,7 @@
           popup: 'animate__animated animate__fadeIn'
         },
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -218,7 +218,7 @@
           popup: 'animate__animated animate__flipInX'
         },
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -234,7 +234,7 @@
           popup: 'animate__animated animate__tada'
         },
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -250,7 +250,7 @@
           popup: 'animate__animated animate__shakeX'
         },
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -268,7 +268,7 @@
         text: 'You clicked the button!',
         icon: 'success',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -283,7 +283,7 @@
         text: 'You clicked the button!',
         icon: 'info',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -298,7 +298,7 @@
         text: ' You clicked the button!',
         icon: 'warning',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -313,7 +313,7 @@
         text: ' You clicked the button!',
         icon: 'error',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -328,7 +328,7 @@
         text: ' You clicked the button!',
         icon: 'question',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -348,7 +348,7 @@
         imageWidth: 400,
         imageAlt: 'Custom image',
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -364,7 +364,7 @@
         html: 'I will close in <strong></strong> seconds.',
         timer: 2000,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false,
         willOpen: function () {
@@ -396,7 +396,7 @@
         backdrop: true,
         allowOutsideClick: true,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          confirmButton: 'btn btn-primary waves-effect waves-light'
         },
         buttonsStyling: false
       });
@@ -457,8 +457,8 @@
         confirmButtonText: 'Look up',
         showLoaderOnConfirm: true,
         customClass: {
-          confirmButton: 'btn btn-primary me-3',
-          cancelButton: 'btn btn-label-danger'
+          confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+          cancelButton: 'btn btn-label-danger waves-effect waves-light'
         },
         preConfirm: login => {
           return fetch('//api.github.com/users/' + login)
@@ -481,7 +481,7 @@
             imageUrl: result.value.avatar_url,
             customClass: {
               confirmButtonText: 'Close me!',
-              confirmButton: 'btn btn-primary'
+              confirmButton: 'btn btn-primary waves-effect waves-light'
             }
           });
         }
@@ -499,8 +499,8 @@
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
         customClass: {
-          confirmButton: 'btn btn-primary me-3',
-          cancelButton: 'btn btn-label-secondary'
+          confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+          cancelButton: 'btn btn-label-secondary waves-effect waves-light'
         },
         buttonsStyling: false
       }).then(function (result) {
@@ -510,7 +510,7 @@
             title: 'Deleted!',
             text: 'Your file has been deleted.',
             customClass: {
-              confirmButton: 'btn btn-success'
+              confirmButton: 'btn btn-success waves-effect waves-light'
             }
           });
         }
@@ -528,8 +528,8 @@
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
         customClass: {
-          confirmButton: 'btn btn-primary me-3',
-          cancelButton: 'btn btn-label-secondary'
+          confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+          cancelButton: 'btn btn-label-secondary waves-effect waves-light'
         },
         buttonsStyling: false
       }).then(function (result) {
@@ -539,7 +539,7 @@
             title: 'Deleted!',
             text: 'Your file has been deleted.',
             customClass: {
-              confirmButton: 'btn btn-success'
+              confirmButton: 'btn btn-success waves-effect waves-light'
             }
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -548,7 +548,7 @@
             text: 'Your imaginary file is safe :)',
             icon: 'error',
             customClass: {
-              confirmButton: 'btn btn-success'
+              confirmButton: 'btn btn-success waves-effect waves-light'
             }
           });
         }

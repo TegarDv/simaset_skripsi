@@ -43,7 +43,7 @@
       if (!option.id) {
         return option.text;
       }
-      var $badge = "<div class='badge " + $(option.element).data('color') + " rounded-pill'> " + option.text + '</div>';
+      var $badge = "<div class='badge " + $(option.element).data('color') + "'> " + option.text + '</div>';
       return $badge;
     }
 
@@ -101,9 +101,9 @@
   // Render header
   function renderHeader(color, text) {
     return (
-      "<div class='d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1'>" +
+      "<div class='d-flex justify-content-between flex-wrap align-items-center mb-2'>" +
       "<div class='item-badges'> " +
-      "<div class='badge rounded-pill bg-label-" +
+      "<div class='badge bg-label-" +
       color +
       "'> " +
       text +
@@ -153,12 +153,12 @@
   // Render footer
   function renderFooter(attachments, comments, assigned, members) {
     return (
-      "<div class='d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1'>" +
-      "<div class='d-flex'> <span class='d-flex align-items-center me-2'><i class='ti ti-paperclip ti-xs me-1'></i>" +
+      "<div class='d-flex justify-content-between align-items-center flex-wrap mt-2'>" +
+      "<div class='d-flex'> <span class='d-flex align-items-center me-2'><i class='ti ti-paperclip me-1'></i>" +
       "<span class='attachments'>" +
       attachments +
       '</span>' +
-      "</span> <span class='d-flex align-items-center ms-1'><i class='ti ti-message-dots ti-xs me-1'></i>" +
+      "</span> <span class='d-flex align-items-center ms-2'><i class='ti ti-message-2 me-1'></i>" +
       '<span> ' +
       comments +
       ' </span>' +
@@ -172,7 +172,7 @@
   // Init kanban
   const kanban = new jKanban({
     element: '.kanban-wrapper',
-    gutter: '15px',
+    gutter: '12px',
     widthBoard: '250px',
     dragItems: true,
     boards: boards,
@@ -226,12 +226,12 @@
       const addNew = document.createElement('form');
       addNew.setAttribute('class', 'new-item-form');
       addNew.innerHTML =
-        '<div class="mb-3">' +
+        '<div class="mb-4">' +
         '<textarea class="form-control add-new-item" rows="2" placeholder="Add Content" autofocus required></textarea>' +
         '</div>' +
-        '<div class="mb-3">' +
-        '<button type="submit" class="btn btn-primary btn-sm me-2">Add</button>' +
-        '<button type="button" class="btn btn-label-secondary btn-sm cancel-add-item">Cancel</button>' +
+        '<div class="mb-4">' +
+        '<button type="submit" class="btn btn-primary btn-sm me-4 waves-effect waves-light">Add</button>' +
+        '<button type="button" class="btn btn-label-secondary btn-sm cancel-add-item waves-effect waves-light">Cancel</button>' +
         '</div>';
       kanban.addForm(boardId, addNew);
 

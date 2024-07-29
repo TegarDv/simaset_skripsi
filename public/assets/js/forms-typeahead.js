@@ -174,7 +174,7 @@ $(function () {
         '</div>'
       ].join('\n'),
       suggestion: function (data) {
-        return '<div><strong>' + data.value + '</strong> – ' + data.year + '</div>';
+        return '<div><span class="fw-medium">' + data.value + '</span> – ' + data.year + '</div>';
       }
     }
   });
@@ -268,7 +268,7 @@ $(function () {
       source: nbaExample,
       display: 'team',
       templates: {
-        header: '<h4 class="league-name border-bottom mb-0 mx-3 mt-3 pb-2">NBA Teams</h4>'
+        header: '<h5 class="league-name border-bottom mb-0 mx-3 mt-3 pb-2">NBA Teams</h5>'
       }
     },
     {
@@ -276,7 +276,7 @@ $(function () {
       source: nhlExample,
       display: 'team',
       templates: {
-        header: '<h4 class="league-name border-bottom mb-0 mx-3 mt-3 pb-2">NHL Teams</h4>'
+        header: '<h5 class="league-name border-bottom mb-0 mx-3 mt-3 pb-2">NHL Teams</h5>'
       }
     }
   );

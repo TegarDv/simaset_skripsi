@@ -44,7 +44,7 @@ $(function () {
           targets: 2,
           render: function (data, type, full, meta) {
             var $name = full['name'];
-            return '<span class="text-nowrap">' + $name + '</span>';
+            return '<span class="text-nowrap text-heading">' + $name + '</span>';
           }
         },
         {
@@ -55,12 +55,12 @@ $(function () {
             var $assignedTo = full['assigned_to'],
               $output = '';
             var roleBadgeObj = {
-              Admin: '<a href="' + userList + '"><span class="badge bg-label-primary m-1">Administrator</span></a>',
-              Manager: '<a href="' + userList + '"><span class="badge bg-label-warning m-1">Manager</span></a>',
-              Users: '<a href="' + userList + '"><span class="badge bg-label-success m-1">Users</span></a>',
-              Support: '<a href="' + userList + '"><span class="badge bg-label-info m-1">Support</span></a>',
+              Admin: '<a href="' + userList + '"><span class="badge me-4 bg-label-primary">Administrator</span></a>',
+              Manager: '<a href="' + userList + '"><span class="badge me-4 bg-label-warning">Manager</span></a>',
+              Users: '<a href="' + userList + '"><span class="badge me-4 bg-label-success">Users</span></a>',
+              Support: '<a href="' + userList + '"><span class="badge me-4 bg-label-info">Support</span></a>',
               Restricted:
-                '<a href="' + userList + '"><span class="badge bg-label-danger m-1">Restricted User</span></a>'
+                '<a href="' + userList + '"><span class="badge me-4 bg-label-danger">Restricted User</span></a>'
             };
             for (var i = 0; i < $assignedTo.length; i++) {
               var val = $assignedTo[i];
@@ -86,8 +86,14 @@ $(function () {
           orderable: false,
           render: function (data, type, full, meta) {
             return (
-              '<span class="text-nowrap"><button class="btn btn-sm btn-icon me-2" data-bs-target="#editPermissionModal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="ti ti-edit"></i></button>' +
-              '<button class="btn btn-sm btn-icon delete-record"><i class="ti ti-trash"></i></button></span>'
+              '<div class="d-flex align-items-center">' +
+              '<span class="text-nowrap"><button class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill me-1" data-bs-target="#editPermissionModal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="ti ti-edit ti-md"></i></button>' +
+              '<a href="javascript:;" class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-md mx-1"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a href="javascript:;"" class="dropdown-item">Edit</a>' +
+              '<a href="javascript:;" class="dropdown-item">Suspend</a>' +
+              '</div>' +
+              '</div>'
             );
           }
         }
@@ -96,22 +102,26 @@ $(function () {
       dom:
         '<"row mx-1"' +
         '<"col-sm-12 col-md-3" l>' +
-        '<"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
+        '<"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap"<"me-4 mt-n6 mt-md-0"f>B>>' +
         '>t' +
-        '<"row mx-2"' +
+        '<"row"' +
         '<"col-sm-12 col-md-6"i>' +
         '<"col-sm-12 col-md-6"p>' +
         '>',
       language: {
         sLengthMenu: 'Show _MENU_',
-        search: 'Search',
-        searchPlaceholder: 'Search..'
+        search: '',
+        searchPlaceholder: 'Search Permissions',
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
       },
       // Buttons with Dropdown
       buttons: [
         {
-          text: 'Add Permission',
-          className: 'add-new btn btn-primary mb-3 mb-md-0',
+          text: '<i class="ti ti-plus ti-xs me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add Permission</span>',
+          className: 'add-new btn btn-primary mb-6 mb-md-0 waves-effect waves-light',
           attr: {
             'data-bs-toggle': 'modal',
             'data-bs-target': '#addPermissionModal'
@@ -191,5 +201,7 @@ $(function () {
   setTimeout(() => {
     $('.dataTables_filter .form-control').removeClass('form-control-sm');
     $('.dataTables_length .form-select').removeClass('form-select-sm');
+    $('.dataTables_info').addClass('ms-n1');
+    $('.dataTables_paginate').addClass('me-n1');
   }, 300);
 });

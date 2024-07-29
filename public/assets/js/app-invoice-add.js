@@ -7,7 +7,9 @@
 (function () {
   const invoiceItemPriceList = document.querySelectorAll('.invoice-item-price'),
     invoiceItemQtyList = document.querySelectorAll('.invoice-item-qty'),
-    invoiceDateList = document.querySelectorAll('.date-picker');
+    invoiceDateList = document.querySelectorAll('.date-picker'),
+    invoiceDate = document.querySelector('.invoice-date'),
+    dueDate = document.querySelector('.due-date');
 
   // Price
   if (invoiceItemPriceList) {
@@ -35,6 +37,16 @@
       invoiceDateEl.flatpickr({
         monthSelectorType: 'static'
       });
+    });
+  }
+  if (invoiceDate) {
+    invoiceDate.flatpickr({
+      monthSelectorType: 'static'
+    });
+  }
+  if (dueDate) {
+    dueDate.flatpickr({
+      monthSelectorType: 'static'
     });
   }
 })();

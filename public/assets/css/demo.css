@@ -36,7 +36,7 @@
   padding-top: 64px !important;
 }
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
-  padding-top: 78px !important;
+  padding-top: 72px !important;
 }
 /* Navbar page z-index issue solution */
 .content-wrapper .navbar {
@@ -88,6 +88,19 @@
 
 [dir='rtl'] .rtl-only {
   display: block !important;
+}
+
+/* Dropdown buttons going out of small screens */
+@media (max-width: 576px) {
+  #dropdown-variation-demo .btn-group .text-truncate {
+    width: 254px;
+    position: relative;
+  }
+  #dropdown-variation-demo .btn-group .text-truncate::after {
+    position: absolute;
+    top: 45%;
+    right: 0.65rem;
+  }
 }
 
 /*

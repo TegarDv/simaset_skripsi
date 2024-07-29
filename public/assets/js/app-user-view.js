@@ -16,8 +16,8 @@
         showCancelButton: true,
         confirmButtonText: 'Yes, Suspend user!',
         customClass: {
-          confirmButton: 'btn btn-primary me-2',
-          cancelButton: 'btn btn-label-secondary'
+          confirmButton: 'btn btn-primary me-2 waves-effect waves-light',
+          cancelButton: 'btn btn-label-secondary waves-effect waves-light'
         },
         buttonsStyling: false
       }).then(function (result) {
@@ -27,7 +27,7 @@
             title: 'Suspended!',
             text: 'User has been suspended.',
             customClass: {
-              confirmButton: 'btn btn-success'
+              confirmButton: 'btn btn-success waves-effect waves-light'
             }
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -36,7 +36,7 @@
             text: 'Cancelled Suspension :)',
             icon: 'error',
             customClass: {
-              confirmButton: 'btn btn-success'
+              confirmButton: 'btn btn-success waves-effect waves-light'
             }
           });
         }
@@ -58,8 +58,8 @@
           showCancelButton: true,
           confirmButtonText: 'Yes',
           customClass: {
-            confirmButton: 'btn btn-primary me-2',
-            cancelButton: 'btn btn-label-secondary'
+            confirmButton: 'btn btn-primary me-2 waves-effect waves-light',
+            cancelButton: 'btn btn-label-secondary waves-effect waves-light'
           },
           buttonsStyling: false
         }).then(function (result) {
@@ -69,7 +69,7 @@
               title: 'Unsubscribed!',
               text: 'Your subscription cancelled successfully.',
               customClass: {
-                confirmButton: 'btn btn-success'
+                confirmButton: 'btn btn-success waves-effect waves-light'
               }
             });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -78,7 +78,7 @@
               text: 'Unsubscription Cancelled!!',
               icon: 'error',
               customClass: {
-                confirmButton: 'btn btn-success'
+                confirmButton: 'btn btn-success waves-effect waves-light'
               }
             });
           }

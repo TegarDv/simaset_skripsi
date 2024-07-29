@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
           trigger: new FormValidation.plugins.Trigger(),
           bootstrap5: new FormValidation.plugins.Bootstrap5({
             eleValidClass: '',
-            rowSelector: '.mb-3'
+            rowSelector: '.mb-6'
           }),
           submitButton: new FormValidation.plugins.SubmitButton(),
 

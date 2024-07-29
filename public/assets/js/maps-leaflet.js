@@ -4524,18 +4524,18 @@
       return d > 1000
         ? '#800026'
         : d > 500
-        ? '#BD0026'
-        : d > 200
-        ? '#E31A1C'
-        : d > 100
-        ? '#FC4E2A'
-        : d > 50
-        ? '#FD8D3C'
-        : d > 20
-        ? '#FEB24C'
-        : d > 10
-        ? '#FED976'
-        : '#FFEDA0';
+          ? '#BD0026'
+          : d > 200
+            ? '#E31A1C'
+            : d > 100
+              ? '#FC4E2A'
+              : d > 50
+                ? '#FD8D3C'
+                : d > 20
+                  ? '#FEB24C'
+                  : d > 10
+                    ? '#FED976'
+                    : '#FFEDA0';
     }
 
     function style(feature) {
@@ -4566,22 +4566,23 @@
       aurora = L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.'),
       golden = L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.');
     const cities = L.layerGroup([littleton, denver, aurora, golden]);
-    const street = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
-        maxZoom: 18
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap'
       }),
-      watercolor = L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
-        maxZoom: 18
+      osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution:
+          '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
       });
     const layerControl = L.map('layerControl', {
       center: [39.73, -104.99],
       zoom: 10,
-      layers: [street, cities]
+      layers: [osm, cities]
     });
     const baseMaps = {
-      Street: street,
-      Watercolor: watercolor
+      OpenStreetMap: osm,
+      'OpenStreetMap.HOT': osmHOT
     };
     const overlayMaps = {
       Cities: cities

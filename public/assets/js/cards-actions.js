@@ -50,7 +50,11 @@
       // Toggle class ti-arrows-maximize & ti-arrows-minimize
 
       if (cardFullscreen) {
-        Helpers._toggleClass(cardFullscreen.querySelector('.card-expand').firstChild, 'ti-arrows-maximize', 'ti-arrows-minimize');
+        Helpers._toggleClass(
+          cardFullscreen.querySelector('.card-expand').firstChild,
+          'ti-arrows-maximize',
+          'ti-arrows-minimize'
+        );
         cardFullscreen.classList.toggle('card-fullscreen');
       }
     }
@@ -105,7 +109,7 @@ $(function () {
             .closest('.card')
             .find('.card-alert')
             .html(
-              '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><strong>Holy grail!</strong> Your success/error message here.</div>'
+              '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><span class="fw-medium">Holy grail!</span> Your success/error message here.</div>'
             );
         }
       }, 2500);

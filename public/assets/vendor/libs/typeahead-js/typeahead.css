@@ -30,6 +30,9 @@
 .twitter-typeahead .tt-menu .tt-suggestion p {
   margin: 0;
 }
+.twitter-typeahead .tt-menu .tt-suggestion .tt-highlight {
+  font-weight: 500;
+}
 .twitter-typeahead .tt-hint {
   color: #999;
 }
@@ -43,31 +46,36 @@
   font-size: 0.9375rem;
   z-index: 1000;
   margin: 0.25rem 0;
-  color: #6f6b7d;
-  box-shadow: 0 0.25rem 1rem rgba(165, 163, 174, 0.45);
+  color: #6d6b77;
+  box-shadow: 0 0.25rem 1.125rem 0 rgba(47, 43, 61, 0.16);
   background-color: #fff;
   border-radius: 0.375rem;
 }
 .light-style .twitter-typeahead .tt-hint {
-  color: #b7b5be;
+  color: #acaab1;
 }
 .light-style .twitter-typeahead .tt-suggestion {
   font-weight: 400;
-  color: #5d596c;
-  padding: 0.42rem 1rem;
+  color: #444050;
+  padding: 0.543rem 1rem;
 }
 .light-style .twitter-typeahead .tt-suggestion:hover, .light-style .twitter-typeahead .tt-suggestion:focus {
   text-decoration: none;
-  color: #7367f0;
-  background-color: rgba(115, 103, 240, 0.08);
+  color: #444050;
+  background-color: #f3f2f3;
+}
+.light-style .tt-menu .suggestion:hover, .light-style .tt-menu .suggestion:focus {
+  text-decoration: none;
+  color: #444050;
+  background-color: #f3f2f3;
 }
 
 .dark-style .twitter-typeahead .tt-menu {
-  color: #b6bee3;
+  color: #acabc1;
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.25rem 0;
-  box-shadow: 0 0.25rem 1rem rgba(15, 20, 34, 0.55);
+  box-shadow: 0 0.25rem 1.125rem 0 rgba(19, 17, 32, 0.22);
   font-size: 0.9375rem;
   background-color: #2f3349;
   z-index: 1000;
@@ -75,14 +83,19 @@
 }
 .dark-style .twitter-typeahead .tt-menu .tt-suggestion {
   font-weight: 400;
-  color: #cfd3ec;
-  padding: 0.42rem 1rem;
+  color: #cfcde4;
+  padding: 0.543rem 1rem;
 }
 .dark-style .twitter-typeahead .tt-menu .tt-suggestion:hover, .dark-style .twitter-typeahead .tt-menu .tt-suggestion:focus {
   text-decoration: none;
-  color: #7367f0;
-  background-color: rgba(115, 103, 240, 0.08);
+  color: #cfcde4;
+  background-color: rgba(225, 222, 245, 0.06);
 }
 .dark-style .twitter-typeahead .tt-hint {
-  color: #5e6692;
+  color: #76778e;
+}
+.dark-style .tt-menu .suggestion:hover, .dark-style .tt-menu .suggestion:focus {
+  text-decoration: none;
+  color: #cfcde4;
+  background-color: rgba(225, 222, 245, 0.06);
 }

@@ -239,10 +239,10 @@ $(function () {
     });
   }
 
-  // Adding btn-secondary class in cancel btn
+  // Adding btn-label-secondary class in cancel btn
   for (var i = 0; i < bsRangePickerCancelBtn.length; i++) {
     bsRangePickerCancelBtn[i].classList.remove('btn-default');
-    bsRangePickerCancelBtn[i].classList.add('btn-secondary');
+    bsRangePickerCancelBtn[i].classList.add('btn-label-primary');
   }
 
   // jQuery Timepicker

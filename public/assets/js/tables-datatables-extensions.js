@@ -58,7 +58,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block">' +
-              '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>' +
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-md"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
               '<a href="javascript:;" class="dropdown-item">Details</a>' +
               '<a href="javascript:;" class="dropdown-item">Archive</a>' +
@@ -66,7 +66,7 @@ $(function () {
               '<a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>' +
               '</div>' +
               '</div>' +
-              '<a href="javascript:;" class="item-edit text-body"><i class="text-primary ti ti-pencil"></i></a>'
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon item-edit"><i class="ti ti-pencil ti-md"></i></a>'
             );
           }
         }
@@ -74,7 +74,18 @@ $(function () {
       // Scroll options
       scrollY: '300px',
       scrollX: true,
-      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>'
+      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      },
+      initComplete: function (settings, json) {
+        // Add the mti-n1 class to the first row in tbody
+        dt_scrollable_table.find('tbody tr:first').addClass('border-top-0');
+        $('.card-header').after('<hr class="my-0">');
+      }
     });
   }
 
@@ -201,7 +212,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block">' +
-              '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>' +
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-md"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
               '<a href="javascript:;" class="dropdown-item">Details</a>' +
               '<a href="javascript:;" class="dropdown-item">Archive</a>' +
@@ -209,15 +220,21 @@ $(function () {
               '<a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>' +
               '</div>' +
               '</div>' +
-              '<a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>'
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon item-edit"><i class="ti ti-pencil ti-md"></i></a>'
             );
           }
         }
       ],
       order: [[2, 'desc']],
-      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
       displayLength: 7,
       lengthMenu: [7, 10, 25, 50, 75, 100],
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      },
       responsive: {
         details: {
           display: $.fn.dataTable.Responsive.display.modal({
@@ -308,7 +325,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block">' +
-              '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>' +
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-md"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
               '<a href="javascript:;" class="dropdown-item">Details</a>' +
               '<a href="javascript:;" class="dropdown-item">Archive</a>' +
@@ -316,7 +333,7 @@ $(function () {
               '<a href="javascript:;" class="dropdown-item text-danger delete-record"></i>Delete</a>' +
               '</div>' +
               '</div>' +
-              '<a href="javascript:;" class="item-edit text-body"><i class="text-primary ti ti-pencil"></i></a>'
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon item-edit"><i class="ti ti-pencil ti-md"></i></a>'
             );
           }
         }
@@ -328,7 +345,11 @@ $(function () {
       paging: false,
       info: false,
       // Fixed column option
-      fixedColumns: true
+      fixedColumns: true,
+      initComplete: function (settings, json) {
+        // Add the mti-n1 class to the first row in tbody
+        dt_fixedcolumns_table.find('tbody tr:first').addClass('border-top-0');
+      }
     });
   }
 
@@ -384,7 +405,13 @@ $(function () {
         }
       ],
       order: [[1, 'desc']],
-      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      language: {
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      },
       select: {
         // Select style
         style: 'multi'

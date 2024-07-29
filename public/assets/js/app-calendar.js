@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       offcanvasTitle = document.querySelector('.offcanvas-title'),
       btnToggleSidebar = document.querySelector('.btn-toggle-sidebar'),
-      btnSubmit = document.querySelector('button[type="submit"]'),
+      btnSubmit = document.querySelector('#addEventBtn'),
       btnDeleteEvent = document.querySelector('.btn-delete-event'),
       btnCancel = document.querySelector('.btn-cancel'),
       eventTitle = document.querySelector('#eventTitle'),
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
       fcSidebarToggleButton.setAttribute('data-bs-toggle', 'sidebar');
       fcSidebarToggleButton.setAttribute('data-overlay', '');
       fcSidebarToggleButton.setAttribute('data-target', '#app-calendar-sidebar');
-      fcSidebarToggleButton.insertAdjacentHTML('beforeend', '<i class="ti ti-menu-2 ti-sm"></i>');
+      fcSidebarToggleButton.insertAdjacentHTML('beforeend', '<i class="ti ti-menu-2 ti-lg text-heading"></i>');
     }
 
     // Filter events by calender
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
           eleValidClass: '',
           rowSelector: function (field, ele) {
             // field is the field name & ele is the field element
-            return '.mb-3';
+            return '.mb-5';
           }
         }),
         submitButton: new FormValidation.plugins.SubmitButton(),

@@ -14,7 +14,8 @@
     greyColor = '#4F5D70',
     greyLightColor = '#EDF1F4',
     blueColor = '#2B9AFF',
-    blueLightColor = '#84D0FF';
+    blueLightColor = '#84D0FF',
+    blueDarkColor = '#1D9FF2';
 
   let cardColor, headingColor, labelColor, borderColor, legendColor;
 
@@ -134,7 +135,7 @@
         datasets: [
           {
             data: [710, 350, 470, 580, 230, 460, 120],
-            backgroundColor: config.colors.info,
+            backgroundColor: blueDarkColor,
             borderColor: 'transparent',
             maxBarThickness: 15
           }

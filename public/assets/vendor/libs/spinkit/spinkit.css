@@ -833,16 +833,3 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-
-.sk-secondary.sk-plane,
-.sk-secondary .sk-chase-dot:before,
-.sk-secondary .sk-bounce-dot,
-.sk-secondary .sk-wave-rect,
-.sk-secondary.sk-pulse,
-.sk-secondary .sk-swing-dot,
-.sk-secondary .sk-circle-dot:before,
-.sk-secondary .sk-circle-fade-dot:before,
-.sk-secondary .sk-grid-cube,
-.sk-secondary .sk-fold-cube:before {
-    background-color: #bfbfbf;
-}

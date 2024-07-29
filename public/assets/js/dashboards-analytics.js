@@ -37,14 +37,13 @@
     });
   }
 
-  // Revenue Generated Area Chart
+  // Average Daily Sales
   // --------------------------------------------------------------------
-  const revenueGeneratedEl = document.querySelector('#revenueGenerated'),
-    revenueGeneratedConfig = {
+  const averageDailySalesEl = document.querySelector('#averageDailySales'),
+    averageDailySalesConfig = {
       chart: {
-        height: 130,
+        height: 105,
         type: 'area',
-        parentHeightOffset: 0,
         toolbar: {
           show: false
         },
@@ -78,7 +77,7 @@
       },
       series: [
         {
-          data: [300, 350, 330, 380, 340, 400, 380]
+          data: [400, 200, 650, 500]
         }
       ],
       xaxis: {
@@ -104,11 +103,29 @@
       },
       tooltip: {
         enabled: false
-      }
+      },
+      responsive: [
+        {
+          breakpoint: 1387,
+          options: {
+            chart: {
+              height: 80
+            }
+          }
+        },
+        {
+          breakpoint: 1200,
+          options: {
+            chart: {
+              height: 123
+            }
+          }
+        }
+      ]
     };
-  if (typeof revenueGeneratedEl !== undefined && revenueGeneratedEl !== null) {
-    const revenueGenerated = new ApexCharts(revenueGeneratedEl, revenueGeneratedConfig);
-    revenueGenerated.render();
+  if (typeof averageDailySalesEl !== undefined && averageDailySalesEl !== null) {
+    const averageDailySales = new ApexCharts(averageDailySalesEl, averageDailySalesConfig);
+    averageDailySales.render();
   }
 
   // Earning Reports Bar Chart
@@ -116,7 +133,7 @@
   const weeklyEarningReportsEl = document.querySelector('#weeklyEarningReports'),
     weeklyEarningReportsConfig = {
       chart: {
-        height: 202,
+        height: 161,
         parentHeightOffset: 0,
         type: 'bar',
         toolbar: {
@@ -236,7 +253,7 @@
               offsetY: 10,
               color: headingColor,
               fontSize: '38px',
-              fontWeight: '600',
+              fontWeight: '400',
               fontFamily: 'Public Sans'
             }
           }
@@ -315,7 +332,7 @@
         }
       ],
       chart: {
-        height: 230,
+        height: 175,
         parentHeightOffset: 0,
         stacked: true,
         type: 'bar',
@@ -330,13 +347,16 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '18%',
-          borderRadius: 5,
+          columnWidth: '20%',
+          borderRadius: 6,
           startingShape: 'rounded',
           endingShape: 'rounded'
         }
       },
-      colors: [config.colors.primary, grayColor],
+      fill: {
+        opacity: [1, 1]
+      },
+      colors: [config.colors.primary, config.colors.secondary],
       dataLabels: {
         enabled: false
       },
@@ -380,7 +400,7 @@
           breakpoint: 1197,
           options: {
             chart: {
-              height: 228
+              height: 212
             },
             plotOptions: {
               bar: {
@@ -394,7 +414,7 @@
           breakpoint: 783,
           options: {
             chart: {
-              height: 232
+              height: 210
             },
             plotOptions: {
               bar: {
@@ -533,20 +553,28 @@
             var $row_output =
               '<div class="d-flex justify-content-left align-items-center">' +
               '<div class="avatar-wrapper">' +
-              '<div class="avatar me-2">' +
+              '<div class="avatar avatar-sm me-3">' +
               $output +
               '</div>' +
               '</div>' +
               '<div class="d-flex flex-column">' +
-              '<span class="text-truncate fw-semibold">' +
+              '<h6 class="text-truncate mb-0">' +
               $name +
-              '</span>' +
-              '<small class="text-truncate text-muted">' +
+              '</h6>' +
+              '<small class="text-truncate">' +
               $date +
               '</small>' +
               '</div>' +
               '</div>';
             return $row_output;
+          }
+        },
+        {
+          // Task
+          targets: 3,
+          render: function (data, type, full, meta) {
+            var $task = full['project_leader'];
+            return '<span class="text-heading">' + $task + '</span>';
           }
         },
         {
@@ -556,20 +584,40 @@
           searchable: false,
           render: function (data, type, full, meta) {
             var $team = full['team'],
-              $output;
-            $output = '<div class="d-flex align-items-center avatar-group">';
+              $team_item = '',
+              $team_count = 0;
             for (var i = 0; i < $team.length; i++) {
-              $output +=
-                '<div class="avatar avatar-sm">' +
-                '<img src="' +
+              $team_item +=
+                '<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Kim Karlos" class="avatar avatar-sm pull-up">' +
+                '<img class="rounded-circle" src="' +
                 assetsPath +
                 'img/avatars/' +
                 $team[i] +
-                '" alt="Avatar" class="rounded-circle pull-up">' +
-                '</div>';
+                '"  alt="Avatar">' +
+                '</li>';
+              $team_count++;
+              if ($team_count > 2) break;
             }
-            $output += '</div>';
-            return $output;
+            if ($team_count > 2) {
+              var $remainingAvatars = $team.length - 3;
+              if ($remainingAvatars > 0) {
+                $team_item +=
+                  '<li class="avatar avatar-sm">' +
+                  '<span class="avatar-initial rounded-circle pull-up text-heading" data-bs-toggle="tooltip" data-bs-placement="top" title="' +
+                  $remainingAvatars +
+                  ' more">+' +
+                  $remainingAvatars +
+                  '</span >' +
+                  '</li>';
+              }
+            }
+            var $team_output =
+              '<div class="d-flex align-items-center">' +
+              '<ul class="list-unstyled d-flex align-items-center avatar-group mb-0 z-2">' +
+              $team_item +
+              '</ul>' +
+              '</div>';
+            return $team_output;
           }
         },
         {
@@ -586,7 +634,7 @@
               $status_number +
               '" aria-valuemin="0" aria-valuemax="100"></div>' +
               '</div>' +
-              '<span>' +
+              '<span class="text-heading">' +
               $status_number +
               '</span></div>'
             );
@@ -596,12 +644,12 @@
           // Actions
           targets: -1,
           searchable: false,
-          title: 'Actions',
+          title: 'Action',
           orderable: false,
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block">' +
-              '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></a>' +
+              '<a href="javascript:;" class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-md"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
               '<a href="javascript:;" class="dropdown-item">Details</a>' +
               '<a href="javascript:;" class="dropdown-item">Archive</a>' +
@@ -617,6 +665,14 @@
       dom: '<"card-header pb-0 pt-sm-0"<"head-label text-center"><"d-flex justify-content-center justify-content-md-end"f>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
       displayLength: 5,
       lengthMenu: [5, 10, 25, 50, 75, 100],
+      language: {
+        search: '',
+        searchPlaceholder: 'Search Project',
+        paginate: {
+          next: '<i class="ti ti-chevron-right ti-sm"></i>',
+          previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+        }
+      },
       responsive: {
         details: {
           display: $.fn.dataTable.Responsive.display.modal({
@@ -650,7 +706,7 @@
         }
       }
     });
-    $('div.head-label').html('<h5 class="card-title mb-0">Projects</h5>');
+    $('div.head-label').html('<h5 class="card-title mb-0">Project List</h5>');
   }
 
   // Filter form control to default size
