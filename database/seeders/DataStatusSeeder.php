@@ -18,18 +18,40 @@ class DataStatusSeeder extends Seeder
         DB::table('data_status')->insert([
             'nama_status' => 'Aset Normal',
             'color' => 'primary',
+            'kategori' => 'normal',
+            'biaya_perbaikan' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('data_status')->insert([
             'nama_status' => 'Aset Diperbaiki',
-            'color' => 'primary',
+            'color' => 'warning',
+            'kategori' => 'rusak',
+            'biaya_perbaikan' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('data_status')->insert([
-            'nama_status' => 'Aset Rusak',
-            'color' => 'primary',
+            'nama_status' => 'Aset Rusak Ringan',
+            'color' => 'warning',
+            'kategori' => 'rusak',
+            'biaya_perbaikan' => 0.25,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('data_status')->insert([
+            'nama_status' => 'Aset Rusak Sedang',
+            'color' => 'danger',
+            'kategori' => 'rusak',
+            'biaya_perbaikan' => 0.50,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('data_status')->insert([
+            'nama_status' => 'Aset Rusak Berat',
+            'color' => 'danger',
+            'kategori' => 'rusak',
+            'biaya_perbaikan' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -37,6 +59,8 @@ class DataStatusSeeder extends Seeder
             DB::table('data_status')->insert([
                 'nama_status' => 'Status ' . ($i + 1),
                 'color' => 'primary',
+                'kategori' => 'normal',
+                'biaya_perbaikan' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -46,12 +46,16 @@ class StatusController extends Controller
         $data = DataStatus::create([
             'nama_status'          => $request->nama_status,
             'color'                => $request->color,
+            'kategori'             => $request->kategori,
+            'biaya_perbaikan'      => $request->biaya_perbaikan,
             'created_at'           => now(),
             'updated_at'           => now(),
         ]);
 
         $dataFormatted = "Nama Status: {$data->nama_status}\n" .
                         "Color: {$data->color}\n" .
+                        "Kategori: {$data->kategori}\n" .
+                        "Biaya Perbaikan: {$data->biaya_perbaikan}\n" .
                         "Created At: " . $data->created_at->format('d/M/Y H:i') . "\n" .
                         "Updated At: " . $data->updated_at->format('d/M/Y H:i');
 
@@ -102,9 +106,11 @@ class StatusController extends Controller
         $data_lama['updated_at'] = $data->updated_at->format('d/M/Y H:i');
 
         $data->update([
-            'nama_status' => $request->nama_status,
-            'color'       => $request->color,
-            'updated_at'  => now(),
+            'nama_status'       => $request->nama_status,
+            'color'             => $request->color,
+            'kategori'          => $request->kategori,
+            'biaya_perbaikan'   => $request->biaya_perbaikan,
+            'updated_at'        => now(),
         ]);
         $data_baru = $data->toArray();
         $data_baru['created_at'] = $data->created_at->format('d/M/Y H:i');
@@ -113,11 +119,15 @@ class StatusController extends Controller
         // Prepare old and new data in a readable format
         $oldDataFormatted = "Nama Status: {$data_lama['nama_status']}\n" .
                             "Color: {$data_lama['color']}\n" .
+                            "Kategori: {$data->kategori}\n" .
+                            "Biaya Perbaikan: {$data->biaya_perbaikan}\n" .
                             "Created At: {$data_lama['created_at']}\n" .
                             "Updated At: {$data_lama['updated_at']}";
 
         $newDataFormatted = "Nama Status: {$data_baru['nama_status']}\n" .
                             "Color: {$data_baru['color']}\n" .
+                            "Kategori: {$data_baru['kategori']}\n" .
+                            "Biaya Perbaikan: {$data_baru['biaya_perbaikan']}\n" .
                             "Created At: {$data_baru['created_at']}\n" .
                             "Updated At: {$data_baru['updated_at']}";
 
@@ -168,8 +178,10 @@ class StatusController extends Controller
     private function validateData(Request $request)
     {
         $this->validate($request, [
-            'nama_status'   => 'required',
-            'color'         => 'required|in:primary,secondary,success,danger,warning,info,light,dark',
+            'nama_status'       => 'required',
+            'color'             => 'required|in:primary,secondary,success,danger,warning,info,light,dark',
+            'kategori'          => 'required|in:normal,rusak',
+            'biaya_perbaikan'   => 'required|numeric|min:0|max:1',
         ]);
     }
 
@@ -192,7 +204,7 @@ class StatusController extends Controller
             $delete_btn = '<button class="btn btn-sm btn-label-danger m-1 delete-app-btn" data-app-id="' . $loop_data->id . '" title="Delete"><i class="bi bi-trash3"></i></button>';
             $data[] = [
                 'index' => $key + 1,
-                'column2_table' => $loop_data->nama_status,
+                'column2_table' => 'Nama: ' . $loop_data->nama_status . '<br>Kategori: ' . $loop_data->kategori . '<br>Biaya Perbaikan: ' . $loop_data->biaya_perbaikan,
                 'column3_table' => '<span class="badge rounded-pill border text-bg-'. $loop_data->color .'">'. $loop_data->nama_status .'</span>',
                 'column4_table' => 'Dibuat pada: ' . $loop_data->created_at . '<br>Terakhir di update: ' . $loop_data->updated_at,
                 'column5_table' => $edit_btn . $read_btn . $delete_btn,

@@ -23,37 +23,48 @@
     </div>
     <div class="col-lg-4 col-sm-6">
         <div class="card card-border-shadow-primary h-100">
-          <div class="card-body">
-            <div class="d-flex align-items-center mb-2">
-              <div class="avatar me-4">
-                <span class="avatar-initial rounded bg-label-primary"
-                  ><i class="ti ti-truck ti-28px"></i
-                ></span>
-              </div>
-              <h4 class="mb-0">42</h4>
-            </div>
-            <p class="mb-1">On route vehicles</p>
-            <p class="mb-0">
-              <span class="text-heading fw-medium me-2">+18.2%</span>
-              <small class="text-muted">than last week</small>
-            </p>
-          </div>
-        </div>
-      </div>
-    <div class="col-lg-4">
-        <div class="card">
             <div class="card-body">
-                <div class="d-flex align-items-start justify-content-between">
-                    <div class="content-left">
-                        <h5 class="card-title text-primary">Jumlah Aset Saat Ini</h5>
-                        <h4 class="mb-4">
-                            {{ $asset_count }}
-                        </h4>
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-primary"
+                            ><i class="ti ti-box ti-28px"></i
+                        ></span>
                     </div>
-                    <span class="badge bg-label-primary rounded p-2">
-                        <i class="bi bi-box-seam"></i>
-                    </span>
+                    <h4 class="mb-0">{{ $asset_count }}</h4>
                 </div>
+                <p class="mb-0">Jumlah aset saat ini</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row g-4 mb-4">
+    <div class="col-lg-3 col-sm-6">
+        <div class="card card-border-shadow-success h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-success"
+                            ><i class="ti ti-box ti-28px"></i
+                        ></span>
+                    </div>
+                    <h4 class="mb-0">{{ $asset_count }}</h4>
+                </div>
+                <p class="mb-0">Jumlah aset normal</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card card-border-shadow-danger h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-danger"
+                            ><i class="ti ti-box ti-28px"></i
+                        ></span>
+                    </div>
+                    <h4 class="mb-0">{{ $asset_count }}</h4>
+                </div>
+                <p class="mb-0">Jumlah aset rusak</p>
             </div>
         </div>
     </div>

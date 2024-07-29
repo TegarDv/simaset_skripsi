@@ -17,7 +17,13 @@ class DataStatus extends Model
     protected $fillable = [
         'nama_status',
         'color',
+        'kategori',
+        'biaya_perbaikan',
         'created_at',
         'updated_at',
+    ];
+
+    public static $rules = [
+        'biaya_perbaikan' => 'required|numeric|min:0|max:1',
     ];
 }

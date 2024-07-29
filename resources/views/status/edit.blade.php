@@ -8,9 +8,26 @@
     @method('PUT')
     <div class="modal-body">
         
-        <div class="mb-3">
-            <label class="font-weight-bold">Nama Status</label>
-            <input type="text" class="form-control" name="nama_status" value="{{ $data['nama_status'] }}" required>
+        <div class="row mb-2">
+            <div class="col-lg-4 mb-3">
+                <label class="font-weight-bold">Nama Status</label>
+                <input type="text" class="form-control" name="nama_status" value="{{ $data['nama_status'] }}" required>
+                <div class="form-text">Nama status yang tampil</div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <label class="font-weight-bold">Kategori</label>
+                <select class="form-select" name="kategori">
+                    <option selected disabled>Pilih salah satu</option>
+                    <option value="normal" {{ $data['kategori'] == 'normal' ? 'selected' : '' }}>Aset Normal</option>
+                    <option value="rusak" {{ $data['kategori'] == 'rusak' ? 'selected' : '' }}>Aset Rusak</option>
+                </select>
+                <div class="form-text">Kategori status untuk aset rusak atau normal</div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <label class="font-weight-bold">Biaya Perbaikan</label>
+                <input type="text" class="form-control" name="biaya_perbaikan" value="{{ $data['biaya_perbaikan'] }}" required>
+                <div class="form-text">Biaya perbaikan untuk aset dengan status terkait. Min 0.00 - Max 1.00</div>
+            </div>
         </div>
         <div class="mb-3">
             <label class="font-weight-bold">Warna Status</label>
