@@ -21,6 +21,25 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-4 col-sm-6">
+        <div class="card card-border-shadow-primary h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-2">
+              <div class="avatar me-4">
+                <span class="avatar-initial rounded bg-label-primary"
+                  ><i class="ti ti-truck ti-28px"></i
+                ></span>
+              </div>
+              <h4 class="mb-0">42</h4>
+            </div>
+            <p class="mb-1">On route vehicles</p>
+            <p class="mb-0">
+              <span class="text-heading fw-medium me-2">+18.2%</span>
+              <small class="text-muted">than last week</small>
+            </p>
+          </div>
+        </div>
+      </div>
     <div class="col-lg-4">
         <div class="card">
             <div class="card-body">
