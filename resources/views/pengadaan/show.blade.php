@@ -85,7 +85,7 @@
 
             <div id="accordionWithIcon-1" class="accordion-collapse collapse">
               <div class="accordion-body">
-                {!! QrCode::size(200)->backgroundColor(255, 255, 255)->color(0, 0, 0)->margin(1)->generate($data['kode_aset']) !!}
+                {!! QrCode::size(200)->backgroundColor(255, 255, 255)->color(0, 0, 0)->margin(1)->generate($qr_link) !!}
               </div>
             </div>
           </div>

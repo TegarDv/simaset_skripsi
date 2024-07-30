@@ -127,7 +127,8 @@ class PengadaanController extends Controller
     {
         $data = Assets::findOrFail($id);
         $status = DataStatus::all();
-        return view('pengadaan.show', compact('data', 'status'));
+        $qr_link = env('APP_URL') . '/qrcode/' .  $data->kode_aset;
+        return view('pengadaan.show', compact('data', 'status', 'qr_link'));
     }
 
     /**
