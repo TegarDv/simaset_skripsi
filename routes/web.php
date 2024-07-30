@@ -39,6 +39,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/qrcode/{code}', [DashboardController::class, 'show'])->name('dashboard.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     

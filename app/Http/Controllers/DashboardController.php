@@ -163,9 +163,14 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $code)
     {
-        //
+        $data = Assets::where('kode_aset', $code)->first();
+        if (!$data) {
+            abort(404, 'Asset not found');
+        }
+        $qr_link = env('APP_URL') . '/qrcode/' .  $data->kode_aset;
+        return view('qr_code_detail', compact('data', 'qr_link'));
     }
 
     /**

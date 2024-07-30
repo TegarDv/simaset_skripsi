@@ -17,7 +17,6 @@
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Style Switcher -->
-            <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown">
                 <a
                     class="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow"
@@ -39,7 +38,6 @@
                 </ul>
             </li>
             <!-- / Style Switcher-->
-            <!--/ Style Switcher -->
 
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">

@@ -299,41 +299,50 @@
       </ul>
       <div class="tab-content p-0 ms-0 ms-sm-2">
         <div class="tab-pane fade show active" id="navs-1-id" role="tabpanel">
-          <div class="table-responsive">
+          <div class="card-datatable table-responsive">
             <h5>Deviasi Aset</h5>
+            <div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                <span class="alert-icon rounded">
+                    <i class="ti ti-alert-triangle"></i>
+                </span>
+                Data yang ditampilkan hanya data aset fisik. Deviasi aset adalah 10% tiap tahun.
+            </div>
             <table class="table table-bordered" id="datatable1"></table>
           </div>
         </div>
-        <div class="tab-pane fade" id="navs-2-id" role="tabpanel">
-          <div class="table-responsive">
+        <div class="tab-pane fade show active" id="navs-2-id" role="tabpanel">
+          <div class="card-datatable table-responsive">
             <h5>Biaya Maintenance Aset yang sedang rusak</h5>
-            <table class="table table-bordered" id="datatable2">
-              <thead>
-                <th>Data Aset</th>
-                <th>Kode Aset</th>
-                <th>Kondisi Aset</th>
-                <th>Biaya Maintance</th>
-              </thead>
-            </table>
+            <div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                <span class="alert-icon rounded">
+                    <i class="ti ti-alert-triangle"></i>
+                </span>
+                Data yang ditampilkan hanya data aset dengan kondisi rusak. Biaya maintenance didapat dari konfigurasi kondisi aset.
+            </div>
+            <table class="table table-bordered" id="datatable2"></table>
           </div>
         </div>
-        <div class="tab-pane fade" id="navs-3-id" role="tabpanel">
-          <div class="table-responsive">
+        <div class="tab-pane fade show active" id="navs-3-id" role="tabpanel">
+          <div class="card-datatable table-responsive">
             <h5>Aset dengan masa berlaku yang sudah habis</h5>
-            <table class="table table-bordered" id="datatable3">
-              <thead>
-                <th>No</th>
-                <th>Data Aset</th>
-                <th>Kode Aset</th>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-              </thead>
-            </table>
+            <div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                <span class="alert-icon rounded">
+                    <i class="ti ti-alert-triangle"></i>
+                </span>
+                Data yang ditampilkan hanya data aset dengan masa berlaku yang sudah lewat hari ini.
+            </div>
+            <table class="table table-bordered" id="datatable3"></table>
           </div>
         </div>
         <div class="tab-pane fade" id="navs-4-id" role="tabpanel">
           <div>
             <h5>5 Permintaan Pengadaan Terbaru</h5>
+            <div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                <span class="alert-icon rounded">
+                    <i class="ti ti-alert-triangle"></i>
+                </span>
+                5 data permintaan pengadaan aset yang paling terbaru.
+            </div>
             <div class="table-responsive pt-0">
                 <table class="datatables-basic table">
                     <thead>
@@ -359,6 +368,12 @@
         <div class="tab-pane fade" id="navs-5-id" role="tabpanel">
           <div>
             <h5>5 Permintaan Peminjaman Terbaru</h5>
+            <div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                <span class="alert-icon rounded">
+                    <i class="ti ti-alert-triangle"></i>
+                </span>
+                5 data permintaan peminjaman yang paling terbaru.
+            </div>
             <div class="table-responsive pt-0">
                 <table class="datatables-basic table">
                     <thead>
@@ -397,27 +412,33 @@
         @can('isSuperAdmin')
         <div class="tab-pane fade" id="navs-6-id" role="tabpanel">
           <div>
-                <h5>5 Aktivitas Terbaru User</h5>
-                <div class="table-responsive pt-0">
-                    <table class="datatables-basic table">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Tindakan</th>
-                                <th>Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($log_user as $loop_data)
-                                <tr>
-                                    <td>{{ $loop_data->created_at }}</td>
-                                    <td>{{ $loop_data->action }}</td>
-                                    <td>{!! nl2br(e($loop_data->detail)) !!}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+              <h5>5 Aktivitas Terbaru User</h5>
+              <div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                  <span class="alert-icon rounded">
+                      <i class="ti ti-alert-triangle"></i>
+                  </span>
+                  5 Aktivitas / log terbaru dari semua user.
+              </div>
+              <div class="table-responsive pt-0">
+                  <table class="datatables-basic table">
+                      <thead>
+                          <tr>
+                              <th>Tanggal</th>
+                              <th>Tindakan</th>
+                              <th>Detail</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($log_user as $loop_data)
+                              <tr>
+                                  <td>{{ $loop_data->created_at }}</td>
+                                  <td>{{ $loop_data->action }}</td>
+                                  <td>{!! nl2br(e($loop_data->detail)) !!}</td>
+                              </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
           </div>
         </div>
         @endcan
@@ -558,7 +579,10 @@
                 { data: 'column3', name: 'column3', title: 'Kode Aset' },
                 { data: 'column4', name: 'column4', title: 'Kondisi Aset' },
                 { data: 'column5', name: 'column5', title: 'Biaya Maintenance' },
-            ]
+            ],
+            initComplete: function(settings, json) {
+              $('#navs-2-id').removeClass('show active');
+            }
         });
         var datatables3 = $('#datatable3').DataTable({
             ajax: {
@@ -582,7 +606,10 @@
                 { data: 'column3', name: 'column3', title: 'Kode Aset' },
                 { data: 'column4', name: 'column4', title: 'Tanggal' },
                 { data: 'column5', name: 'column5', title: 'Keterangan' },
-            ]
+            ],
+            initComplete: function(settings, json) {
+              $('#navs-3-id').removeClass('show active');
+            }
         });
     });
 </script>
